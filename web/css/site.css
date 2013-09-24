@@ -1,0 +1,174 @@
+body {  
+  background: url("../images/weil-inseln.jpg") fixed no-repeat #000000;
+  background-position: center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.masthead{
+  height: 106px;
+  background-color: #ffffff;
+}
+
+.breadcrumb{
+  background-color: transparent;
+}
+
+#wrapper{
+  background: url("../images/background.png") scroll no-repeat #000000;
+  min-height: 600px;
+}
+
+.site-wsp{
+  color: #ffffff;
+}
+
+.cms{
+  background-color: #333333;
+  padding: 15px 15px 15px 15px;
+  color: #ffffff;
+}
+
+.module-wsp{
+  background-color: #efefef;
+  padding: 15px 15px 15px 15px;
+}
+
+.footer {
+	border-top: 1px solid #ddd;
+	margin-top: 30px;
+	padding-top: 15px;
+	padding-bottom: 30px;
+  background-color: #181818;
+}
+
+.footer-box{
+  border-left: 1px dotted #404040;
+  padding-left: 20px;
+}
+
+.post-box{
+  border-top: 1px dotted #404040;
+  padding-left: 5px;
+  padding-top: 10px;
+  margin-bottom:15px;
+  min-height: 200px;
+}
+
+.lastfooter {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  padding-bottom: 30px;
+}
+
+.fg-color-white{
+  color: #ffffff;
+}
+
+.fg-color-grayLight{
+  color: #cccccc;
+}
+
+.fg-color-orange{
+  color: #FF6600;
+}
+
+.jumbotron {
+  margin-top: 15px;
+	text-align: center;
+	background-color: #ababab;
+}
+
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+.spacer{
+  margin-top: 15px;
+}
+
+.opacity {   
+    opacity: 0.5;       /* modern browser */  
+    -moz-opacity: 0.5;  /* older Mozilla browser */  
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE8 in Standard Compliant Mode */  
+    filter:alpha(opacity=50); /* IE5.x -7.0 */  
+}
+
+.opacity-light {   
+    opacity: 0.8;       /* modern browser */  
+    -moz-opacity: 0.8;  /* older Mozilla browser */  
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /* IE8 in Standard Compliant Mode */  
+    filter:alpha(opacity=80); /* IE5.x -7.0 */  
+}
+
+.bg-color-darken{
+  background-color: #787878;
+}
+
+.bg-color-gray{
+  background-color: #333333;
+}
+
+.bg-color-orange{
+  background-color: #FF6600;
+}
+
+.bg-color-orangepic{
+  background: url("../images/h_underlay.png") repeat-x scroll 0 0 #FF6600;
+}
+
+.smallspace{
+  padding: 4px 4px 4px 4px;
+}
+
+.bigspace{
+  padding: 15px 0px 5px 0px;
+}
+
+.site-login{
+  padding: 15px 15px 15px 15px;
+}
+
+.liicon{
+  text-align: center;
+  margin-left: 5px;
+  height: 25px;
+  width: 25px;
+  list-style-type: none;
+  float: left;
+}
+
+/*************************************
+ * specific styling for #sp_slider
+ ************************************/
+
+#sp_slider {
+  margin: 15px auto;
+  background: #333333;
+}
+
+#sp_slider .als-item {
+  margin: 0px 5px;
+  padding: 4px 0px;
+  min-height: 120px;
+  min-width: 100px;
+  text-align: center;
+}
+
+#sp_slider .als-item img {
+  display: block;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+#sp_slider .als-prev, #sp_slider .als-next {
+  top: 40px;
+}
+
+#sp_slider .als-prev {
+  left: 50px;
+}
+
+#sp_slider .als-next {
+  right: 50px;
+}

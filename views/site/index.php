@@ -15,7 +15,7 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
 			<div class="bigspace">
 				<?php 
 					for($img=1;$img<=3;$img++){
-						$item[] = array('content'=>"<img src='http://lorempixel.com/800/250/people'/>",'id'=>$img);
+						$item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);
 					}
 
 					echo Carousel::widget(array(

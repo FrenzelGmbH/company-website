@@ -40,7 +40,7 @@ app\config\AppAsset::register($this);
 <?php $this->beginBody(); ?>
 	<?php
 		NavBar::begin(array(
-			'brandLabel' => 'PowerShop Weil',
+			'brandLabel' => 'Frenzel GmbH',
 			'brandUrl' => Yii::$app->homeUrl,
 			'options' => array(
 				'class' => 'navbar-inverse',
@@ -86,19 +86,19 @@ app\config\AppAsset::register($this);
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
-					<img src="images/powershop-weil-harley-davidson-dealer.png"></img>
+					
 				</div>
 				<div class="col-md-3">
 					<div class="footer-box">
 						<h4 class="fg-color-orange">Kontakt</h4>
-						<address class="fg-color-grayLight">
-						Burghölzle 15	<br>
-						D-79576 Weil am Rhein <br>
+						<address>
+						Hohewartstr. 32	<br>
+						D-70469 Stuttgart <br>
 
-						Tel. 0049 - 7621 - 6 20 22 <br>
-						Fax. 0049 - 7621 - 6 20 80 <br>
+						Tel. 0049 - 7964 - 33 17 54 <br>
+						Fax. 0049 - 7664 - 33 17 55 <br>
 
-						Mail. powershop@web.de
+						Mail. info@frenzel.net
 						</address>						
 					</div>
 				</div>
@@ -109,7 +109,7 @@ app\config\AppAsset::register($this);
 				</div>
 				<div class="col-md-3">
 					<div class="footer-box">
-						<h4 class="fg-color-orange">PowerSop Sozialenetze</h4>
+						<h4 class="fg-color-orange">Sozialenetze</h4>
 						<ul>
 							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-facebook"></i></li>
 							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-google-plus"></i></li>
@@ -123,7 +123,7 @@ app\config\AppAsset::register($this);
 	<footer class="lastfooter">
 		<div class="container">
 			<div class="footer-box">
-				<p class="pull-left fg-color-white">&copy; PowerShop Weil <?php echo date('Y'); ?></p>
+				<p class="pull-left fg-color-white">Build by creative people on a happy base! ;) <?php echo date('Y'); ?></p>
 				<p class="pull-right fg-color-white">&copy; Frenzel GmbH <?php echo date('Y'); ?></p>
 			</div>
 		</div>

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fef9babbe5abe2455c53c48df4e33472",
+    "hash": "6c0d9d68d6465f0009a8afb890591fb8",
     "packages": [
         {
             "name": "anthonymartin/geo-location",
@@ -192,6 +192,55 @@
             "time": "2013-09-20 14:45:41"
         },
         {
+            "name": "philippfrenzel/yii2toolbarbutton",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/philippfrenzel/yii2toolbarbutton.git",
+                "reference": "b7490a3ac22fd5f79236159f56eff800ce77aee6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/philippfrenzel/yii2toolbarbutton/zipball/b7490a3ac22fd5f79236159f56eff800ce77aee6",
+                "reference": "b7490a3ac22fd5f79236159f56eff800ce77aee6",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "yii2toolbarbutton\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT license"
+            ],
+            "authors": [
+                {
+                    "name": "Philipp Frenzel",
+                    "email": "philipp@frenzel.net",
+                    "homepage": "http://www.frenzel.net/",
+                    "role": "Author Version Yii2"
+                },
+                {
+                    "name": "Paul Kinzett",
+                    "homepage": "http://kinzett.co.nz/",
+                    "role": "ToolbarJS Writer"
+                }
+            ],
+            "description": "Toolbar.js for Yii2",
+            "homepage": "http://www.frenzel.net/",
+            "keywords": [
+                "framework",
+                "yii2",
+                "yii2 jquery toolbar button"
+            ],
+            "time": "2013-09-25 06:15:25"
+        },
+        {
             "name": "philippfrenzel/yii2tooltipster",
             "version": "dev-master",
             "source": {
@@ -332,12 +381,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "accd948dada841919e3b769c494870fd1f86db34"
+                "reference": "873955a2c1990e2fff1c17ca49bcb7310c5848ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/accd948dada841919e3b769c494870fd1f86db34",
-                "reference": "accd948dada841919e3b769c494870fd1f86db34",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/873955a2c1990e2fff1c17ca49bcb7310c5848ed",
+                "reference": "873955a2c1990e2fff1c17ca49bcb7310c5848ed",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +426,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2013-09-23 07:12:02"
+            "time": "2013-09-25 07:52:29"
         },
         {
             "name": "phpspec/php-diff",
@@ -418,12 +467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "259fcb37a59cbd55fd3c8334c098d665975aea51"
+                "reference": "3572a624666d199e3d1fe4b9a9227542b3ab6a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/259fcb37a59cbd55fd3c8334c098d665975aea51",
-                "reference": "259fcb37a59cbd55fd3c8334c098d665975aea51",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3572a624666d199e3d1fe4b9a9227542b3ab6a91",
+                "reference": "3572a624666d199e3d1fe4b9a9227542b3ab6a91",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +554,7 @@
                 "framework",
                 "yii"
             ],
-            "time": "2013-09-24 00:38:54"
+            "time": "2013-09-25 01:50:08"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -604,7 +653,8 @@
         "philippfrenzel/yiiwymeditor": 20,
         "philippfrenzel/yii2elfinder": 20,
         "philippfrenzel/yii2tooltipster": 20,
-        "philippfrenzel/yii2imageslider": 20
+        "philippfrenzel/yii2imageslider": 20,
+        "philippfrenzel/yii2toolbarbutton": 20
     },
     "platform": {
         "php": ">=5.3.0"

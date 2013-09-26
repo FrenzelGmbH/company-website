@@ -6,7 +6,7 @@ use Yii2Imageslider\Yii2Imageslider;
 /**
  * @var yii\base\View $this
  */
-$this->title = 'Power-Shop The Original! Weil am Rhein, direkt im Ländereck Dutschland, Frankreich, Schweiz';
+$this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwicklung, Management Beratung';
 ?>
 <div class="site-wsp">
 
@@ -14,46 +14,13 @@ $this->title = 'Power-Shop The Original! Weil am Rhein, direkt im Ländereck Dut
 		<div class="col-lg-8">
 			<div class="bigspace">
 				<?php 
-					$item = array();
-					for($img=4;$img<=5;$img++){
-						$item[] = array('content'=>"<img src='images/".$img.".jpg' height='300px' />",'id'=>$img,'caption'=>'Die neuen Modelle 2014 sind da!');
+					for($img=1;$img<=3;$img++){
+						$item[] = array('content'=>"<img src='http://lorempixel.com/800/250/people'/>",'id'=>$img);
 					}
 
 					echo Carousel::widget(array(
 						'items'=> $item,
 					)); 
-				?>
-
-				<?php 
-					echo Yii2Imageslider::widget(array(
-						'id' => 'sp_slider',
-						'items'=> array(
-							array(
-								'caption'=>'8 50',
-								'content' => '<img style="height:90px;width:160px;" src="/powershopyii2/powershop/web/index.php?r=pages/page/connector&cmd=file&target=l1_bW9kZWxsZS8yMDE0LzE0LWhkLTEyMDAtY3VzdG9tLWJzLnBuZw" alt="">'
-							),
-							array(
-								'caption'=>'Longtail',
-								'content' => '<img style="height:90px;width:160px;" src="/powershopyii2/powershop/web/index.php?r=pages/page/connector&cmd=file&target=l1_bW9kZWxsZS8yMDE0LzE0LWhkLTg4My1yb2Fkc3Rlci1icy5wbmc" alt="">'
-							),
-							array(
-								'caption'=>'Blobber',
-								'content' => '<img style="height:90px;width:160px;" src="/powershopyii2/powershop/web/index.php?r=pages/page/connector&cmd=file&target=l1_bW9kZWxsZS8yMDE0LzE0LWhkLWJyZWFrb3V0LWJzLnBuZw" alt="">'
-							),
-							array(
-								'caption'=>'Chopper',
-								'content' => '<img style="height:90px;width:160px;" src="/powershopyii2/powershop/web/index.php?r=pages/page/connector&cmd=file&target=l1_bW9kZWxsZS8yMDE0LzE0LWhkLTg4My1yb2Fkc3Rlci1icy5wbmc" alt="">'
-							),
-							array(
-								'caption'=>'Six Seven',
-								'content' => '<img style="height:90px;width:160px;" src="/powershopyii2/powershop/web/index.php?r=pages/page/connector&cmd=file&target=l1_bW9kZWxsZS8yMDE0LzE0LWhkLWJyZWFrb3V0LWJzLnBuZw" alt="">'
-							)							
-						),
-						'clientOptions' => array(
-							'visible_items'=>3,
-							'circular' => 'yes',
-						),
-					));
 				?>
 
 				<div class="row">

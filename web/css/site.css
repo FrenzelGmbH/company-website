@@ -4,6 +4,18 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+.navbar-inverse{
+  background-color: #8B8878;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+  color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #CDCDC1;
+}
+
 .masthead{
   height: 106px;
   background-color: #ffffff;
@@ -14,12 +26,12 @@ body {
 }
 
 #wrapper{
-  background: url("../images/background.png") scroll no-repeat #000000;
   min-height: 600px;
 }
 
 .site-wsp{
   color: #ffffff;
+  background-color: #CDCDC1;
 }
 
 .cms{
@@ -38,7 +50,7 @@ body {
 	margin-top: 30px;
 	padding-top: 15px;
 	padding-bottom: 30px;
-  background-color: #181818;
+  background-color: #EEE8AA;
 }
 
 .footer-box{
@@ -69,7 +81,7 @@ body {
 }
 
 .fg-color-orange{
-  color: #FF6600;
+  color: #8B0000;
 }
 
 .jumbotron {
@@ -110,11 +122,11 @@ body {
 }
 
 .bg-color-orange{
-  background-color: #FF6600;
+  background-color: #8B8878;
 }
 
 .bg-color-orangepic{
-  background: url("../images/h_underlay.png") repeat-x scroll 0 0 #FF6600;
+  background-color: #8B0000;
 }
 
 .smallspace{

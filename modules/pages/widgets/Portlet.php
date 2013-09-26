@@ -6,6 +6,10 @@ use yii\helpers\Html;
 use yii\base\Widget;
 use yii\widgets\Block;
 
+use yii\jui\Draggable;
+
+use yii2toolbarbutton\yii2toolbarbutton;
+
 /**
  * Portlet is the base class for portlet widgets.
  *
@@ -27,6 +31,11 @@ class Portlet extends Block
 	 * @var string the tag name for the portlet container tag. Defaults to 'div'.
 	 */
 	public $tagName='div';
+	/**
+	 * @var array of admin actions
+	 */
+	public $adminActions = array();
+
 	/**
 	 * @var array the HTML attributes for the portlet container tag.
 	 */
@@ -64,16 +73,45 @@ class Portlet extends Block
 	 */
 	public function init()
 	{
+		if(Yii::$app->user->isAdmin){
+			Html::addCssClass($this->htmlOptions,'widgetadmin');			
+			Draggable::begin();
+		}
 		ob_start();
 		ob_implicit_flush(false);
-
+		
 		$this->htmlOptions['id']=$this->getId();
+
+
+
 		echo Html::beginTag($this->tagName,$this->htmlOptions)."\n";
+
+		if(Yii::$app->user->isAdmin){
+			$this->renderToolbar();
+		}
+
 		$this->renderDecoration();
 		echo "<div class=\"{$this->contentCssClass}\">\n";
 
 		$this->_beginTag=ob_get_contents();
+
 		ob_clean();
+		if(Yii::$app->user->isAdmin){
+			Draggable::end();
+		}		
+	}
+
+	/**
+	 * Renders the portlet admin toolbar
+	 */
+	public function renderToolbar(){
+		echo "<div class='widgettoolbar'><i class='icon icon-move handy'></i> ";
+		if(count($this->adminActions)>0){
+			echo yii2toolbarbutton::widget(array(
+				'items'=> $this->adminActions
+			));
+		}
+		echo "</div>";
 	}
 
 	/**

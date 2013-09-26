@@ -1,7 +1,7 @@
 <?php
 
 $config = array(
-	'id' => 'powershop',
+	'id' => 'Frenzel Gmbh',
 	'basePath' => dirname(__DIR__),
 	'modules'=>array(
     'pages' => array(

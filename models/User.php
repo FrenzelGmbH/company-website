@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use yii\web\Identity;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "tbl_user".
@@ -31,7 +31,7 @@ use yii\web\Identity;
  * @property User $parentUser
  * @property ChildUsers[] $users
  */
-class User extends \yii\db\ActiveRecord implements Identity
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
 		const ROLE_SYSADMIN = 0;
     const ROLE_ADMIN    = 1;

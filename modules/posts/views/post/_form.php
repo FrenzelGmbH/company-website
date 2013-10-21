@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 use app\modules\workflow\models\Workflow;
+use yiiwymeditor\yiiwymeditor;
 
 /**
  * @var yii\base\View $this
@@ -14,20 +15,32 @@ use app\modules\workflow\models\Workflow;
 
 <div class="post-form">
 
-	<?php $form = ActiveForm::begin(); ?>
+  <?php $form = ActiveForm::begin(); ?>
 
-		<?php echo $form->field($model, 'title')->textInput(array('maxlength' => 128)); ?>
+    <?= $form->field($model, 'title')->textInput(array('maxlength' => 128)); ?>
 
-		<?php echo $form->field($model, 'content')->textarea(array('rows' => 6)); ?>
+    <?= yiiwymeditor::widget(array(
+      'model'=>$model,
+      'attribute'=>'content',
+      'clientOptions'=>array(
+        'toolbar' => 'basic',
+        'height' => '200px',
+        'filebrowserBrowseUrl' => Html::url(array('/pages/page/filemanager')),
+        'filebrowserImageBrowseUrl' => Html::url(array('/pages/page/filemanager','mode'=>'image')),
+      ),
+      'inputOptions'=>array(
+        'size'=>'2',
+      )
+    ));?>
 
-		<?php echo $form->field($model,'status')->dropDownList(Workflow::getStatusOptions()); ?>
+    <?= $form->field($model,'status')->dropDownList(Workflow::getStatusOptions()); ?>
 
-		<?php echo $form->field($model, 'tags')->textarea(array('rows' => 6)); ?>
+    <?= $form->field($model, 'tags')->textInput(); ?>
 
-		<div class="form-group">
-			<?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', array('class' => 'btn btn-primary')); ?>
-		</div>
+    <div class="form-group">
+      <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', array('class' => 'btn btn-primary')); ?>
+    </div>
 
-	<?php ActiveForm::end(); ?>
+  <?php ActiveForm::end(); ?>
 
 </div>

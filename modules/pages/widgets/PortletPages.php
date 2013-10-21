@@ -18,7 +18,7 @@ class PortletPages extends Portlet
 	 */
 	public $titleCssClass='fg-color-white';
 
-	public $contentCssClass='fg-color-white';
+	public $contentCssClass='fg-color-black';
 
 	public $htmlOptions=array();
 

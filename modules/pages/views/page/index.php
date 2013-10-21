@@ -15,17 +15,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="module-wsp">
 
-	<h1><?php echo Html::encode($this->title); ?></h1>
+	<h1><?= Html::encode($this->title); ?></h1>
 
 	<?php //echo $this->render('_search', array('model' => $searchModel)); ?>
 
 	<hr>
 
 	<div>
-		<?php echo Html::a('Create Page', array('create'), array('class' => 'btn btn-danger')); ?>
+		<?= Html::a('Create Page', array('create'), array('class' => 'btn btn-danger')); ?>
 	</div>
 
-	<?php echo GridView::widget(array(
+	<?= GridView::widget(array(
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns' => array(

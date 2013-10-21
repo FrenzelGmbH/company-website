@@ -19,22 +19,27 @@ use yiiwymeditor\yiiwymeditor;
 	<?php $form = ActiveForm::begin(); ?>
 
 <div class="row">
+	<div class="col-lg-12">
+		<?= $form->field($model,'title')->textInput(array('size'=>80,'maxlength'=>128,'class'=>'form-control tipster','title'=>'Titel der Seite')); ?>
+		<?= $form->field($model,'name')->textInput(array('size'=>80,'maxlength'=>128)); ?>		
+	</div>
+</div>
+
+<div class="row">
 	<div class="col-lg-4">
-		<?php echo $form->field($model,'title')->textInput(array('size'=>80,'maxlength'=>128)); ?>
-		<?php echo $form->field($model,'name')->textInput(array('size'=>80,'maxlength'=>128)); ?>
-		<?php echo $form->field($model,'parent_pages_id')->dropDownList($model::getListOptions()); ?>
-		<?php echo $form->field($model,'tags')->textInput(array('size'=>50)); ?>
-		<?php echo $form->field($model,'status')->dropDownList(Workflow::getStatusOptions()); ?>
-		<?php echo $form->field($model, 'template')->textarea(array('rows' => 6)); ?>
-		<?php echo $form->field($model, 'description')->textarea(array('rows' => 6)); ?>
-		<?php echo $form->field($model, 'vars')->textarea(array('rows' => 6)); ?>
-		<?php echo $form->field($model, 'ord')->textInput(); ?>
-		<?php echo $form->field($model, 'special')->textInput(); ?>
-		<?php echo $form->field($model, 'date_associated')->textInput(); ?>
-		<?php echo $form->field($model, 'category')->textInput(array('maxlength' => 64)); ?>
+		<?= $form->field($model, 'parent_pages_id')->dropDownList($model::getListOptions()); ?>
+		<?= $form->field($model, 'description')->textarea(array('rows' => 2)); ?>
+		<?= $form->field($model, 'tags')->textInput(array('size'=>50)); ?>
+		<?= $form->field($model, 'status')->dropDownList(Workflow::getStatusOptions()); ?>
+		<?= $form->field($model, 'template')->textarea(array('rows' => 2)); ?>
+		<?= $form->field($model, 'vars')->textInput(); ?>
+		<?= $form->field($model, 'ord')->textInput(); ?>
+		<?= $form->field($model, 'special')->textInput(); ?>
+		<?= $form->field($model, 'date_associated')->textInput(array('readonly'=>true)); ?>
+		<?= $form->field($model, 'category')->textInput(array('maxlength' => 64)); ?>
 	</div>
 	<div class="col-lg-8">
-		<?php echo yiiwymeditor::widget(array(
+		<?= yiiwymeditor::widget(array(
 			'model'=>$model,
 			'attribute'=>'body',
 			'clientOptions'=>array(
@@ -51,7 +56,7 @@ use yiiwymeditor\yiiwymeditor;
 </div>
 		
 		<div class="form-group">
-			<?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', array('class' => 'btn btn-primary')); ?>
+			<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', array('class' => 'btn btn-primary')); ?>
 		</div>
 
 	<?php ActiveForm::end(); ?>

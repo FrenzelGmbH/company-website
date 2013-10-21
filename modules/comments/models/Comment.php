@@ -16,14 +16,11 @@
 
 namespace app\modules\comments\models;
 
-use Yii;
-use \yii\db\ActiveRecord;
-use \yii\helpers\Html;
+use \Yii;
+use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 use app\modules\workflow\models\Workflow;
-use app\models\Post;
-use app\models\Pages;
-use app\models\User;
 
 class Comment extends ActiveRecord
 {
@@ -43,13 +40,20 @@ class Comment extends ActiveRecord
         return array(
             array('content', 'string'),
             array('content, comment_table, comment_id', 'required'),
-			array('author_id, time_create, comment_table, comment_id', 'integer'),
+						array('author_id, time_create, comment_table, comment_id', 'integer'),
             array('status', 'string', 'max' => 255)
         );
     }
 
-	//the author
+  /**
+  * @param ActiveQuery $query
+  */
+  public static function active($query,$module=NULL)
+  {
+      $query->andWhere('(special <> -1 OR special IS NULL)');
+  }
 
+	//the author
 	public function getAuthor() {
 		return $this->hasOne('app\models\User', array('id' => 'author_id'));
 	}
@@ -57,12 +61,12 @@ class Comment extends ActiveRecord
 	//for each module we allow comments, we need to add a dynamic reference
 
 	public function getPost() {
-		return $this->hasOne('app\models\Post', array('id' => 'comment_id'));
-			//->where('t1.comment_table = '.Workflow::MODULE_BLOG); //,'comment_table'=>'tbl_post'
+		return $this->hasOne('app\modules\posts\models\Post', array('id' => 'comment_id'));
+								//->where('t1.comment_table = '.Workflow::MODULE_BLOG); //,'comment_table'=>'tbl_post'
 	}
 
 	public function getPage() {
-		return $this->hasOne('app\models\Pages', array('id' => 'comment_id'));
+		return $this->hasOne('app\modules\pages\models\Pages', array('id' => 'comment_id'));
 			//->where('t1.comment_table = '.Workflow::MODULE_CMS); //,'comment_table'=>'tbl_post'
 	}
 	
@@ -115,20 +119,23 @@ class Comment extends ActiveRecord
 	}
 
 	/**
-	 * @return integer the number of comments that are pending approval
+	 * get the current comment count
+	 * @param  [type] $module [description]
+	 * @param  [type] $id     [description]
+	 * @return [type]         [description]
 	 */
-	public static function getPendingCommentCount()
+	public static function getPendingCommentCount($module,$id)
 	{
-		return static::find()->where('status="'.Workflow::STATUS_PENDING.'"')->count();
+		return static::find()->where('status="'.Workflow::STATUS_PENDING.'" AND comment_table = '.$module.' AND comment_id = '.$id)->count();
 	}
 
 	/**
 	 * @param integer the maximum number of comments that should be returned
 	 * @return array the most recently added comments
 	 */
-	public static function findRecentComments($limit=10)
+	public static function findRecentComments($module,$id,$limit=10)
 	{
-		return static::find()->where('status="'.Workflow::STATUS_APPROVED.'"')
+		return static::find()->where('status="'.Workflow::STATUS_APPROVED.'" AND comment_table = '.$module.' AND comment_id = '.$id)
 					->orderBy('time_create DESC')
 					->limit($limit)
 					->with('post');
@@ -149,6 +156,17 @@ class Comment extends ActiveRecord
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * here we return the current number of comments for the passed over module and id
+	 * @param  integer $module [description]
+	 * @param  integer $id     [description]
+	 * @return integer         [description]
+	 */
+	public static function getAdapterForCommentCount($module,$id)
+	{
+		return static::find()->where('status="'.Workflow::STATUS_APPROVED.'" AND comment_table = '.$module.' AND comment_id = '.$id)->Count();
 	}
 
 }

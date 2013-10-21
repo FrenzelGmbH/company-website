@@ -15,19 +15,29 @@ class PortletPosts extends Portlet
 	/**
 	 * @var string the CSS class for the portlet title tag. Defaults to 'portlet-title'.
 	 */
-	public $titleCssClass='fg-color-white';
+	public $titleCssClass='fg-color-black';
 
-	public $contentCssClass='fg-color-white';
+	/**
+	 * @var string the CSS class for the portlet title tag. Defaults to 'portlet-content'.
+	 */
+	public $contentCssClass='fg-color-black';
 
 	public $htmlOptions=array();
 
 	public function init() {
+		if(isset($_GET['tag'])){
+			$this->title = "Posts <small>Tagged with <i>".Html::encode($_GET['tag'])."</i></small>";
+		}
 		parent::init();
 	}
 
 	protected function renderContent()
 	{
-		$query = Post::getAdapterForPosts($this->limit);
+		if(isset($_GET['tag'])){
+			$query = Post::getAdapterForPosts($this->limit,$_GET['tag']);
+		}
+		else
+			$query = Post::getAdapterForPosts($this->limit);
 
 		$dpPosts = new ActiveDataProvider(array(
 		      'query' => $query,
@@ -48,7 +58,7 @@ class PortletPosts extends Portlet
 		if($this->title!==null)
 		{
 			$this->title = Yii::t('app',$this->title);
-			echo "<div class='panel-heading'><h3 class=\"{$this->titleCssClass}\"><i class='icon-info'></i> {$this->title}</h3>\n</div>\n";
+			echo "<h2 class=\"{$this->titleCssClass}\"><i class='icon-info'></i> {$this->title}</h2>\n";
 		}
 	}
 }

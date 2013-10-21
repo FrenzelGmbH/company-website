@@ -13,25 +13,36 @@ use yii\grid\DataColumn;
 $this->title = 'Posts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php yii\widgets\Block::begin(array('id'=>'sidebar')); ?>
+
+	<?php 
+
+	$sideMenu = array();
+	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-arrow-left','label'=>Yii::t('app','Home'),'link'=>Html::url(array('/site/index')));
+	$sideMenu[] = array('decoration'=>'sticker sticker-color-green','icon'=>'icon-plus','label'=>Yii::t('app','New Post'),'link'=>Html::url(array('/posts/post/create')));
+
+	echo app\modules\posts\widgets\PortletSidemenu::widget(array(
+		'sideMenu'=>$sideMenu,
+		'enableAdmin'=>false,
+		'htmlOptions'=>array('class'=>'nostyler'),
+	)); ?>	 
+	
+<?php yii\widgets\Block::end(); ?>
+
 <div class="module-wsp">
 
-	<h1><?php echo Html::encode($this->title); ?></h1>
-
-	<?php echo $this->render('_search', array('model' => $searchModel)); ?>
+	<h1><?= Html::encode($this->title); ?></h1>
 
 	<hr>
 
-	<div>
-		<?php echo Html::a('Create Post', array('create'), array('class' => 'btn btn-danger')); ?>
-	</div>
-
-	<?php echo GridView::widget(array(
+	<?= GridView::widget(array(
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns' => array(
 			'id',
 			'title',
-			'content:ntext',
+			//'content:ntext',
 			'tags:ntext',
 			'status',
 			// 'author_id',

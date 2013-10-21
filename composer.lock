@@ -100,12 +100,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/philippfrenzel/yii2elfinder.git",
-                "reference": "da0f03cbbe000799bfc4a2308eaacf0cecc80d85"
+                "reference": "6ef213b85df6cfb5e9e5c6c6fc80178d84f5bd48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/philippfrenzel/yii2elfinder/zipball/da0f03cbbe000799bfc4a2308eaacf0cecc80d85",
-                "reference": "da0f03cbbe000799bfc4a2308eaacf0cecc80d85",
+                "url": "https://api.github.com/repos/philippfrenzel/yii2elfinder/zipball/6ef213b85df6cfb5e9e5c6c6fc80178d84f5bd48",
+                "reference": "6ef213b85df6cfb5e9e5c6c6fc80178d84f5bd48",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "yii",
                 "yii2 elfinder filemaneger"
             ],
-            "time": "2013-08-19 07:35:58"
+            "time": "2013-10-05 09:21:58"
         },
         {
             "name": "philippfrenzel/yii2imageslider",
@@ -381,12 +381,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "873955a2c1990e2fff1c17ca49bcb7310c5848ed"
+                "reference": "7c1d0f93deec981f213728f401fa50682159a46f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/873955a2c1990e2fff1c17ca49bcb7310c5848ed",
-                "reference": "873955a2c1990e2fff1c17ca49bcb7310c5848ed",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/7c1d0f93deec981f213728f401fa50682159a46f",
+                "reference": "7c1d0f93deec981f213728f401fa50682159a46f",
                 "shasum": ""
             },
             "require": {
@@ -426,7 +426,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2013-09-25 07:52:29"
+            "time": "2013-10-14 16:23:20"
         },
         {
             "name": "phpspec/php-diff",
@@ -467,12 +467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "b1d61dd031eb227961f578a81e86fc7c557b7f88"
+                "reference": "ecd5b7e5a3283a80a02524bbc81e42aaa6c71e98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b1d61dd031eb227961f578a81e86fc7c557b7f88",
-                "reference": "b1d61dd031eb227961f578a81e86fc7c557b7f88",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ecd5b7e5a3283a80a02524bbc81e42aaa6c71e98",
+                "reference": "ecd5b7e5a3283a80a02524bbc81e42aaa6c71e98",
                 "shasum": ""
             },
             "require": {
@@ -554,7 +554,7 @@
                 "framework",
                 "yii"
             ],
-            "time": "2013-09-26 01:20:58"
+            "time": "2013-10-06 01:56:06"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -562,12 +562,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "e3b5db6d0bd975425c6e6b5f2f6304aa75a4a50d"
+                "reference": "ad897ede0c6cc747fce802d5a1bc36b0806f0ebe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/e3b5db6d0bd975425c6e6b5f2f6304aa75a4a50d",
-                "reference": "e3b5db6d0bd975425c6e6b5f2f6304aa75a4a50d",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/ad897ede0c6cc747fce802d5a1bc36b0806f0ebe",
+                "reference": "ad897ede0c6cc747fce802d5a1bc36b0806f0ebe",
                 "shasum": ""
             },
             "require": {
@@ -576,7 +576,7 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "yii\\composer": ""
+                    "yii\\composer\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -598,7 +598,7 @@
                 "update",
                 "yii"
             ],
-            "time": "2013-08-14 10:53:12"
+            "time": "2013-10-06 16:14:30"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -606,12 +606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-jui.git",
-                "reference": "1669f20bc47caf3aafb923a6ac0341b9eebdad37"
+                "reference": "52e85bf15a9c3dbcebf8613aa0606b7e6a458b92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/1669f20bc47caf3aafb923a6ac0341b9eebdad37",
-                "reference": "1669f20bc47caf3aafb923a6ac0341b9eebdad37",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/52e85bf15a9c3dbcebf8613aa0606b7e6a458b92",
+                "reference": "52e85bf15a9c3dbcebf8613aa0606b7e6a458b92",
                 "shasum": ""
             },
             "require": {
@@ -620,7 +620,7 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "yii\\jui": ""
+                    "yii\\jui\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -633,7 +633,7 @@
                 "renderer",
                 "yii"
             ],
-            "time": "2013-08-25 21:46:13"
+            "time": "2013-10-06 16:14:30"
         }
     ],
     "packages-dev": [

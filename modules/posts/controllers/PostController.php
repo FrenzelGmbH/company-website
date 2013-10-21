@@ -13,6 +13,9 @@ use yii\web\HttpException;
  */
 class PostController extends DefaultController
 {
+
+	public $layout = "column2";
+
 	/**
 	 * Lists all Post models.
 	 * @return mixed

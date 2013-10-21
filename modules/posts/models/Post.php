@@ -7,6 +7,7 @@ use Yii;
 use app\models\User;
 use app\modules\workflow\models\Workflow;
 use app\modules\comments\models\Comment;
+use app\modules\tags\models\Tag;
 
 /**
  * This is the model class for table "tbl_post".
@@ -46,7 +47,7 @@ class Post extends \yii\db\ActiveRecord
 			array('status', 'in', 'range'=>array(Workflow::STATUS_DRAFT,Workflow::STATUS_PUBLISHED,Workflow::STATUS_ARCHIVED)),
 			array('title', 'string', 'max'=>128),
 			array('tags', 'match', 'pattern'=>'/^[\w\s,]+$/', 'message'=>'Tags can only contain word characters.'),
-			//array('tags', 'normalizeTags'), disable validation, as Tag module is currently not working
+			array('tags', 'normalizeTags'),
 
 			//array('title, status', 'safe', 'on'=>'search'),
 		);
@@ -163,7 +164,7 @@ class Post extends \yii\db\ActiveRecord
 	public function afterSave($insert)
 	{
 		parent::afterSave($insert);
-		//Tag::updateFrequency($this->_oldTags, $this->tags);
+		Tag::updateFrequency($this->_oldTags, $this->tags);
 	}
 
 	/**
@@ -186,9 +187,9 @@ class Post extends \yii\db\ActiveRecord
 	 * @return  query containing the correct sql for active data provider
 	 */
 	
-	public static function getAdapterForPosts($limit=5)
+	public static function getAdapterForPosts($limit=5,$tag='All')
 	{
-		return static::find()->where('status="'.Workflow::STATUS_PUBLISHED.'"')
+		return static::find()->where('status="'.Workflow::STATUS_PUBLISHED.'" AND tags LIKE "%'.$tag.'%"')
 					->orderBy('time_create DESC')
 					->limit($limit);
 	}

@@ -3,9 +3,11 @@
 namespace app\modules\workflow\models;
 
 use \Yii;
-use \yii\base\Model;
-use \yii\db\ActiveRecord;
-use \yii\helpers\ArrayHelper;
+use yii\base\Model;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+
+use \PHPMailer;
 
 class Workflow extends ActiveRecord
 {
@@ -80,17 +82,27 @@ class Workflow extends ActiveRecord
     const MODULE_HOLIDAY     = 7;
 
     public static $appmodules = array(
-        self::MODULE_TIMETABLE   => 'timetable',
+        self::MODULE_TIMETABLE   => 'timetrack/timetrack',
         self::MODULE_PRINTREPORT => 'printreport',
-        self::MODULE_CMS         => 'page',
+        self::MODULE_CMS         => 'pages/page',
         self::MODULE_BLOG        => 'post',
         self::MODULE_TASKS       => 'tasks/default',
         self::MODULE_REVISION    => 'revision/default',
-        self::MODULE_HOLIDAY     => 'holiday',
+        self::MODULE_HOLIDAY     => 'timetrack/timetrack',
+    );
+
+    public static $appinternals = array(
+        self::MODULE_TIMETABLE => array('table'=>'tbl_time_table','field'=>'category'),
+        self::MODULE_HOLIDAY => array('table'=>'tbl_time_table','field'=>'category'),
+        self::MODULE_TASKS => array('table'=>'tbl_task','field'=>'content'),
     );
 
     public static function getModuleOptions(){
         return self::$appmodules;
+    }
+
+    public static function getModuleInternals(){
+        return self::$appinternals;
     }
 
     /**
@@ -103,7 +115,7 @@ class Workflow extends ActiveRecord
         $options = self::getModuleOptions();
         if(!is_null($id))
             return isset($options[$id]) ? $options[$id] : '';
-        return isset($options[$this->wf_table]) ? $options[$this->wf_table] : '';
+        return 'Unknown';
     }
 
     /**
@@ -192,7 +204,40 @@ class Workflow extends ActiveRecord
 
     public static function getAdapterForUserWorkflow() {
         $userId = Yii::$app->user->identity->id;
-        return static::find()->where('(previous_user_id = '.$userId.' OR next_user_id = '.$userId.')');
+        return static::find()->where('(next_user_id = '.$userId.') AND (id IN (SELECT max(id) FROM tbl_workflow GROUP BY wf_table, wf_id))')
+            ->OrderBy('date_create DESC');
+        //return static::find()->where('(previous_user_id = '.$userId.' OR next_user_id = '.$userId.') AND (id IN (SELECT max(id) FROM tbl_workflow GROUP BY wf_table, wf_id))')
+    }
+
+    /**
+     * this function trys to return the related content for the module
+     * @return [type] [description]
+     */
+    public function getRelatedContent()
+    {
+        $allInternals = $this->getModuleInternals();
+
+        //return $allInternals[$this->wf_table]['field'];
+        
+        if($allInternals[$this->wf_table]['table']<>''){
+            $query = new \yii\db\Query;
+
+            // Define query
+            $query->select($allInternals[$this->wf_table]['field'])
+                ->from($allInternals[$this->wf_table]['table'])
+                ->where(array('id'=>$this->wf_id))
+                ->limit(1);
+
+            // Create a command. You can get the actual SQL using $command->sql
+            $command = $query->createCommand();
+            // Execute command
+            $rows = $command->queryOne();
+
+            return $rows[$allInternals[$this->wf_table]['field']];
+            //return $allInternals;
+        }else{
+            return 'no details available...';
+        }
     }
 
     /**
@@ -209,11 +254,15 @@ class Workflow extends ActiveRecord
     }
 
     /**
-    * will insert a record into a new workflow
-    *
-    * @param integer module table by const from workflow model
-    * @param integer the fk of the table refrenced by param one
-    */
+     * will insert a record into a new workflow
+     * @param integer $module  module table by const from workflow model
+     * @param integer $id      fk of the table refrenced by param one
+     * @param integer $status  new status for the workflow item
+     * @param integer $user_id the user id, the next workflow step is related to
+     * @param string $actions the allowed next actions for the workflow
+     *
+     * @return object $NWflow the new created workflow object
+     */
     public static function addRecordIntoWorkflow($module,$id,$status=self::STATUS_CREATED,$user_id=NULL,$actions=NULL){
         //grep the modules as array
         $options = self::getModuleOptions();
@@ -226,10 +275,10 @@ class Workflow extends ActiveRecord
         $NWflow->wf_id = $id;
         $NWflow->status_from = self::STATUS_CREATED;
         $NWflow->status_to = $status;        
-        $NWflow->actions_next = is_array($actions)?array_merge($actions,','):'';
+        $NWflow->actions_next = is_array($actions)?implode(',',$actions):'';
         if($NWflow->save())
-            return true;
-        return false;
+            return $NWflow;
+        return NULL;
     }
 
     /**
@@ -239,7 +288,8 @@ class Workflow extends ActiveRecord
     */
     public static function getAdapterForWorkflowLog($module,$id)
     {
-        return static::find()->where('wf_table = '.$module.' AND wf_id = '.$id);
+        return static::find()->where('wf_table = '.$module.' AND wf_id = '.$id)
+            ->OrderBy('date_create DESC');
     }
 
     /**
@@ -252,4 +302,55 @@ class Workflow extends ActiveRecord
         return static::find()->where('wf_table = '.$module.' AND wf_id = '.$id)->Count();
     }
 
+    /**
+     * will send an email for the workflow step
+     * @param  [type] $reason   what should the next user do
+     * @param  [type] $workflow the corresponding workflow item
+     * @param  [type] $link     the deep link to the website
+     * @return [type]           returns nothing if mail is send
+     */
+    public static function sendWorkflowMail($reason,$workflow,$link = NULL){
+        $mail = new PHPMailer;
+
+        $mail->IsSMTP();                                                // Set mailer to use SMTP
+        $mail->Host       = Yii::$app->params['mailconfig']['Host'];    // Specify main and backup server
+        $mail->SMTPAuth   = true;                                       // Enable SMTP authentication
+        $mail->Username   = Yii::$app->params['mailconfig']['Username'];// SMTP username
+        $mail->Password   = Yii::$app->params['mailconfig']['Password'];// SMTP password
+        //$mail->SMTPSecure = 'tls';                                        // Enable encryption, 'ssl' also accepted
+
+        $mail->From = 'myplace-info@lichtbruecken.at';
+        $mail->FromName = Yii::$app->params['mailerAlias'];
+        $mail->AddAddress($workflow->NextUser->email);  // Add a recipient
+        $mail->AddCc($workflow->PreviousUser->email); //Add carbon copy
+        $mail->AddAddress(Yii::$app->params['adminEmail'], 'Administrator');  // Add a recipient
+        
+        $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+        $mail->IsHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = $reason;        
+
+        $wfModul = Workflow::getModuleAsString($workflow->wf_table);
+
+        $mail->Body = <<<MSGBODY
+
+Sehr geehrteR BenutzerIn,<br>
+
+auf dem Modul <b>$wfModul</b> mit Bezug auf die Id: {$workflow->wf_id} wird eine neue Handlung gefordert:
+
+<p>$reason</p>
+
+Bitte folgen sie dem <a href="$link"> folgenden Link </a> und setzten Sie die dort gewuenschten Schritte.<br>
+
+Vielen Dank Ihr Informationsdienst.
+MSGBODY;
+
+        $mail->AltBody = htmlentities($mail->Body);
+
+        if(!$mail->Send()) {
+           echo 'Message could not be sent.';
+           echo 'Mailer Error: ' . $mail->ErrorInfo;
+           exit;
+        }
+    }
 }

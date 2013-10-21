@@ -27,7 +27,7 @@ use app\modules\workflow\models\Workflow;
 
 <div id="page" class="workflow-default-index">
 
-<h3><?php echo Yii::t('app','Workflow'); ?></h3>
+<h3><?= Yii::t('app','Workflow'); ?></h3>
 	
 <?php 
 	echo GridView::widget(array(

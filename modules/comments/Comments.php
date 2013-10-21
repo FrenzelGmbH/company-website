@@ -15,7 +15,7 @@ class Comments extends Module
 	/**
 	* @var public defaultRoute holding the controller name which will be called by default
 	*/
-	public $defaultRoute = 'default';
+	public $defaultRoute = 'comment';
 
 	public function init()
 	{

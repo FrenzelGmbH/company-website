@@ -14,16 +14,16 @@ use yii\widgets\ActiveForm;
 
 	<?php $form = ActiveForm::begin(array('method' => 'get')); ?>
 
-		<?php echo $form->field($model, 'id'); ?>
-		<?php echo $form->field($model, 'name'); ?>
+		<?= $form->field($model, 'id'); ?>
+		<?= $form->field($model, 'name'); ?>
 		<?php //echo $form->field($model, 'body'); ?>
 		<?php //echo $form->field($model, 'parent_pages_id'); ?>
-		<?php echo $form->field($model, 'ord'); ?>
+		<?= $form->field($model, 'ord'); ?>
 		<?php // echo $form->field($model, 'time_create'); ?>
 		<?php // echo $form->field($model, 'time_update'); ?>
 		<?php // echo $form->field($model, 'special'); ?>
 		<?php // echo $form->field($model, 'title'); ?>
-		<?php echo $form->field($model, 'template'); ?>
+		<?= $form->field($model, 'template'); ?>
 		<?php // echo $form->field($model, 'category'); ?>
 		<?php // echo $form->field($model, 'tags'); ?>
 		<?php // echo $form->field($model, 'description'); ?>
@@ -31,8 +31,8 @@ use yii\widgets\ActiveForm;
 		<?php // echo $form->field($model, 'vars'); ?>
 		<?php // echo $form->field($model, 'status'); ?>
 		<div class="form-group">
-			<?php echo Html::submitButton('Search', array('class' => 'btn btn-primary')); ?>
-			<?php echo Html::resetButton('Reset', array('class' => 'btn btn-default')); ?>
+			<?= Html::submitButton('Search', array('class' => 'btn btn-primary')); ?>
+			<?= Html::resetButton('Reset', array('class' => 'btn btn-default')); ?>
 		</div>
 
 	<?php ActiveForm::end(); ?>

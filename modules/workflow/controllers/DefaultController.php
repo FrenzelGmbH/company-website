@@ -14,7 +14,7 @@ class DefaultController extends Controller
 	/**
 	* @var string layout as default for the rendering
 	*/
-	public $layout='/column2_menu';
+	public $layout='column2';
 
 	/**
 	* @var object current record as model

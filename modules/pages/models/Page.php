@@ -2,7 +2,7 @@
 
 namespace app\modules\pages\models;
 
-use Yii;
+use \Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -65,7 +65,7 @@ class Page extends \yii\db\ActiveRecord
 			array('status', 'in', 'range'=>array(Workflow::STATUS_DRAFT,Workflow::STATUS_PUBLISHED,Workflow::STATUS_ARCHIVED)),
 			array('title, name', 'string', 'max'=>128),
 			array('parent_pages_id','integer'),
-			array('body, description','string'),
+			array('body, description, vars','string'),
 			array('date_associated','date'),
 			array('ord','integer'),
 			array('time_create, time_update, template','string'),
@@ -109,6 +109,14 @@ class Page extends \yii\db\ActiveRecord
       $query->andWhere('(special <> -1 OR special IS NULL)');
   }
 
+  /**
+   * returns the complete parent node of the selected page
+   * @return [type] [description]
+   */
+  public function getParent(){
+    return $this->hasOne('app\modules\pages\models\Page',array('id'=>'parent_pages_id'));
+  }
+
 	/**
 	* returns the number of child nodes
 	*/
@@ -146,7 +154,7 @@ class Page extends \yii\db\ActiveRecord
 	 */
 	public function getUrl()
 	{
-		return Yii::$app->controller->createUrl('pages/view', array(
+		return Yii::$app->controller->createUrl('/pages/page/onlineview', array(
 			'id'=>$this->id,
 			'title'=>$this->title,
 		));
@@ -167,7 +175,7 @@ class Page extends \yii\db\ActiveRecord
 	 */
 	public function getUrlDiff()
 	{
-		return Yii::$app->controller->createUrl('pages/diffview', array(
+		return Yii::$app->controller->createUrl('page/diffview', array(
 			'id'=>$this->id
 		));
 	}
@@ -179,7 +187,7 @@ class Page extends \yii\db\ActiveRecord
 	{
 		$links=array();
 		foreach(Tag::string2array($this->tags) as $tag)
-			$links[]=Html::a(Html::encode($tag), array('pages/index', 'tag'=>$tag), array('class'=>'label'));
+			$links[]=Html::a(Html::encode($tag), array('page/index', 'tag'=>$tag), array('class'=>'label'));
 		return $links;
 	}
 

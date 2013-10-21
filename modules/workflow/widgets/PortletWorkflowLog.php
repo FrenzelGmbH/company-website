@@ -18,6 +18,10 @@ class PortletWorkflowLog extends Portlet
 	 */
 	public $titleCssClass='panel-title';
 
+	public $enableAdmin = false;
+
+	public $htmlOptions = array('class'=>'panel panel-info');
+
 	public function init() {
 		parent::init();
 	}

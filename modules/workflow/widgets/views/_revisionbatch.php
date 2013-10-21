@@ -12,7 +12,7 @@ $('#$uniqueIdEDIT').on('click',function() {
 	var th=$(this),
 		id=th.attr('id').slice(0);		
 	$('#applicationModal').modal('show');
-	$('#applicationModal div.modal-header h2').html('You are going to show '+id);
+	$('#applicationModal div.modal-header h4').html('You are going to show '+id);
 	$('#applicationModal div.modal-body').load(th.attr('href'));
 	return false;
 });
@@ -21,7 +21,7 @@ $('#$uniqueIdCREATE').on('click',function() {
 	var th=$(this),
 		id=th.attr('id').slice(0);		
 	$('#applicationModal').modal('show');
-	$('#applicationModal div.modal-header h2').html('New Revision Log');
+	$('#applicationModal div.modal-header h4').html('New Revision Log');
 	$('#applicationModal div.modal-body').load(th.attr('href'));
 	return false;
 });

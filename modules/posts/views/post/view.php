@@ -14,14 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="module-wsp">
 
-	<h1><?php echo Html::encode($this->title); ?></h1>
+	<h1><?= Html::encode($this->title); ?></h1>
 
 	<div>
-		<?php echo Html::a('Update', array('update', 'id' => $model->id), array('class' => 'btn btn-danger')); ?>
-		<?php echo Html::a('Delete', array('delete', 'id' => $model->id), array('class' => 'btn btn-danger')); ?>
+		<?= Html::a('Update', array('update', 'id' => $model->id), array('class' => 'btn btn-danger')); ?>
+		<?= Html::a('Delete', array('delete', 'id' => $model->id), array('class' => 'btn btn-danger')); ?>
 	</div>
 
-	<?php echo DetailView::widget(array(
+	<?= DetailView::widget(array(
 		'model' => $model,
 		'attributes' => array(
 			'id',

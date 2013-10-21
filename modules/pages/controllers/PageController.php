@@ -2,17 +2,28 @@
 
 namespace app\modules\pages\controllers;
 
+use \Yii;
+
+use app\models\User;
+
 use app\modules\pages\models\Page;
 use app\modules\pages\models\PageForm;
+
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\HttpException;
+use yii\base\HttpException;
+use yii\web\Repsonse;
+
+use yii\helpers\Json;
+use yii\helpers\StringHelper;
 
 /**
  * PageController implements the CRUD actions for Page model.
  */
 class PageController extends Controller
 {
+
+	public $_model = NULL;
 
 	public $layout = "column1";
 
@@ -21,12 +32,17 @@ class PageController extends Controller
 			'AccessControl' => array(
 				'class' => '\yii\web\AccessControl',
 				'rules' => array(
-					/*array(
+					array(
 						'allow'=>true, 
 						'roles'=>array('@'), // allow authenticated users to access all actions
-					),*/
+					),
 					array(
-						'allow'=>true
+						'allow'=>true,
+						'actions' => array('onlineview'),
+						'roles'=>array('?'),
+					),
+					array(
+						'allow'=>false
 					),
 				)
 			)
@@ -45,21 +61,21 @@ class PageController extends Controller
 				'clientOptions'=>array(
 					'locale' => '',	
 					'roots'  => array(
-				        array(
-				        	'rootAlias' => 'CMS Bilder',
-				            'driver' => 'LocalFileSystem',
-				            'path'   => dirname(__DIR__).'/../../web/filemanager/',
-				            'URL'    => '',				            
-				            'mimeDetect' => 'internal',
-				            'dotFiles' => false,
-				            'uploadAllow' => array('image'),
-							'accessControl' => 'access',
-							'perms'=>array(
-								 '/^$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
-								 '/^gallery\/pictures$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
-							)
-				        )
-				    ) 	
+			        array(
+			        	  'rootAlias' => 'CMS Bilder',
+			            'driver' => 'LocalFileSystem',
+			            'path'   => dirname(__DIR__).'/../../../web/img/cms/',
+			            'URL'    => '',				            
+			            'mimeDetect' => 'internal',
+			            'dotFiles' => false,
+			            'uploadAllow' => array('image'),
+			            'accessControl' => 'access',
+									'perms'=>array(
+										 '/^$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
+										 '/^gallery\/pictures$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
+									)
+			      )
+				  ) 	
 				)
 			)
 		);
@@ -123,17 +139,21 @@ class PageController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 * @return mixed
 	 */
-	public function actionCreate()
+	public function actionCreate($id = NULL)
 	{
-		$model = new Page;
+		$this->layout='column1';
+
+		$model=new Page();
+		if(!is_null($id))
+			$model->parent_pages_id = $id;
 
 		if ($model->load($_POST) && $model->save()) {
-			return $this->redirect(array('view', 'id' => $model->id));
-		} else {
-			return $this->render('create', array(
-				'model' => $model,
-			));
+			return $this->redirect(array('/pages/page/view','id'=>$model->id));
 		}
+
+		return $this->render('create',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -147,7 +167,7 @@ class PageController extends Controller
 		$model = $this->findModel($id);
 
 		if ($model->load($_POST) && $model->save()) {
-			return $this->redirect(array('view', 'id' => $model->id));
+			return $this->redirect(array('onlineview', 'id' => $model->id));
 		} else {
 			return $this->render('update', array(
 				'model' => $model,
@@ -181,5 +201,73 @@ class PageController extends Controller
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');
 		}
+	}
+
+	/**
+	 * Returns the parent data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 */
+	public function findParentModel($id='')
+	{
+		if($this->_model===null)
+		{
+			if(!empty($id))
+			{
+				$tmpModel = $this->findModel($id);
+				$this->_model=Page::find($tmpModel->parent_pages_id);				
+			}
+			if($this->_model===null)
+				throw new \yii\web\HttpException(404,'The requested page does not exist.');
+		}
+		return $this->_model;
+	}
+
+	/**
+	 * Shows the diff of the current cms page compared to the version before
+	 * @param  integer $id of the old page
+	 * @return view the diff view
+	 */
+	public function actionDiffview($id){
+		//changing layout
+		$this->layout = 'column2';
+		
+		$model = $this->findParentModel($id);
+		$compareModel = Page::find($id);
+
+		$difftext = StringHelper::diff($compareModel->body,$model->body);
+
+		return $this->render('view_diff',array(
+			'difftext' => $difftext,
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * jumps to the parent page of the current cms page
+	 * @param  integer $id of the old page
+	 * @return view the diff view
+	 */
+	public function actionViewparent($id){
+		$model=$this->findParentModel($id);
+		return $this->render('view',array(
+			'model'=>$model,		
+		));
+	}
+
+	/**
+	 * creates the JSON for the dhtmlx tree object
+	 * @param  integer $id     The id of the current id
+	 * @param  integer $rootId The id of the shown root node
+	 * @return JSON         Returns a json array, that can be parsed by dhtmlx tree component
+	 */
+	public function actionJsontreeview($id=NULL,$rootId=NULL)
+	{
+		$data = array();
+		if(!is_NULL($rootId) AND is_null($id))
+			$data = Page::rootTreeAsArray($rootId);
+		else
+			$data = Page::nodeChildren($id,true);
+		echo Yii::$app->response->sendContentAsFile(Json::encode($data),'tree.json','application/json');
+		exit;
 	}
 }

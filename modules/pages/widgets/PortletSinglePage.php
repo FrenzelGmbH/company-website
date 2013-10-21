@@ -37,12 +37,12 @@ class PortletSinglePage extends Portlet
 		if(!is_null($this->_model)){
 			$this->title = $this->_model->title;
 			$this->adminActions[] = array(
-					'action'=>Html::url(array('/pages/page/view','id'=>$this->_model->id)),
-					'content'=>"<i class='icon icon-eye-open icon-2x tipster' title='anzeigen'> </i>"
+					'action'=>Html::url(array('/pages/page/onlineview','id'=>$this->_model->id)),
+					'content'=>"<i class='icon icon-eye-open icon-1x tipster' title='anzeigen'> </i>"
 			);
 			$this->adminActions[] = array(
 					'action'=>Html::url(array('/pages/page/update','id'=>$this->_model->id)),
-					'content'=>"<i class='icon icon-pencil icon-2x tipster' title='bearbeiten'> </i>"
+					'content'=>"<i class='icon icon-pencil icon-1x tipster' title='bearbeiten'> </i>"
 			);
 		}
 		parent::init();

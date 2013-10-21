@@ -8,6 +8,6 @@ $this->params['breadcrumbs']=array(
 );
 ?>
 
-<h1>Update Comment #<?php echo $model->id; ?></h1>
+<h1>Update Comment #<?= $model->id; ?></h1>
 
-<?php echo $this->context->renderPartial('_form', array('model'=>$model)); ?>
+<?= $this->context->renderPartial('_form', array('model'=>$model)); ?>

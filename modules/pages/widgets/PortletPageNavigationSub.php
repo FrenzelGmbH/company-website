@@ -27,7 +27,7 @@ class PortletPageNavigationSub extends Portlet
 	 */
 	public $titleCssClass='fg-color-white bg-color-orangepic smallspace';
 
-	public $contentCssClass='fg-color-white';
+	public $contentCssClass;
 
 	public $htmlOptions=array();
 
@@ -42,7 +42,7 @@ class PortletPageNavigationSub extends Portlet
 		$dpSubmenu = new ActiveDataProvider(array(
 		      'query' => $query,
 		      'pagination' => array(
-		          'pageSize' => 10,
+		          'pageSize' => 100,
 		      ),
 	  	));
 		//here we don't return the view, here we just echo it!

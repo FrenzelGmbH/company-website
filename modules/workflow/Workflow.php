@@ -8,7 +8,7 @@ class Workflow extends \yii\base\Module
 	/**
 	* @var public defaultRoute holding the controller name which will be called by default
 	*/
-	public $defaultRoute = 'default';
+	public $defaultRoute = 'workflow';
 
 	/**
 	* @var public $controllerNamespace holing the namespace of the controller

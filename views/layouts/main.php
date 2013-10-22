@@ -76,9 +76,6 @@ app\config\AppAsset::register($this);
 	?>
 
 	<div id="wrapper" class="container">
-		<?php echo Breadcrumbs::widget(array(
-			'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : array(),
-		)); ?>
 		<?php echo $content; ?>
 	</div>
 

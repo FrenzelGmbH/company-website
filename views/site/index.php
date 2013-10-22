@@ -8,7 +8,7 @@ use Yii2Imageslider\Yii2Imageslider;
  */
 $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwicklung, Management Beratung';
 ?>
-<div class="site-wsp">
+<div class="nostyler">
 
 	<div class="row">
 		<div class="col-lg-8">

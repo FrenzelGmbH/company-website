@@ -5,6 +5,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 
+use Yii2Tooltipster\Yii2Tooltipster;
+use \yii\bootstrap\Modal;
+
 /**
  * @var $this \yii\base\View
  * @var $content string
@@ -22,6 +25,20 @@ app\config\AppAsset::register($this);
 	<?php $this->head(); ?>
 </head>
 <body>
+
+<?= Yii2Tooltipster::widget(array('options'=>array('class'=>'.tipster'))); ?>
+
+<?php 
+	Modal::begin(array(
+	  'id'=>'applicationModal',
+	  'header' => '<h4><i class="icon-meter-medium"></i>Loading</h4>',
+	  'options' => array(
+	  		'width'=>'600px',
+	  ),
+	));
+	echo 'pls. wait one moment...';
+	Modal::end();
+?>
 
 <div class="masthead">
 	<div class="container">

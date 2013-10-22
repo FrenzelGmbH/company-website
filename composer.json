@@ -26,7 +26,8 @@
     "philippfrenzel/yii2elfinder": "dev-master",
     "philippfrenzel/yii2tooltipster": "dev-master",
     "philippfrenzel/yii2imageslider": "dev-master",
-    "philippfrenzel/yii2toolbarbutton": "dev-master"
+    "philippfrenzel/yii2toolbarbutton": "dev-master",
+    "philippfrenzel/yiijquerytoc": "dev-master"
 	},
 	"scripts": {
 		"post-create-project-cmd": [

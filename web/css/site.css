@@ -148,3 +148,35 @@ a.desc:after { content: /*"\e114"*/"\e152"; }
   line-height: 1.42;
   border-radius: 37px;
 }
+
+.navbar-inverse{
+  background-color: #666666;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+  color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #CDCDC1;
+}
+
+.masthead{
+  height: 106px;
+  background-color: #ffffff;
+}
+
+.opacity {   
+    opacity: 0.5;       /* modern browser */  
+    -moz-opacity: 0.5;  /* older Mozilla browser */  
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE8 in Standard Compliant Mode */  
+    filter:alpha(opacity=50); /* IE5.x -7.0 */  
+}
+
+.opacity-light {   
+    opacity: 0.8;       /* modern browser */  
+    -moz-opacity: 0.8;  /* older Mozilla browser */  
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /* IE8 in Standard Compliant Mode */  
+    filter:alpha(opacity=80); /* IE5.x -7.0 */  
+}
+

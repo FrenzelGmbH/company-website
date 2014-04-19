@@ -80,7 +80,7 @@ Icon::map($this);
 			'brandLabel' => Yii::t('app','Frenzel GmbH'),
 			'brandUrl' => Yii::$app->homeUrl,
 			'options' => [
-				'class' => 'navbar-default',
+				'class' => 'navbar-inverse',
 			],
 		]);		
 

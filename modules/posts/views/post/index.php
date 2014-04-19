@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
             return Html::tag('div',$model->category->name);
         },
         'filterType' => GridView::FILTER_SELECT2,
-        'filter'=>ArrayHelper::merge('0'=>'none',\app\modules\categories\models\Categories::pdCategories()), 
+        'filter'=>ArrayHelper::merge(['0'=>'none'],\app\modules\categories\models\Categories::pdCategories()), 
         'filterWidgetOptions'=>[
             'pluginOptions' => ['allowClear' => true],
         ],

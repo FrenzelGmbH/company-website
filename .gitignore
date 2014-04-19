@@ -7,6 +7,5 @@ config/web-test.php
 
 web/assets/*
 runtime/*
-config/web-test.php
 
 config/web-test.php

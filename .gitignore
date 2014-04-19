@@ -1,0 +1,9 @@
+#ignore vendor
+vendor/*
+
+composer.lock
+
+config/web-test.php
+
+web/assets/*
+runtime/*

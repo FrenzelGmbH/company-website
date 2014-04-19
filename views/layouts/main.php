@@ -62,12 +62,14 @@ Icon::map($this);
 
 
 	<?php
-		$MenuItems = NULL;
+		$menuItems = array();
+    $menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));
 
 		$rootNodes = app\modules\pages\models\Page::getRootNodes();
-		foreach($rootNodes AS $Node)
-			$MenuItems[] = array('label'=>'<i class="icon-book"></i> '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id));
-		
+		foreach($rootNodes AS $Node){
+			if($Node->title!='')
+        $menuItems[] = ['label'=>Icon::show('book', ['class'=>'fa'], Icon::FA).' '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id)];
+		}
 		//menu items visible for administrator
 		if(!Yii::$app->user->isGuest){
 			$subMenuAdmin[] = ['label'=>Icon::show('folder-open', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Paper Runner'),'url' => ['/dms/dmpaper/index']];
@@ -78,7 +80,7 @@ Icon::map($this);
 			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Vendors'), 'url'=>['/parties/party/index','type'=>'Vendors']];
 			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Articles'), 'url'=>['/article/article/index','type'=>'Article']];
       $subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Purchase Requests'), 'url'=>['/purchase/purchase-order/index']];
-			$MenuItems = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Administration'), 'url' => '','items' => $subMenuAdmin];
+			$menuItems[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Administration'), 'url' => '','items' => $subMenuAdmin];
 		};
 
 		NavBar::begin([
@@ -119,13 +121,7 @@ Icon::map($this);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'encodeLabels' => false,
-			'items' => [
-				['label' => Icon::show('home', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Home'), 'url' => ['/site/index']],
-				['label' => Icon::show('sign-in', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Login'), 'url' => ['/user/security/login'], 'visible' => Yii::$app->user->isGuest],
-				['label' => Icon::show('pencil', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Registration'), 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
-				is_array($MenuItems)?$MenuItems:'',
-        ['label' => Icon::show('sign-out', ['class'=>'fa'], Icon::FA) . ' ' .Yii::t('app','Logout'), 'url' => ['/user/security/logout'], 'visible' => !Yii::$app->user->isGuest, 'linkOptions' => ['data-method' => 'post']],				
-			],
+			'items' => $menuItems
 		]);		
 		NavBar::end();
 	?>

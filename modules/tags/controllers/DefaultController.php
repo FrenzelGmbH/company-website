@@ -28,8 +28,6 @@ class DefaultController extends AppController
    */
   public function actionJsonlist($search = NULL)
   {
-    header('Content-type: application/json');
-
     $query = new Query;
     if(!is_Null($search))
     {
@@ -43,6 +41,7 @@ class DefaultController extends AppController
       $clean['results'] = array_values($rows);
     }
     $clean['results'][] = ['id'=>$search,'text'=>$search];
+    header('Content-type: application/json');
     echo Json::encode($clean);
     exit();
   }

@@ -91,6 +91,9 @@ $config = [
             ]
           ]
         ],
+        'user'=>[
+          'identityClass'=>'app\modules\app\components\User'
+        ],
         'authManager' => [
           'class' => 'app\modules\app\components\User',
         ],

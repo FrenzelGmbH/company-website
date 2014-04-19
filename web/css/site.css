@@ -25,6 +25,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border-radius: 14px 14px 14px 14px;
 }
 
+.carousel-caption{
+  background-color: #454545;
+}
+
 .tab-content{
   background-color: #FFFFFF;
   padding: 5px 5px 5px 5px;

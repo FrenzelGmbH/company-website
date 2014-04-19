@@ -27,9 +27,11 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
               'caption' => '<h4>Planlogiq</h4><p>Dezentrale Planungslösung für KMU!</p>'
           );
 
-          for($img=1;$img<=2;$img++){
-            $item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);
-          }
+          $item[] = array(
+              'content'=>"<img src='img/sample_blog.png'/>",
+              'id'=>$img,
+              'caption' => '<h4>SBLOG</h4><p>Smart Blog Lösung - indiviual!</p>'
+          );
 
           echo Carousel::widget(array(
             'items'=> $item,

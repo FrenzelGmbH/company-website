@@ -13,7 +13,7 @@ class AppController extends Controller
    * [$layout description]
    * @var string
    */
-  public $layout = '/column2_blog';
+  public $layout = '/column2';
 
   /**
    * $adminlayout for the modules
@@ -25,7 +25,7 @@ class AppController extends Controller
    * [$mainlayout description]
    * @var string
    */
-  CONST mainlayout = '/main_blog';
+  CONST mainlayout = '/main';
 
   /**
    * [init description]

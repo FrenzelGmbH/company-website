@@ -14,6 +14,7 @@
         "yiisoft/yii2-jui": "*",
         "phpexcel/phpexcel":"*",
         "phpword/phpword":"*",
+        "frenzelgmbh/golfteamplanner": "dev-master",
         "philippfrenzel/yii2wikiparser": "dev-master",
         "philippfrenzel/yiidhtmlx": "dev-master",
         "philippfrenzel/yiiwymeditor": "dev-master",

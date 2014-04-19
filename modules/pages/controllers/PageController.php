@@ -214,7 +214,7 @@ class PageController extends AppController
 			if(!empty($id))
 			{
 				$tmpModel = $this->findModel($id);
-				$this->_model=Page::find($tmpModel->parent_pages_id);				
+				$this->_model=Page::findOne($tmpModel->parent_pages_id);				
 			}
 			if($this->_model===null)
 				throw new \yii\web\HttpException(404,'The requested page does not exist.');

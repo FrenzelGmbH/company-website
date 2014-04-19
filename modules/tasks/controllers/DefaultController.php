@@ -2,11 +2,14 @@
 
 namespace app\modules\tasks\controllers;
 
-use \Yii;
+use Yii;
+use app\modules\app\controllers\AppController;
+
 use yii\db\Query;
-use yii\web\Controller;
+use yii\filters\VerbFilter;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\Json;
 
 use yii\data\Sort;
@@ -15,20 +18,21 @@ use yii\data\ActiveDataProvider;
 use app\modules\workflow\models\Workflow;
 use app\modules\tasks\models\Task;
 
-class DefaultController extends Controller
+class DefaultController extends AppController
 {
-	/**
-	* @var string layout as default for the rendering
-	*/
-	public $layout='column3';
-
 	//container for the current model
 	private $_model = NULL;
 
 	public function behaviors() {
 		return array(
+			'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+          'delete' => ['post'],
+        ],
+      ],
 			'AccessControl' => array(
-				'class' => '\yii\web\AccessControl',
+				'class' => '\yii\filters\AccessControl',
 				'rules' => array(
 					array(
 						'allow'=>true, 
@@ -42,6 +46,10 @@ class DefaultController extends Controller
 		);
 	}
 
+	/**
+	 * [actionIndex description]
+	 * @return [type] [description]
+	 */
 	public function actionIndex()
 	{
 		$query= new Query();
@@ -72,13 +80,24 @@ class DefaultController extends Controller
 
 	}
 
+	/**
+	 * [actionView description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
 	public function actionView($id){
-		$model = $this->loadModel($id);
+		$model = $this->findModel($id);
 		return $this->render('_form',array(
 			'model'=>$model,
 		));
 	}
 
+	/**
+	 * [actionViewwindow description]
+	 * @param  [type] $id     [description]
+	 * @param  [type] $module [description]
+	 * @return [type]         [description]
+	 */
 	public function actionViewwindow($id,$module)
 	{
 		echo $this->renderPartial('windows/view',array(
@@ -87,54 +106,81 @@ class DefaultController extends Controller
 		));
 	}
 
+	/**
+	 * [actionUpdate description]
+	 * @param  integer $id [description]
+	 * @return [type]     [description]
+	 */
 	public function actionUpdate($id)
 	{
-	    $model = $this->loadModel($id);	    
+    $model = $this->findModel($id);
 
-	    if ($model->load($_POST)) {
-	        if($model->validate()) {
-	        	if ($model->save()) {
-					return $this->redirect(array('index'));
-				}else{
-	            	throw new \yii\web\HttpException(404,'The requested page does not exist.');
-	            }
-	        }
-	    }
-
-	    return $this->render('_form', array(
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$query = Task::getAdapterForTasksLog($model->task_table, $model->task_id);
+			$dpTasks = new ActiveDataProvider(array(
+			  'query' => $query,
+		  ));
+			return $this->renderAjax('@app/modules/tasks/widgets/views/_tasks_nonepjax',[
+				'dpTasks' 	 => $dpTasks,
+				'module'     => $model->task_table,
+				'id'         => $model->task_id
+			]);
+		} 
+		else {
+			$myForm = '_form_create';
+			if (!\Yii::$app->request->isAjax) {
+				$myForm = '_form';
+			}
+			return $this->renderAjax($myForm, array(
 	        'model' => $model,
 	    ));
+	  }
 	}
 
-	public function actionCreate()
+	/**
+	 * [actionCreate description]
+	 * @param  [type] $id     [description]
+	 * @param  [type] $module [description]
+	 * @return [type]         [description]
+	 */
+	public function actionCreate($id=NULL,$module=NULL)
 	{
-	    $model = new Task;	    
+    $model = new Task;	    
 
-	    if ($model->load($_POST)) {
-	        if($model->validate()) {
-	        	if ($model->save()) {
-					return $this->redirect(array('index'));
-				}else{
-	            	throw new \yii\web\HttpException(404,'The requested page does not exist.');
-	            }
-	        }
-	    }
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$query = Task::getAdapterForTasksLog($model->task_table, $model->task_id);
+			$dpTasks = new ActiveDataProvider(array(
+			  'query' => $query,
+		  ));
+			return $this->renderPartial('@app/modules/tasks/widgets/views/_tasks_nonepjax',[
+				'dpTasks' 	 => $dpTasks,
+				'module'     =>$model->task_table,
+				'id'         =>$model->task_id
+			]);
+		} else {
+			$model->task_id = $id;
+			$model->task_table = $module;
+			$model->creator_id = Yii::$app->user->id;
 
-	    $model->isNewRecord = true;
-	    return $this->render('_form', array(
-	        'model' => $model,
-	    ));
+			return $this->renderAjax('_form_create', array(
+				//'showform' => '_form_create',
+				'model' => $model,
+			));
+		}
 	}
 
-	public function actionCreatewindow($id,$module){		
+	/**
+	 * [actionCreatewindow description]
+	 * @param  [type] $id     [description]
+	 * @param  [type] $module [description]
+	 * @return [type]         [description]
+	 */
+	public function actionCreatewindow($id=NULL,$module=NULL){		
 		//define the request target		
-		$requestUrl = Html::url(array('default/createwindow','id'=>$id,'module'=>$module));
+		$requestUrl = Url::to(array('default/createwindow','id'=>$id,'module'=>$module));
 		
 		$model=new Task();
-		$model->task_id = $id;
-		$model->task_table = $module;
-		$model->creator_id = Yii::$app->user->id;
-		if ($model->load($_POST)) {
+		if ($model->load(Yii::$app->request->post())) {
 			if($model->save()){
 				$myCounter = Task::getAdapterForTaskLogCount($module,$id);
 				header('Content-type: application/json');
@@ -147,28 +193,50 @@ class DefaultController extends Controller
 			}
 		}
 
-		$this->layout = '/column1';
-		echo $this->renderPartial('windows/update',array(
+		$this->layout = '/main';
+		
+		$model->task_id = $id;
+		$model->task_table = $module;
+		$model->creator_id = Yii::$app->user->id;
+		
+		return $this->renderPartial('windows/update',array(
 			'model'=>$model,
 			'requestUrl' => $requestUrl,
 		));
 	}
 
 	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
+	 * Finds the Comment model based on its primary key value.
+	 * If the model is not found, a 404 HTTP exception will be thrown.
+	 * @param integer $id
+	 * @return Comment the loaded model
+	 * @throws HttpException if the model cannot be found
 	 */
-	public function loadModel($id='')
+	protected function findModel($id)
 	{
-		if($this->_model===null)
-		{
-			if(!empty($id))
-			{
-				$this->_model=Task::find($id);				
-			}
-			if($this->_model===null)
-				throw new \yii\web\HttpException(404,'The requested page does not exist.');
+		if (($model = Task::findOne($id)) !== null) {
+			return $model;
+		} else {
+			throw new HttpException(404, 'The requested page does not exist.');
 		}
-		return $this->_model;
+	}
+
+	/**
+	 * Deletes an existing Comment model.
+	 * If deletion is successful, the browser will be redirected to the 'index' page.
+	 * @param integer $id
+	 * @return mixed
+	 */
+	public function actionDelete($id)
+	{
+		Workflow::deleteAll(['wf_table'=>Workflow::MODULE_TASKS, 'wf_id'=>$id]);
+		$this->findModel($id)->delete();
+		if (\Yii::$app->request->isAjax) {
+					header('Content-type: application/json');
+					echo Json::encode(['status'=>'DONE']);
+					exit();
+		}else{
+			return $this->redirect(['index']);
+		}
 	}
 }

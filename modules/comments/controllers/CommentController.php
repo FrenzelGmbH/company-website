@@ -2,18 +2,22 @@
 
 namespace app\modules\comments\controllers;
 
+use Yii;
+
 use app\modules\comments\models\Comment;
 use app\modules\comments\models\CommentSearch;
 
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use app\modules\app\controllers\AppController;
 use yii\web\HttpException;
-use yii\web\VerbFilter;
+use yii\filters\VerbFilter;
+
+use yii\helpers\Json;
 
 /**
  * CommentController implements the CRUD actions for Comment model.
  */
-class CommentController extends Controller
+class CommentController extends AppController
 {
 	public function behaviors()
 	{
@@ -63,7 +67,7 @@ class CommentController extends Controller
 	{
 		$model = new Comment;
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('view', 'id' => $model->id));
 		} else {
 			return $this->render('create', array(
@@ -82,7 +86,7 @@ class CommentController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('view', 'id' => $model->id));
 		} else {
 			return $this->render('update', array(
@@ -100,7 +104,13 @@ class CommentController extends Controller
 	public function actionDelete($id)
 	{
 		$this->findModel($id)->delete();
-		return $this->redirect(array('index'));
+		if (\Yii::$app->request->isAjax) {
+					header('Content-type: application/json');
+					echo Json::encode(['status'=>'DONE']);
+					exit();
+		}else{
+			return $this->redirect(['index']);
+		}
 	}
 
 	/**
@@ -112,7 +122,7 @@ class CommentController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if (($model = Comment::find($id)) !== null) {
+		if (($model = Comment::findOne($id)) !== null) {
 			return $model;
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');

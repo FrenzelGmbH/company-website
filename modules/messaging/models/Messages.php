@@ -36,8 +36,8 @@ class Messages extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['sender_id, reciever_id', 'integer'],
-			['body, deleted_by', 'string'],
+			[['sender_id', 'reciever_id'], 'integer'],
+			[['body', 'deleted_by'], 'string'],
 			['is_read', 'boolean'],
 			['date_create', 'required'],
 			['date_create', 'safe'],

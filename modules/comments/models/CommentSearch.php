@@ -22,8 +22,8 @@ class CommentSearch extends Model
 	public function rules()
 	{
 		return array(
-			array('id, author_id, time_create, comment_table, comment_id', 'integer'),
-			array('content, status', 'safe'),
+			array(['id', 'author_id', 'time_create', 'comment_table', 'comment_id'], 'integer'),
+			array(['content', 'status'], 'safe'),
 		);
 	}
 

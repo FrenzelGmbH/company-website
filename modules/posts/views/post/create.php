@@ -1,22 +1,40 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Block;
 
 /**
- * @var yii\base\View $this
+ * @var yii\web\View $this
  * @var app\modules\posts\models\Post $model
  */
 
 $this->title = 'Create Post';
-$this->params['breadcrumbs'][] = array('label' => 'Posts', 'url' => array('index'));
+$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="module-wsp">
 
-	<h1><?= Html::encode($this->title); ?></h1>
+<div class="workbench">
 
-	<?= $this->render('_form', array(
+<?php Block::begin(array('id'=>'sidebar')); ?>
+
+  <?php 
+
+  $sideMenu = array();
+  $sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-arrow-left','label'=>Yii::t('app','Posts Overview'),'link'=>Url::to(array('/posts/post/index'))); 
+
+  echo app\modules\posts\widgets\PortletSidemenu::widget(array(
+    'sideMenu'=>$sideMenu,
+    'enableAdmin'=>false,
+    'htmlOptions'=>array('class'=>'nostyler'),
+  )); ?>
+
+<?php Block::end(); ?>
+
+	<h1><?= Html::encode($this->title) ?></h1>
+
+	<?php echo $this->render('_form', [
 		'model' => $model,
-	)); ?>
+	]); ?>
 
 </div>

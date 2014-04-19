@@ -5,8 +5,9 @@ use Yii;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use app\modules\workflow\models\Workflow;
+use app\modules\app\widgets\AdminPortlet;
 
-class PortletWorkflowLog extends Portlet
+class PortletWorkflowLog extends AdminPortlet
 {
 	public $title='Workflow Log';
 	

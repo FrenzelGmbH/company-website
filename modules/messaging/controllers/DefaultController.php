@@ -2,17 +2,20 @@
 
 namespace app\modules\messaging\controllers;
 
+use Yii;
+use app\modules\app\controllers\AppController;
+
 use app\modules\messaging\models\Messages;
 use app\modules\messaging\models\MessagesSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\HttpException;
-use yii\web\VerbFilter;
+use yii\filters\VerbFilter;
 
 /**
  * DefaultController implements the CRUD actions for Messages model.
  */
-class DefaultController extends Controller
+class DefaultController extends AppController
 {
 	public function behaviors()
 	{
@@ -62,7 +65,7 @@ class DefaultController extends Controller
 	{
 		$model = new Messages;
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
 			return $this->render('create', [
@@ -81,7 +84,7 @@ class DefaultController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
 			return $this->render('update', [
@@ -111,7 +114,7 @@ class DefaultController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if (($model = Messages::find($id)) !== null) {
+		if (($model = Messages::findOne($id)) !== null) {
 			return $model;
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');

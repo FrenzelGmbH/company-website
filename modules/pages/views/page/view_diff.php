@@ -9,8 +9,8 @@ use yii\bootstrap\Collapse;
 
 $this->registerAssetBundle('yii\gii\GiiAsset');
 
-if(!is_null($model->Parent->title))
-	$this->params['breadcrumbs'][] = array('label' => $model->Parent->title, 'url' => array('/pages/page/onlineview','id'=>$model->parent_pages_id));
+if(!is_null($model->parent->title))
+	$this->params['breadcrumbs'][] = array('label' => $model->parent->title, 'url' => array('/pages/page/onlineview','id'=>$model->parent_pages_id));
 
 $this->params['breadcrumbs'][] = array('label' => $model->title);
 

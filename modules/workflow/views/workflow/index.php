@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use yii\widgets\ListView;
 
@@ -24,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<?php 
   if(class_exists('\app\modules\workflow\widgets\PortletToolbox')){
-    echo \app\modules\timetrack\widgets\PortletToolbox::widget(array(
+    echo \app\modules\workflow\widgets\PortletToolbox::widget(array(
       'enableAdmin'=>false,
       'menuItems'=>array(
-          array('label'=>Yii::t('app','home'),'link'=>Html::url(array('/site/index')),'icon'=>'icon-home'),
-          array('label'=>Yii::t('app','overview'),'link'=>Html::url(array('/workflow/workflow/index')),'icon'=>'icon-list-alt'),          
+          array('label'=>Yii::t('app','home'),'link'=>Url::to(array('/site/index')),'icon'=>'icon-home'),
+          array('label'=>Yii::t('app','overview'),'link'=>Url::to(array('/workflow/workflow/index')),'icon'=>'icon-list-alt'),          
       )
     )); 
   }

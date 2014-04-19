@@ -1,36 +1,34 @@
 <?php
+
 $params = require(__DIR__ . '/params.php');
-return array(
-	'id' => 'bootstrap-console',
+$db = require(__DIR__ . '/db.php');
+
+return [
+	'id' => 'basic-console',
 	'basePath' => dirname(__DIR__),
-	'preload' => array('log'),
-	'controllerPath' => dirname(__DIR__) . '/commands',
-	'controllerNamespace' => 'app\commands',
-	'modules' => array(
-	),
-	'components' => array(
-		'db' => array(
-			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host=localhost;dbname=powershop2',
-            'username' => 'root', 
-            'password' => '',
-            'tablePrefix' => 'tbl_',
-		),
-		'cache' => array(
-			'class' => 'yii\caching\FileCache',
-		),
-		'seeder'=>array(
+	//'controllerPath' => dirname(__DIR__) . '/modules/app/commands',
+	'controllerNamespace' => 'app\modules\app\commands',
+	'extensions' => require(__DIR__ . '/../vendor/yiisoft/extensions.php'),
+	'modules' => [
+		 'user' => 'dektrium\user\Module',
+	],
+	'components' => [
+		'seeder'=>[
 			'class'    =>'app\components\DbFixtureManager',
 			'basePath' => dirname(__DIR__).'/migrations/seed',
-    ),
-		'log' => array(
-			'targets' => array(
-				array(
+    ],
+		'cache' => [
+			'class' => 'yii\caching\FileCache',
+		],
+		'log' => [
+			'targets' => [
+				[
 					'class' => 'yii\log\FileTarget',
-					'levels' => array('error', 'warning'),
-				),
-			),
-		),
-	),
+					'levels' => ['error', 'warning'],
+				],
+			],
+		],
+		'db' => $db,
+	],
 	'params' => $params,
-);
+];

@@ -12,14 +12,14 @@ use yii\widgets\Breadcrumbs;
 
 $this->title = $model->name;
 
-if(!is_null($model->Parent->title))
-	$this->params['breadcrumbs'][] = array('label' => $model->Parent->title, 'url' => array('/pages/page/onlineview','id'=>$model->parent_pages_id));
+if(!is_null($model->parent->title))
+	$this->params['breadcrumbs'][] = array('label' => $model->parent->title, 'url' => array('/pages/page/onlineview','id'=>$model->parent_pages_id));
 
 $this->params['breadcrumbs'][] = array('label' => $this->title);
 ?>
 
 <?php
-	if(Yii::$app->user->isAdvanced):
+	if(Yii::$app->user->identity->isAdvanced):
 ?>
 
 <div class="frztoolbar">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = array('label' => $this->title);
 <?php Block::begin(array('id'=>'sidebar')); ?>
 
   <?php 
-    if(class_exists('\app\modules\pages\widgets\PortletPageToc') && Yii::$app->user->isUser){
+    if(class_exists('\app\modules\pages\widgets\PortletPageToc') && Yii::$app->user->identity->isUser){
       echo \app\modules\pages\widgets\PortletPageToc::widget(); 
     }
   ?>  
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = array('label' => $this->title);
 	?>
 
   <?php 
-    if(class_exists('\app\modules\pages\widgets\PortletCmsHistory') && Yii::$app->user->isUser){
+    if(class_exists('\app\modules\pages\widgets\PortletCmsHistory') && Yii::$app->user->identity->isUser){
       echo \app\modules\pages\widgets\PortletCmsHistory::widget(array(
         'id'=>$model->id,
       )); 
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = array('label' => $this->title);
 <?php Block::end(); ?>
 
 <?php 
-	if(class_exists('\app\modules\tasks\widgets\PortletTasksBatch') && Yii::$app->user->isAdvanced){
+	if(class_exists('\app\modules\tasks\widgets\PortletTasksBatch') && Yii::$app->user->identity->isAdvanced){
 		echo \app\modules\tasks\widgets\PortletTasksBatch::widget(array(
 			'module'=>\app\modules\workflow\models\Workflow::MODULE_CMS,
 			'id'=>$model->id,
@@ -79,15 +79,21 @@ $this->params['breadcrumbs'][] = array('label' => $this->title);
 	}
 ?>
 
-<div id="onlineviewwrap">
-	<h1 class="fg-color-orange"><?= Html::encode($this->title); ?></h1>
-	<?php 
-		echo HtmlPurifier::process($model->body);
-	?>
+<div id="site-index">
+  <div class="post-box">
+    <div class="post-header">
+  	 <h3 class="subline"><?= Html::encode($this->title); ?></h3>
+    </div>
+    <div class="post-content">
+    	<?php 
+    		echo HtmlPurifier::process($model->body);
+    	?>
+    </div>
+  </div>
 </div>
 
 <?php 
-  if(class_exists('\app\modules\comments\widgets\PortletComments') && Yii::$app->user->isAdvanced){
+  if(class_exists('\app\modules\comments\widgets\PortletComments') && !Yii::$app->user->isGuest){
     echo \app\modules\comments\widgets\PortletComments::widget(array(
       'module'=>\app\modules\workflow\models\Workflow::MODULE_CMS,
       'id'=>$model->id,

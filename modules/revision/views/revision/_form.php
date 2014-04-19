@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
- * @var yii\base\View $this
+ * @var yii\web\View $this
  * @var app\modules\revision\models\Revision $model
  * @var yii\widgets\ActiveForm $form
  */
@@ -14,18 +14,18 @@ use yii\widgets\ActiveForm;
 
 	<?php $form = ActiveForm::begin(); ?>
 
-		<?= $form->field($model, 'content')->textarea(array('rows' => 6)); ?>
+		<?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-		<?= $form->field($model, 'revision_table')->textInput(); ?>
+		<?= $form->field($model, 'revision_table')->textInput() ?>
 
-		<?= $form->field($model, 'revision_id')->textInput(); ?>
+		<?= $form->field($model, 'revision_id')->textInput() ?>
 
-		<?= $form->field($model, 'creator_id')->textInput(); ?>
+		<?= $form->field($model, 'creator_id')->textInput() ?>
 
-		<?= $form->field($model, 'status')->textInput(array('maxlength' => 255)); ?>
+		<?= $form->field($model, 'status')->textInput(['maxlength' => 255]) ?>
 
 		<div class="form-group">
-			<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', array('class' => 'btn btn-primary')); ?>
+			<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 		</div>
 
 	<?php ActiveForm::end(); ?>

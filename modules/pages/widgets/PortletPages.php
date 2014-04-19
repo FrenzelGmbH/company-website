@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 
+use app\modules\app\widgets\Portlet;
 use app\modules\pages\models\Page;
 
 class PortletPages extends Portlet

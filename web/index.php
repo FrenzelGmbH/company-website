@@ -1,22 +1,10 @@
 <?php
 
-/*
- *
- * PowerShop Weil
+/**
+ * PurePO
  * @company Frenzel GmbH
- * @copy    Frenzel GmbH 2013
+ * @copy    Frenzel GmbH 2013-2014
  * @contact philipp@frenzel.net
- *                                              
- *                                 )            
- *           (  (     (  (      ( /(            
- * `  )   (  )\))(   ))\ )(  (  )\()) (  `  )   
- * /(/(   )\((_)()\ /((_|()\ )\((_)\  )\ /(/(   
- *((_)_\ ((_)(()((_|_))  ((_|(_) |(_)((_|(_)_\  
- *| '_ \) _ \ V  V / -_)| '_(_-< ' \/ _ \ '_ \) 
- *| .__/\___/\_/\_/\___||_| /__/_||_\___/ .__/  
- *|_|                                   |_|     
- *
- *
  */
 
 //Set the default time zone to europe/berlin
@@ -38,11 +26,9 @@ defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
 require(__DIR__ . '/../vendor/autoload.php');
-require(__DIR__ . '/../vendor/yiisoft/yii2/yii/Yii.php');
+require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
-Yii::importNamespaces(require(__DIR__ . '/../vendor/composer/autoload_namespaces.php'));
-
-if(($baseConfig = includeIfExists(__DIR__.'/../config/web.php')) && ($localConfig = includeIfExists(__DIR__.'/../config/local.php'))) {
+if(($baseConfig = includeIfExists(__DIR__.'/../config/web.php')) && ($localConfig = includeIfExists(__DIR__.'/../config/web-test.php'))) {
   $config = \yii\helpers\ArrayHelper::merge($baseConfig,$localConfig);
 } else {
   $config = $baseConfig;

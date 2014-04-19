@@ -1,16 +1,17 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\grid\DataColumn;
+use kartik\grid\GridView;
+use kartik\widgets\SideNav;
 
 /**
- * @var yii\base\View $this
+ * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\modules\posts\models\PostSearch $searchModel
+ * @var app\modules\posts\models\PostForm $searchModel
  */
 
-$this->title = 'Posts';
+$this->title = 'Manage Blog Posts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,46 +19,89 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<?php 
 
-	$sideMenu = array();
-	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-arrow-left','label'=>Yii::t('app','Home'),'link'=>Html::url(array('/site/index')));
-	$sideMenu[] = array('decoration'=>'sticker sticker-color-green','icon'=>'icon-plus','label'=>Yii::t('app','New Post'),'link'=>Html::url(array('/posts/post/create')));
+  	$sideMenu = array();
+  	$sideMenu[] = array('icon'=>'home','label'=>Yii::t('app','Home'),'url'=>Url::to(array('/site/index')));
+  	$sideMenu[] = array('icon'=>'plus','label'=>Yii::t('app','New Post'),'url'=>Url::to(array('/posts/post/create')));
+    $sideMenu[] = array('icon'=>'arrow-right','label'=>Yii::t('app','Manage Categories'),'url'=>Url::to(array('/categories/categories/index')));
+    $sideMenu[] = array('icon'=>'arrow-right','label'=>Yii::t('app','Manage Tags'),'url'=>Url::to(array('/tags/default/index')));
+   
+    echo SideNav::widget([
+      'type' => SideNav::TYPE_DEFAULT,
+      'heading' => 'Options',
+      'items' => $sideMenu
+    ]);
 
-	echo app\modules\posts\widgets\PortletSidemenu::widget(array(
-		'sideMenu'=>$sideMenu,
-		'enableAdmin'=>false,
-		'htmlOptions'=>array('class'=>'nostyler'),
-	)); ?>	 
-	
+  ?>
+
 <?php yii\widgets\Block::end(); ?>
 
-<div class="module-wsp">
 
-	<h1><?= Html::encode($this->title); ?></h1>
+<div class="workbench">
 
-	<hr>
+  <h1 class="page-header"><?= Html::encode($this->title) ?></h1>  
 
-	<?= GridView::widget(array(
+	<?php echo GridView::widget([
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
-		'columns' => array(
-			'id',
+		'columns' => [
+			['class' => 'yii\grid\SerialColumn'],
+			//'id',
 			'title',
-			//'content:ntext',
-			'tags:ntext',
-			'status',
-			// 'author_id',
-			// 'time_create:datetime',
+      [
+        'attribute'=>'author_id',
+        'value'=>function ($model, $index, $widget) { 
+            return Html::a($model->author->username,  
+                '#', 
+                [
+                    'title'=>'View author detail', 
+                    'onclick'=>'alert("This will open the author page.\n\nDisabled for this demo!")'
+                ]);
+        },
+        'filterType' => GridView::FILTER_SELECT2,
+        'filter'=>\app\modules\app\components\User::pdUsers(), 
+        'filterWidgetOptions'=>[
+            'pluginOptions' => ['allowClear' => true],
+        ],
+        'filterInputOptions' => ['placeholder' => 'All Authors'],
+        'format'=>'raw'
+      ],
+      [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'status',
+        'filterType' => GridView::FILTER_SELECT2,
+        'filter'=>\app\modules\workflow\models\Workflow::getStatusOptions(), 
+        'filterWidgetOptions'=>[
+            'pluginOptions' => ['allowClear' => true],
+        ],
+        'filterInputOptions' => ['placeholder' => 'All Stati'],
+      ],
+			//'content:html',
+      [
+        'attribute'=>'categories_id',
+        'value'=>function ($model, $index, $widget) { 
+            return Html::tag('div',$model->category->name);
+        },
+        'filterType' => GridView::FILTER_SELECT2,
+        'filter'=>\app\modules\categories\models\Categories::pdCategories(), 
+        'filterWidgetOptions'=>[
+            'pluginOptions' => ['allowClear' => true],
+        ],
+        'filterInputOptions' => ['placeholder' => 'All Categories'],
+        'format'=>'raw'
+      ],
+			'tags:ntext', 
+			// 
 			// 'time_update:datetime',
-			array(
-				'class' => DataColumn::className(),
-				'content'=>function($data, $row) {
-					$html = Html::a(NULL, array("/posts/post/update", "id"=>$data->id), array('class' => 'edit icon icon-edit', "id"=>$data->id));
-					$html .= ' | ';
-					$html .= Html::a(NULL, array("/posts/post/delete", "id"=>$data->id), array('class'=>'delete icon icon-trash'));
-					return $html;
-				}
-			),
-		),
-	)); ?>
+      'time_create:datetime',      
+			['class' => 'kartik\grid\ActionColumn'],
+		],
+		'panel' => [
+        'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> Posts</h3>',
+        'type'=>'success',
+        'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Create Post', ['create'], ['class' => 'btn btn-success']),
+        'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset Grid', ['index'], ['class' => 'btn btn-info']),
+        'showFooter'=>false
+    ],
+	]); ?>
 
 </div>

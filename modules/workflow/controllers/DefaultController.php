@@ -2,14 +2,15 @@
 
 namespace app\modules\workflow\controllers;
 
-use yii\web\Controller;
+use Yii;
+use app\modules\app\controllers\AppController;
 
 use yii\data\Sort;
 use yii\data\ActiveDataProvider;
 
 use app\modules\workflow\models\Workflow;
 
-class DefaultController extends Controller
+class DefaultController extends AppController
 {
 	/**
 	* @var string layout as default for the rendering
@@ -24,7 +25,7 @@ class DefaultController extends Controller
 	public function behaviors() {
 		return array(
 			'AccessControl' => array(
-				'class' => '\yii\web\AccessControl',
+				'class' => '\yii\filters\AccessControl',
 				'rules' => array(
 					array(
 						'allow'=>true, 
@@ -77,7 +78,7 @@ class DefaultController extends Controller
 		{
 			if(!empty($id))
 			{
-				$this->_model=Workflow::find($id);				
+				$this->_model=Workflow::findOne($id);				
 			}
 			if($this->_model===null)
 				throw new \yii\web\HttpException(404,'The requested page does not exist.');

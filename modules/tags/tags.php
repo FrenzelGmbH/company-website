@@ -2,8 +2,13 @@
 
 namespace app\modules\tags;
 
+/**
+ * MODULE :: Tags
+ * The default controller, that will be addressed when someone tries to use this module
+ * The default action is index
+ */
 
-class tags extends \yii\base\Module
+class Tags extends \yii\base\Module
 {
 	public $controllerNamespace = 'app\modules\tags\controllers';
 

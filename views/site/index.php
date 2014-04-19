@@ -1,61 +1,34 @@
 <?php
 
-use yii\bootstrap\Carousel;
-use Yii2Imageslider\Yii2Imageslider;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
- * @var yii\base\View $this
+ * @var yii\web\View $this
  */
-$this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwicklung, Management Beratung';
+$this->title = Yii::t('app','PUREpo - Purchase Request Order System - Home');
 ?>
-<div class="nostyler">
+<div class="site-index">
 
 	<div class="row">
-		<div class="col-lg-8">
-			<div class="bigspace">
-				<?php 
-					for($img=1;$img<=3;$img++){
-						$item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);
-					}
-
-					echo Carousel::widget(array(
-						'items'=> $item,
-					)); 
-				?>
-
-				<div class="row">
-					<div class="col-lg-6">
-						<?php
-							echo app\modules\pages\widgets\PortletSinglePage::widget(array(
-			        		'id'=>1,
-			    		));
-						?>
-					</div>
-					<div class="col-lg-6">
-						<?php
-							echo app\modules\pages\widgets\PortletSinglePage::widget(array(
-			        		'id'=>2,
-			    		));
-						?>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="col-lg-4">
-			<div class="spacer">
-				<?php
-					echo app\modules\posts\widgets\PortletPosts::widget(array(
-	        		'limit'=>3,
-	    		));
-				?>
+			<div class="col-lg-4">
+				
 				<?php
 					echo app\modules\pages\widgets\PortletSinglePage::widget(array(
-	        		'id'=>3,
+	        		'id'=>1,
 	    		));
 				?>
+
 			</div>
-		</div>
-	</div>	
+			<div class="col-lg-8">
+				<div class="jumbotron">
+					<h1>Welcome!</h1>
+
+					<p class="lead">to purchase request - purchase order</p>
+
+					<p><a class="btn btn-lg btn-success" href="<?php echo Url::to(array('/user/auth/login')); ?>">Login PUREpo!</a></p>
+				</div>
+			</div>
+	</div>
 
 </div>

@@ -3,9 +3,12 @@ namespace app\modules\workflow\widgets;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
+
+use app\modules\app\widgets\AdminPortlet;
 
 
-class PortletToolbox extends Portlet
+class PortletToolbox extends AdminPortlet
 {
 	public $title=NULL;
 
@@ -35,7 +38,7 @@ class PortletToolbox extends Portlet
 	{
 		if($this->menuItems==null){
 			$this->menuItems = array();
-			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Html::url(array('/workflow/workflow/index')),'icon'=>'icon-list-alt');
+			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Url::to(array('/workflow/workflow/index')),'icon'=>'icon-list-alt');
 		}
 
 		//here we don't return the view, here we just echo it!

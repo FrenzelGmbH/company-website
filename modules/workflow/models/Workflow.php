@@ -5,9 +5,14 @@ namespace app\modules\workflow\models;
 use \Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 use \PHPMailer;
+
+/**
+ * Workflow Model will manage all actions that are happening inside defined processes
+ */
 
 class Workflow extends ActiveRecord
 {
@@ -16,7 +21,7 @@ class Workflow extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%workflow}}';
+        return '{{tbl_workflow}}';
     }
 
     //all application workflow stati
@@ -26,6 +31,7 @@ class Workflow extends ActiveRecord
     const ACTION_ESCALATE = 'escalate';
     const ACTION_ARCHIVE  = 'archive';
     const ACTION_BOOK     = 'book';
+    const ACTION_PURCHASE = 'purchase';
 
     //all appication stati
     const STATUS_CREATED   = 'created';
@@ -35,6 +41,7 @@ class Workflow extends ActiveRecord
     const STATUS_APPROVED  = 'approved';
     const STATUS_PENDING   = 'pending';
     const STATUS_BOOKED    = 'booked';
+    const STATUS_PURCHASED  = 'purchased';
     
     const STATUS_DRAFT     = 'draft';
     const STATUS_PUBLISHED = 'published';
@@ -51,6 +58,7 @@ class Workflow extends ActiveRecord
         self::STATUS_DRAFT     => 'draft',
         self::STATUS_PUBLISHED => 'published',
         self::STATUS_ARCHIVED  => 'archived',
+        self::STATUS_PURCHASED => 'purchased',
     );
 
     public static function getStatusOptions()
@@ -80,21 +88,27 @@ class Workflow extends ActiveRecord
     const MODULE_TASKS       = 5;
     const MODULE_REVISION    = 6;
     const MODULE_HOLIDAY     = 7;
+    const MODULE_PURCHASE    = 8;
+    const MODULE_DMPAPER     = 9;
 
     public static $appmodules = array(
-        self::MODULE_TIMETABLE   => 'timetrack/timetrack',
-        self::MODULE_PRINTREPORT => 'printreport',
-        self::MODULE_CMS         => 'pages/page',
-        self::MODULE_BLOG        => 'post',
-        self::MODULE_TASKS       => 'tasks/default',
-        self::MODULE_REVISION    => 'revision/default',
-        self::MODULE_HOLIDAY     => 'timetrack/timetrack',
+        self::MODULE_TIMETABLE   => '/timetrack/timetrack',
+        self::MODULE_PRINTREPORT => '/printreport',
+        self::MODULE_CMS         => '/pages/page',
+        self::MODULE_BLOG        => '/post',
+        self::MODULE_TASKS       => '/tasks/default',
+        self::MODULE_REVISION    => '/revision/default',
+        self::MODULE_HOLIDAY     => '/timetrack/timetrack',
+        self::MODULE_PURCHASE    => '/purchase/default',
+        self::MODULE_DMPAPER     => '/dms/default',
     );
 
     public static $appinternals = array(
         self::MODULE_TIMETABLE => array('table'=>'tbl_time_table','field'=>'category'),
         self::MODULE_HOLIDAY => array('table'=>'tbl_time_table','field'=>'category'),
         self::MODULE_TASKS => array('table'=>'tbl_task','field'=>'content'),
+        self::MODULE_PURCHASE => array('table'=>'tbl_purchaseorder','field'=>'status'),
+        self::MODULE_DMPAPER => array('table'=>'tbl_dmpaper','field'=>'status'),
     );
 
     public static function getModuleOptions(){
@@ -169,18 +183,24 @@ class Workflow extends ActiveRecord
     /**
     * before we save the record, we will md5 the password
     */
-    public function beforeSave($insert){
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-                $this->date_create = Date('Y-m-d H:i:s');
-            }
-            else {
-                //on update
-            }
-            return true;
-        } else {
-            return false;
+    public function beforeSave($insert)
+    {
+        if($this->isNewRecord)
+        {
+          if(\Yii::$app->user->isGuest)
+          {
+            $this->previous_user_id = 0; //external system writer
+          }
+          else
+          {
+            $this->previous_user_id = \Yii::$app->user->identity->id;
+          }      
         }
+        if(is_null($this->date_create))
+        {
+          $this->date_create = Date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);        
     }
 
     /**
@@ -202,11 +222,22 @@ class Workflow extends ActiveRecord
 		);        
     }
 
+    /**
+     * [getAdapterForUserWorkflow description]
+     * @return [query] will return the latest workflow items for the logged in user for all elements which are not archived and with the latest
+     * state ordered by latest creation date
+     */
     public static function getAdapterForUserWorkflow() {
         $userId = Yii::$app->user->identity->id;
         return static::find()->where('(next_user_id = '.$userId.') AND (id IN (SELECT max(id) FROM tbl_workflow GROUP BY wf_table, wf_id))')
             ->OrderBy('date_create DESC');
         //return static::find()->where('(previous_user_id = '.$userId.' OR next_user_id = '.$userId.') AND (id IN (SELECT max(id) FROM tbl_workflow GROUP BY wf_table, wf_id))')
+    }
+
+    public static function getAdapterForLatestWorkflow($id)
+    {
+        return static::find()->where('(wf_id = '.$id.') AND (id IN (SELECT max(id) FROM tbl_workflow GROUP BY wf_table, wf_id))')
+            ->OrderBy('date_create DESC');
     }
 
     /**
@@ -246,7 +277,7 @@ class Workflow extends ActiveRecord
     public function getNextActions(){
         $allowed_actions = array();        
         $allowed_actions = explode(',',$this->actions_next);
-        if(Yii::$app->user->isAdmin){
+        if(Yii::$app->user->identity->isAdmin){
             $allowed_actions[]='update';
         }
         $allowed_actions[]='view';
@@ -282,6 +313,18 @@ class Workflow extends ActiveRecord
     }
 
     /**
+     * [removeRecordFromWorkflow description]
+     * @param  integer $module  [description]
+     * @param  integer $id      [description]
+     * @param  integer $user_id [description]
+     * @return [type]          [description]
+     */
+    public static function removeRecordFromWorkflow($module,$id,$user_id)
+    {
+        return self::find()->where(['wf_table'=>$module,'wf_id'=>$id,'next_user_id'=>$user_id])->one()->delete();
+    }
+
+    /**
     * @return query to get the workflow logs for a special entry
     * @param integer the id of the module - workflow table - see static params from Workflow Model
     * @param integer the primarey key value of the record within the linked table
@@ -302,6 +345,32 @@ class Workflow extends ActiveRecord
         return static::find()->where('wf_table = '.$module.' AND wf_id = '.$id)->Count();
     }
 
+
+    /**
+     * getWorkflowParticipants will return a list of unique users that participate in this workflow
+     * @param  integer $module module id as defined in constants
+     * @param  integer $id     primarey key of the record inside the passed module
+     * @return array           list of emails included
+     */
+    public static function getAdapterForWorkflowParticipants($module,$id){
+        $query = new Query;
+        $query->select('tbl_user.email AS recipient')
+          ->distinct()
+          ->from('tbl_workflow')
+          ->innerJoin('tbl_user','tbl_workflow.next_user_id = tbl_user.id')
+          ->where(['wf_table'=> $module, 'wf_id'=>$id])
+          ->all();
+        
+        $command = $query->createCommand();
+        $rows = $command->queryAll();
+
+        $recipients = array();
+        foreach($rows AS $row){
+          $recipients[] = $row['recipient'];
+        }
+        return $recipients;
+      }
+
     /**
      * will send an email for the workflow step
      * @param  [type] $reason   what should the next user do
@@ -321,9 +390,9 @@ class Workflow extends ActiveRecord
 
         $mail->From = 'myplace-info@lichtbruecken.at';
         $mail->FromName = Yii::$app->params['mailerAlias'];
-        $mail->AddAddress($workflow->NextUser->email);  // Add a recipient
-        $mail->AddCc($workflow->PreviousUser->email); //Add carbon copy
-        $mail->AddAddress(Yii::$app->params['adminEmail'], 'Administrator');  // Add a recipient
+        $mail->AddAddress($workflow->nextUser->email);  // Add a recipient
+        $mail->AddCc($workflow->previousUser->email); //Add carbon copy
+        //$mail->AddAddress(Yii::$app->params['adminEmail'], 'Administrator');  // Add a recipient
         
         $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
         $mail->IsHTML(true);                                  // Set email format to HTML

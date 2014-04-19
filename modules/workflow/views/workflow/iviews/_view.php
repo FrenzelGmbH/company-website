@@ -18,7 +18,7 @@ use app\modules\tasks\models\Task;
       <td width="33%">
         <h4>
           <img src="http://lorempixel.com/40/40/animals" alt="Animals"></img>
-          <?= Yii::t('app','From').' '.strtoupper(User::find($model['previous_user_id'])->prename) .' '. strtoupper(User::find($model['previous_user_id'])->name); ?><br>          
+          <?= Yii::t('app','From').' '.strtoupper(User::find($model['previous_user_id'])->email); ?><br>          
         </h4>        
       </td>
       <td>
@@ -27,7 +27,7 @@ use app\modules\tasks\models\Task;
       <td width="33%">
         <h4>
           <img src="http://lorempixel.com/40/40/people" alt="Animals"></img>          
-          <?= Yii::t('app','For').' '.strtoupper(User::find($model['next_user_id'])->prename) .' '. strtoupper(User::find($model['next_user_id'])->name); ?>
+          <?= Yii::t('app','For').' '.strtoupper(User::find($model['next_user_id'])->email); ?>
         </h4>        
       </td>
       <td>
@@ -58,17 +58,13 @@ use app\modules\tasks\models\Task;
     </tr>
     
     <tr>
-      <td><h4><i class="icon-angel-right"></i></h4></td>
-      <td colspan='4'>
+      <td colspan="5">
         <?php
-          foreach($model->NextActions AS $wfAction){
-            if($wfAction!=''){
-              $html .= '<span class="btn btn-default btn-xs tipster" title="next action: '.Yii::t('other',$wfAction).'">';
-              $html .= '<i class="icon-eye"></i>'.Html::a(Yii::t('other',$wfAction), array('/'.Workflow::getModuleAsController($model->wf_table).'/'.$wfAction,'id'=>$model->wf_id,'senderId'=>$model->id)).' ';
-              $html .= '</span>&nbsp;';
-            }
-          }
-          echo $html;
+          if(class_exists('\app\modules\workflow\widgets\PortletWorkflowActions')){
+            echo \app\modules\workflow\widgets\PortletWorkflowActions::widget(array(
+              'id'=>$model->id,
+            ));
+          } 
         ?>
       </td>
     </tr>

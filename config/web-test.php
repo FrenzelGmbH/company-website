@@ -1,7 +1,15 @@
 <?php
-
-$config = require(__DIR__ . '/web.php');
-
-// ... customize $config for the "test" environment here...
+$config = [
+  'components' => [
+    'db' => [
+      'class' => 'yii\db\Connection',
+      'dsn' => 'mysql:host=localhost;dbname=purepo',
+      'username' => 'root',
+      'password' => '',
+      'charset' => 'utf8',
+      'tablePrefix' => 'tbl_'
+    ],
+  ]
+];
 
 return $config;

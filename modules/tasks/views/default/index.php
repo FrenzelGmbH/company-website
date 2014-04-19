@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 use yii\widgets\ListView;
 
 use yii\widgets\Block;
@@ -13,6 +15,27 @@ use yii\widgets\Block;
 
 $this->title = 'ToDos';
 $this->params['breadcrumbs'][] = $this->title;
+
+$deleteJS = <<<DEL
+$('.post-box').on('click','.op a.delete',function() {
+    var th=$(this),
+    container=th.closest('div.post-box'),
+    id=container.attr('id').slice(1);
+  if(confirm('Are you sure you want to delete comment #'+id+'?')) {
+    $.ajax({
+      url:th.attr('href'),
+      data:{
+        'ajax':1,
+        'id':id
+      },
+      type:'POST'
+    }).done(function(){container.slideUp()});
+  }
+  return false;
+});
+
+DEL;
+$this->registerJs($deleteJS);
 ?>
 
 <?php Block::begin(array('id'=>'sidebar')); ?>
@@ -20,9 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php 
 
 	$sideMenu = array();
-	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-home','label'=>Yii::t('app','Home'),'link'=>Html::url(array('/site/index')));
-	$sideMenu[] = array('icon'=>'icon-plus','label'=>Yii::t('app','new Todo'),'link'=>Html::url(array('/tasks/task/create')));
-	$sideMenu[] = array('decoration'=>'sticker sticker-color-green','icon'=>'icon-list-alt','label'=>Yii::t('app','Overview'),'link'=>Html::url(array('/tasks/default/index')));
+	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'fa fa-home','label'=>Yii::t('app','Home'),'link'=>Url::to(array('/site/index')));
+	$sideMenu[] = array('icon'=>'fa fa-plus','label'=>Yii::t('app','new Todo'),'link'=>Url::to(array('/tasks/task/create')));
+	$sideMenu[] = array('decoration'=>'sticker sticker-color-green','icon'=>'fa fa-icon-list-alt','label'=>Yii::t('app','Overview'),'link'=>Url::to(array('/tasks/default/index')));
 
 	echo \app\modules\tasks\widgets\PortletToolbox::widget(array(
 		'menuItems'=>$sideMenu,
@@ -38,19 +61,15 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php //echo $this->render('_search', array('model' => $searchModel)); ?>
 
 	<hr>
-	<div class="box bordered">
-		<ul class="list-group">
-			<?php 
-				echo ListView::widget(array(
-							'id'           => 'IndexTaskView',
-							'dataProvider' => $dpTasks,
-							'itemView'     => 'iviews/_view',
-							'layout'     => '<div class="box-header">{summary}</div>{items}{pager}',
-						)
-				);
-			?>
-		</ul>
-	</div>
+	<?php 
+		echo ListView::widget(array(
+					'id'           => 'IndexTaskView',
+					'dataProvider' => $dpTasks,
+					'itemView'     => 'iviews/_view',
+					'layout'     	 => '<div class="box-header">{summary}</div>{items}{pager}',
+				)
+		);
+	?>
 
 </div>
 

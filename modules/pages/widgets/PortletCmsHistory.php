@@ -5,6 +5,7 @@ use \Yii;
 use yii\helpers\Html;
 
 use app\modules\pages\models\Page;
+use app\modules\app\widgets\Portlet;
 
 class PortletCmsHistory extends Portlet
 {

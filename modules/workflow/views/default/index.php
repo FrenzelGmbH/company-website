@@ -2,6 +2,7 @@
 
 use yii\widgets\Block;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use app\widgets\PortletSideMenu;
 use \yii\grid\GridView;
@@ -17,7 +18,7 @@ use app\modules\workflow\models\Workflow;
 	<?php 
 
 	$sideMenu = array();
-	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-arrow-left','label'=>Yii::t('app','Home'),'link'=>Html::url(array('/site/index')));
+	$sideMenu[] = array('decoration'=>'sticker sticker-color-yellow','icon'=>'icon-arrow-left','label'=>Yii::t('app','Home'),'link'=>Url::to(array('/site/index')));
 
 	echo PortletSideMenu::widget(array(
 		'sideMenu'=>$sideMenu,

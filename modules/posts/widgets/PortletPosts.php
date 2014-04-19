@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use app\modules\posts\models\Post;
 
-class PortletPosts extends Portlet
+class PortletPosts extends \app\modules\app\widgets\AdminPortlet
 {
 	public $title='Blog';
 	
@@ -42,7 +42,7 @@ class PortletPosts extends Portlet
 		$dpPosts = new ActiveDataProvider(array(
 		      'query' => $query,
 		      'pagination' => array(
-		          'pageSize' => 10,
+		          'pageSize' => $this->limit,
 		      ),
 	  	));
 		//here we don't return the view, here we just echo it!

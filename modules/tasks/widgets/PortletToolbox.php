@@ -3,6 +3,7 @@ namespace app\modules\tasks\widgets;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 class PortletToolbox extends Portlet
 {
@@ -34,11 +35,11 @@ class PortletToolbox extends Portlet
 	{
 		if($this->menuItems==null){
 			$this->menuItems = array();
-			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Html::url(array('/timetrack/timetrack/index')),'icon'=>'icon-list-alt');
+			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Url::to(array('/timetrack/timetrack/index')),'icon'=>'fa fa-list-alt');
 		}
 
 		//here we don't return the view, here we just echo it!
-		echo $this->render('@app/modules/timetrack/widgets/views/_toolbox',array('menuItems'=>$this->menuItems));
+		echo $this->render('@app/modules/tasks/widgets/views/_toolbox',array('menuItems'=>$this->menuItems));
 	}
 
 	/**

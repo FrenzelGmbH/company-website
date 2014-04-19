@@ -3,24 +3,25 @@
 namespace app\modules\revision\controllers;
 
 use Yii;
-use yii\web\Controller;
+use app\modules\app\controllers\AppController;
+
 use yii\data\Sort;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use app\modules\revision\models\Revision;
 use app\modules\workflow\models\Workflow;
 
-class DefaultController extends Controller
+class DefaultController extends AppController
 {
-	public $layout='column2';
 	public $_model=NULL;
 
 	public function behaviors() {
 		return array(
 			'AccessControl' => array(
-				'class' => '\yii\web\AccessControl',
+				'class' => '\yii\filters\AccessControl',
 				'rules' => array(
 					array(
 						'allow'=>true, 
@@ -67,7 +68,7 @@ class DefaultController extends Controller
 
 	public function actionUpdate($id){
 		$model=$this->loadModel($id);
-		if ($model->load($_POST)) {
+		if ($model->load(Yii::$app->request->post())) {
 			if($model->save()){
 				$myCounter = Revision::getAdapterForRevisionLogCount($model->revision_table,$module->revision_id);
 				header('Content-type: application/json');
@@ -80,7 +81,7 @@ class DefaultController extends Controller
 			}
 		}
 		//define the request target		
-		$requestUrl = Html::url(array('default/update','id'=>$model->id));		
+		$requestUrl = Url::to(array('default/update','id'=>$model->id));		
 
 		$this->layout = 'column1';
 		echo $this->renderPartial('update',array(
@@ -91,13 +92,13 @@ class DefaultController extends Controller
 
 	public function actionCreate($id,$module){		
 		//define the request target		
-		$requestUrl = Html::url(array('default/create','id'=>$id,'module'=>$module));
+		$requestUrl = Url::to(array('default/create','id'=>$id,'module'=>$module));
 		
 		$model=new Revision();
 		$model->revision_id = $id;
 		$model->revision_table = $module;
 		$model->creator_id = Yii::$app->user->id;
-		if ($model->load($_POST)) {
+		if ($model->load(Yii::$app->request->post())) {
 			if($model->save()){
 				$myCounter = Revision::getAdapterForRevisionLogCount($module,$id);
 				header('Content-type: application/json');
@@ -127,7 +128,7 @@ class DefaultController extends Controller
 		{
 			if(!empty($id))
 			{
-				$this->_model=Revision::find($id);				
+				$this->_model=Revision::findOne($id);				
 			}
 			if($this->_model===null)
 				throw new \yii\web\HttpException(404,'The requested page does not exist.');

@@ -10,27 +10,25 @@ use app\modules\pages\models\Page;
 use app\modules\pages\models\PageForm;
 
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use app\modules\app\controllers\AppController;
 use yii\base\HttpException;
 use yii\web\Repsonse;
 
 use yii\helpers\Json;
-use yii\helpers\StringHelper;
+use yii\gii\components\DiffRendererHtmlInline;
 
 /**
  * PageController implements the CRUD actions for Page model.
  */
-class PageController extends Controller
+class PageController extends AppController
 {
 
 	public $_model = NULL;
 
-	public $layout = "column1";
-
 	public function behaviors() {
 		return array(
 			'AccessControl' => array(
-				'class' => '\yii\web\AccessControl',
+				'class' => '\yii\filters\AccessControl',
 				'rules' => array(
 					array(
 						'allow'=>true, 
@@ -38,14 +36,19 @@ class PageController extends Controller
 					),
 					array(
 						'allow'=>true,
-						'actions' => array('onlineview'),
+						'actions' => array('onlineview','connector'),
 						'roles'=>array('?'),
 					),
 					array(
 						'allow'=>false
 					),
 				)
-			)
+			),
+			'disableCSRF' => [
+        // required to disable csrf validation on OpenID requests
+        'class' => \app\modules\app\behaviours\CSRFdisableBehaviour::className(),
+        'only' => array('connector'),
+      ]
 		);
 	}
 
@@ -57,23 +60,20 @@ class PageController extends Controller
 	{
 		return array(
 			'connector' => array(
-				'class' => 'yii2elfinder\ConnectorAction',
+				'class' => 'yii2elfinder\ConnectorAction',				
 				'clientOptions'=>array(
-					'locale' => '',	
+					'connectorRoute'=>'/pages/page/connector',
+					'locale' => 'uk',	
 					'roots'  => array(
 			        array(
 			        	  'rootAlias' => 'CMS Bilder',
 			            'driver' => 'LocalFileSystem',
-			            'path'   => dirname(__DIR__).'/../../../web/img/cms/',
-			            'URL'    => '',				            
+			            'path'   => dirname(__DIR__).'/../../web/img/',
+			            'URL'    => '/img',				            
 			            'mimeDetect' => 'internal',
 			            'dotFiles' => false,
-			            'uploadAllow' => array('image'),
-			            'accessControl' => 'access',
-									'perms'=>array(
-										 '/^$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
-										 '/^gallery\/pictures$/' => array('read'=>true, 'write'=>true,  'rm'=>false),
-									)
+			            'uploadAllow' => array('image','pdf'),
+			            'accessControl' => 'access'
 			      )
 				  ) 	
 				)
@@ -87,6 +87,7 @@ class PageController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$this->layout = \app\modules\app\controllers\AppController::adminlayout;
 		$searchModel = new PageForm;
 		$dataProvider = $searchModel->search($_GET);
 
@@ -129,8 +130,7 @@ class PageController extends Controller
 	* @return  mixed
 	*/
 	public function actionFilemanager(){
-		//will not use any layout
-		$this->layout = 'column1';
+		$this->layout = '/main_blog';
 		return $this->render('elfinder');
 	}
 
@@ -141,13 +141,12 @@ class PageController extends Controller
 	 */
 	public function actionCreate($id = NULL)
 	{
-		$this->layout='column1';
-
+		$this->layout = \app\modules\app\controllers\AppController::adminlayout;
 		$model=new Page();
 		if(!is_null($id))
 			$model->parent_pages_id = $id;
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('/pages/page/view','id'=>$model->id));
 		}
 
@@ -164,9 +163,10 @@ class PageController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		$this->layout = \app\modules\app\controllers\AppController::adminlayout;
 		$model = $this->findModel($id);
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('onlineview', 'id' => $model->id));
 		} else {
 			return $this->render('update', array(
@@ -196,7 +196,7 @@ class PageController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if (($model = Page::find($id)) !== null) {
+		if (($model = Page::findOne($id)) !== null) {
 			return $model;
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');
@@ -229,18 +229,54 @@ class PageController extends Controller
 	 */
 	public function actionDiffview($id){
 		//changing layout
-		$this->layout = 'column2';
+		$this->layout = \app\modules\app\controllers\AppController::adminlayout;
 		
 		$model = $this->findParentModel($id);
-		$compareModel = Page::find($id);
+		$compareModel = Page::findOne($id);
 
-		$difftext = StringHelper::diff($compareModel->body,$model->body);
+    if (!is_array($model->body)) {
+        $lines2 = explode("\n", $model->body);
+    }
+    if (!is_array($compareModel->body)) {
+        $lines1 = explode("\n", $compareModel->body);
+    }
+
+    foreach ($lines1 as $i => $line) {
+        $lines1[$i] = rtrim($line, "\r\n");
+    }
+    foreach ($lines2 as $i => $line) {
+        $lines2[$i] = rtrim($line, "\r\n");
+    }
+
+    $renderer = new DiffRendererHtmlInline();
+    $difftext = new \Diff($lines1, $lines2);
 
 		return $this->render('view_diff',array(
-			'difftext' => $difftext,
+			'difftext' => $difftext->render($renderer),
 			'model'=>$model,
 		));
 	}
+
+	private function renderDiff($lines1, $lines2)
+    {
+        if (!is_array($lines1)) {
+            $lines1 = explode("\n", $lines1);
+        }
+        if (!is_array($lines2)) {
+            $lines2 = explode("\n", $lines2);
+        }
+        foreach ($lines1 as $i => $line) {
+            $lines1[$i] = rtrim($line, "\r\n");
+        }
+        foreach ($lines2 as $i => $line) {
+            $lines2[$i] = rtrim($line, "\r\n");
+        }
+
+        $renderer = new DiffRendererHtmlInline();
+        $diff = new \Diff($lines1, $lines2);
+
+        return $diff->render($renderer);
+    }
 
 	/**
 	 * jumps to the parent page of the current cms page
@@ -248,6 +284,7 @@ class PageController extends Controller
 	 * @return view the diff view
 	 */
 	public function actionViewparent($id){
+		$this->layout = \app\modules\app\controllers\AppController::adminlayout;
 		$model=$this->findParentModel($id);
 		return $this->render('view',array(
 			'model'=>$model,		
@@ -267,7 +304,7 @@ class PageController extends Controller
 			$data = Page::rootTreeAsArray($rootId);
 		else
 			$data = Page::nodeChildren($id,true);
-		echo Yii::$app->response->sendContentAsFile(Json::encode($data),'tree.json','application/json');
+		return Yii::$app->response->sendContentAsFile(Json::encode($data),'tree.json','application/json');
 		exit;
 	}
 }

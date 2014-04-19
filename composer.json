@@ -1,45 +1,72 @@
 {
-	"name": "yiisoft/yii2-app-basic",
-	"description": "Yii 2 Basic Application Template",
-	"keywords": ["yii", "framework", "basic", "application template"],
-	"homepage": "http://www.yiiframework.com/",
-	"type": "project",
-	"license": "BSD-3-Clause",
-	"support": {
-		"issues": "https://github.com/yiisoft/yii2/issues?state=open",
-		"forum": "http://www.yiiframework.com/forum/",
-		"wiki": "http://www.yiiframework.com/wiki/",
-		"irc": "irc://irc.freenode.net/yii",
-		"source": "https://github.com/yiisoft/yii2"
+    "name": "philippfrenzel/purepo",
+    "description": "Purchase Request Purchase Order",
+    "keywords": ["yii", "framework"],
+    "homepage": "http://www.frenzel.net/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-jui": "*",
+        "phpexcel/phpexcel":"*",
+        "phpword/phpword":"*",
+        "philippfrenzel/yii2wikiparser": "dev-master",
+        "philippfrenzel/yiidhtmlx": "dev-master",
+        "philippfrenzel/yiiwymeditor": "dev-master",
+        "philippfrenzel/yii2elfinder": "dev-master",
+        "philippfrenzel/yii2imageslider": "*",
+        "phpmailer/phpmailer": "dev-master",
+        "anthonymartin/geo-location": "dev-master",
+        "philippfrenzel/yii2tooltipster": "dev-master",
+        "philippfrenzel/yii2toolbarbutton": "dev-master",
+        "philippfrenzel/yiijquerytoc": "dev-master",
+        "philippfrenzel/yii2fullcalendar": "dev-master",
+        "knplabs/gaufrette": "0.2.*@dev",
+        "nizsheanez/yii2-asset-converter": "1.*",
+        "dektrium/yii2-user": "dev-master",
+        "kartik-v/yii2-icons": "dev-master",
+        "kartik-v/yii2-widgets": "dev-master",
+        "kartik-v/yii2-helpers": "dev-master",
+        "2amigos/yii2-file-input-widget" : "*",
+        "2amigos/yii2-leaflet-markercluster-plugin": "*",
+        "2amigos/yii2-leaflet-extension": "*",
+        "2amigos/yii2-leaflet-makimarker-plugin": "*",
+        "jamesheinrich/phpthumb": "dev-master",
+        "philippfrenzel/yii2masonry": "dev-master",
+        "philippfrenzel/yii2instafeed": "dev-master",
+        "cebe/yii2-gravatar": "1.*",
+        "philippfrenzel/yii2pinit": "dev-master",
+        "suin/php-rss-writer": ">=1.0",
+        "kartik-v/yii2-social": "dev-master",
+        "kartik-v/yii2-grid": "dev-master",
+        "subdee/yii2-soap-server": "*",
+        "guzzle/guzzle": "*",
+        "schmunk42/yii2-packaii": "*"
 	},
-	"minimum-stability": "dev",
-	"require": {
-		"php": ">=5.3.0",
-		"ezyang/htmlpurifier": "v4.5.0",
-		"yiisoft/yii2": "dev-master",
-		"yiisoft/yii2-composer": "dev-master",
-    "yiisoft/yii2-jui": "dev-master",
-		"phpmailer/phpmailer": "dev-master",
-    "anthonymartin/geo-location": "dev-master",
-    "php-google-maps/php-google-maps": "dev-master",
-    "philippfrenzel/yiiwymeditor": "dev-master",
-    "philippfrenzel/yii2elfinder": "dev-master",
-    "philippfrenzel/yii2tooltipster": "dev-master",
-    "philippfrenzel/yii2imageslider": "dev-master",
-    "philippfrenzel/yii2toolbarbutton": "dev-master",
-    "philippfrenzel/yiijquerytoc": "dev-master"
-	},
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "phpdocumentor/phpdocumentor": "2.*"
+    },
+    "config": {
+        "process-timeout": 1000
+    },
 	"scripts": {
 		"post-create-project-cmd": [
-			"yii\\composer\\InstallHandler::setPermissions"
+			"yii\\composer\\Installer::setPermission"
 		]
 	},
 	"extra": {
-		"yii-install-writable": [
+		"writable": [
 			"runtime",
 			"web/assets"
 		],
-		"yii-install-executable": [
+		"executable": [
 			"yii"
 		]
 	}

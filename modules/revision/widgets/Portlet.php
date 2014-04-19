@@ -8,7 +8,7 @@ use yii\widgets\Block;
 
 use yii\jui\Draggable;
 
-use yii2toolbarbutton\yii2toolbarbutton;
+use philippfrenzel\yii2toolbarbutton\yii2toolbarbutton;
 
 /**
  * Portlet is the base class for portlet widgets.
@@ -79,7 +79,7 @@ class Portlet extends Block
    */
   public function init()
   {
-    if(Yii::$app->user->isAdmin && $this->enableAdmin){
+    if(Yii::$app->user->identity->isAdmin && $this->enableAdmin){
       Html::addCssClass($this->htmlOptions,'widgetadmin');      
       Draggable::begin();
     }
@@ -92,7 +92,7 @@ class Portlet extends Block
 
     echo Html::beginTag($this->tagName,$this->htmlOptions)."\n";
 
-    if(Yii::$app->user->isAdmin && $this->enableAdmin){
+    if(Yii::$app->user->identity->isAdmin && $this->enableAdmin){
       $this->renderToolbar();
     }
 
@@ -102,7 +102,7 @@ class Portlet extends Block
     $this->_beginTag=ob_get_contents();
 
     ob_clean();
-    if(Yii::$app->user->isAdmin && $this->enableAdmin){
+    if(Yii::$app->user->identity->isAdmin && $this->enableAdmin){
       Draggable::end();
     }
   }

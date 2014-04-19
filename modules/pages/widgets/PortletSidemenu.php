@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use app\modules\workflow\models\Workflow;
+use app\modules\app\widgets\Portlet;
 
 class PortletSidemenu extends Portlet
 {

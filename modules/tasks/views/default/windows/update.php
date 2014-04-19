@@ -6,8 +6,10 @@ use yii\widgets\ActiveField;
 
 use app\modules\workflow\models\Workflow;
 
-$this->assetBundles['yii\web\YiiAsset'] = new yii\web\AssetBundle;;
-$this->assetBundles['yii\web\JqueryAsset'] = new yii\web\AssetBundle;;
+$this->assetBundles['yii\web\YiiAsset'] = new yii\web\AssetBundle;
+$this->assetBundles['yii\web\JqueryAsset'] = new yii\web\AssetBundle;
+$this->assetBundles['yii\web\BootstrapAsset'] = new yii\web\AssetBundle;
+
 
 $uniqueIdEDIT = 'TaskLogBatch'.$model->task_table.'_'.$model->task_id.'EDIT';
 

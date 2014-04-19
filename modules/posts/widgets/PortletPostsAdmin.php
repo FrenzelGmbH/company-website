@@ -3,10 +3,12 @@ namespace app\modules\posts\widgets;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 use yii\data\ActiveDataProvider;
 use app\modules\posts\models\Post;
 
-class PortletPostsAdmin extends Portlet
+class PortletPostsAdmin extends \app\modules\app\widgets\AdminPortlet
 {
 	public $title='Blog Admin';
 
@@ -36,8 +38,8 @@ class PortletPostsAdmin extends Portlet
 	{
 		if($this->menuItems==null){
 			$this->menuItems = array();
-			$this->menuItems[] = array('label'=>Yii::t('app','new blog entry'),'link'=>Html::url(array('/posts/post/create')),'icon'=>'icon-plus');
-			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Html::url(array('/posts/post/index')),'icon'=>'icon-list-alt');
+			$this->menuItems[] = array('label'=>Yii::t('app','new blog entry'),'link'=>Url::to(array('/posts/post/create')),'icon'=>'icon-plus');
+			$this->menuItems[] = array('label'=>Yii::t('app','overview'),'link'=>Url::to(array('/posts/post/index')),'icon'=>'icon-list-alt');
 		}
 
 		//here we don't return the view, here we just echo it!

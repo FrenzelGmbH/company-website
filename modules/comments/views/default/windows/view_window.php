@@ -12,23 +12,21 @@ $this->assetBundles['yii\web\JqueryAsset'] = new yii\web\AssetBundle;;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title><?= Html::encode($this->title); ?></title>
-	<?php $this->head(); ?>
+  <meta charset="utf-8"/>
+  <title><?= Html::encode($this->title); ?></title>
+   <?php $this->head(); ?>
 </head>
 <body>
-	<?php $this->beginBody(); ?>
+   <?php $this->beginBody(); ?>
 
-<div id="page">
-	
+    
 <?= PortletComments::widget(array(
-	'module'=>$module,
-	'id'=>$id,
+  'module'=>$module,
+  'id'=>$id,
 )); ?>
 
-</div>
 
 <?php $this->endBody(); ?>
-</body>
+  </body>
 </html>
 <?php $this->endPage(); ?>

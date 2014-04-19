@@ -24,8 +24,8 @@ class MessagesSearch extends Model
 	public function rules()
 	{
 		return [
-			['id, sender_id, reciever_id', 'integer'],
-			['subject, body, deleted_by, date_create, module', 'safe'],
+			[['id', 'sender_id', 'reciever_id'], 'integer'],
+			[['subject', 'body', 'deleted_by', 'date_create', 'module'], 'safe'],
 			['is_read', 'boolean'],
 		];
 	}

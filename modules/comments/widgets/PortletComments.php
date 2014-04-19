@@ -5,27 +5,19 @@ use Yii;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use app\modules\comments\models\Comment;
+use app\modules\app\widgets\Portlet;
 
 class PortletComments extends Portlet
 {
-	public $title='Kommentare';
+	public $title=NULL;
 	
 	public $module = 0;
 	public $id = 0;
 
-	/**
-	 * @var string the CSS class for the portlet title tag. Defaults to 'portlet-title'.
-	 */
-	//public $titleCssClass='fg-color-black';
-
-	/**
-	 * @var string the CSS class for the portlet title tag. Defaults to 'portlet-content'.
-	 */
-	//public $contentCssClass='fg-color-black';
-
 	public $enableAdmin = false;
-
 	public $htmlOptions = array('class'=>'panel panel-warning');
+	
+	public $titleCssClass = "panel panel-info";
 
 	public function init() {
 		parent::init();
@@ -39,6 +31,20 @@ class PortletComments extends Portlet
 		  'query' => $query,
 	  ));
 		//here we don't return the view, here we just echo it!
-		echo $this->render('@app/modules/comments/widgets/views/_comments',array('dpComments'=>$dpComments,'module'=>$this->module,'id'=>$this->id));
+		echo $this->render('@app/modules/comments/widgets/views/_comments_nonepjax',['dpComments'=>$dpComments,'module'=>$this->module,'id'=>$this->id]);
 	}
+
+	/**
+	 * Renders the decoration for the portlet.
+	 * The default implementation will render the title if it is set.
+	 */
+	protected function renderDecoration()
+	{
+		if($this->title!==null)
+		{
+			$this->title = Yii::t('app',$this->title);
+			echo "<div class='{$this->titleCssClass}'><div class='panel-heading'><i class='fa fa-info'></i> {$this->title}</div>\n</div>\n";
+		}
+	}
+
 }

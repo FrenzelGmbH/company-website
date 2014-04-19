@@ -7,6 +7,8 @@ use yii\helpers\Html;
 use app\modules\pages\models\Page;
 use app\modules\pages\models\PageSearchForm;
 
+use app\modules\app\widgets\Portlet;
+
 class PortletPagesSearch extends Portlet
 {
 	public $title='Page Search';
@@ -23,7 +25,7 @@ class PortletPagesSearch extends Portlet
 	{
 		$hits = NULL;
 		$model = new PageSearchForm;
-		if ($model->load($_POST))
+		if ($model->load(Yii::$app->request->post()))
 		{
 			if($model->searchstring!=='')
 				$hits = Page::searchByString($model->searchstring)->all();

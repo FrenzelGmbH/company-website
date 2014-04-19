@@ -2,13 +2,14 @@
 
 use \Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yiidhtmlx\Tree;
 use yiidhtmlx\Menu;
 
 $this->registerAssetBundle('yiidhtmlx\WidgetAsset');
 
-$jumpTarget = Html::url(array('/pages/page/onlineview','id'=>''));
-$actionTarget = Html::url(array('/pages/page'));
+$jumpTarget = Url::to(array('/pages/page/onlineview','id'=>''));
+$actionTarget = Url::to(array('/pages/page'));
 $jumpJS = <<<JUMPSS
 
 function doOnRowSelect(id,ind) {
@@ -67,7 +68,7 @@ echo Tree::widget(
     ),
     'clientDataOptions'=>array(
       'type'=>'json',
-      'url'=>Html::url(array('/pages/page/jsontreeview','rootId'=>$rootId))
+      'url'=>Url::to(array('/pages/page/jsontreeview','rootId'=>$rootId))
     ),
     'clientEvents'=>array(
       'onClick' => 'doOnRowSelect',

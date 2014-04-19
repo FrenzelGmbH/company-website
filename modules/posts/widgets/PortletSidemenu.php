@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use app\modules\workflow\models\Workflow;
 
-class PortletSidemenu extends Portlet
+class PortletSidemenu extends \app\modules\app\widgets\AdminPortlet
 {
 	public $title='Menu';
 	
@@ -31,7 +31,7 @@ class PortletSidemenu extends Portlet
 	protected function renderContent()
 	{
 		//here we don't return the view, here we just echo it!
-		echo $this->render('@app/modules/workflow/widgets/views/_sidemenu',array('sideMenu'=>$this->sideMenu));
+		echo $this->render('@app/modules/posts/widgets/views/_sidemenu',array('sideMenu'=>$this->sideMenu));
 	}
 
 	/**

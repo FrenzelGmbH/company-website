@@ -14,7 +14,7 @@ class Revision extends ActiveRecord
      */
 	public static function tableName()
     {
-        return '{{%revision}}';
+        return '{{tbl_revision}}';
     }
 
 	/**
@@ -25,8 +25,8 @@ class Revision extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('content, revision_table, revision_id', 'required'),
-			array('revision_table,revision_id, creator_id','integer'),
+			array(['content', 'revision_table', 'revision_id'], 'required'),
+			array(['revision_table','revision_id', 'creator_id'],'integer'),
 			array('status','string')
 		);
 	}
@@ -69,22 +69,29 @@ class Revision extends ActiveRecord
 		return Html::encode($this->Creator->username);
 	}
 
+
 	/**
-	 * This is invoked before the record is saved.
-	 * @return boolean whether the record should be saved.
-	 */
-	public function beforeSave($insert)
-	{
-		if (parent::beforeSave($insert)) {
-			if ($insert) {
-				$this->creator_id = Yii::$app->user->id;
-				$this->time_create=time();
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
+  * before we save the record, we will md5 the password
+  */
+  public function beforeSave($insert)
+  {
+      if($this->isNewRecord)
+      {
+        if(\Yii::$app->user->isGuest)
+        {
+          $this->creator_id = 0; //external system writer
+        }
+        else
+        {
+          $this->creator_id = \Yii::$app->user->identity->id;
+        }      
+      }
+      if(is_null($this->time_create))
+      {
+        $this->time_create=time();
+      }
+      return parent::beforeSave($insert);        
+  }
 
 	/**
 	* @return query to get the revision logs for a special entry

@@ -1,23 +1,53 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Block;
+use kartik\widgets\SideNav;
 
 /**
- * @var yii\base\View $this
+ * @var yii\web\View $this
  * @var app\modules\posts\models\Post $model
  */
 
 $this->title = 'Update Post: ' . $model->title;
-$this->params['breadcrumbs'][] = array('label' => 'Posts', 'url' => array('index'));
-$this->params['breadcrumbs'][] = array('label' => $model->title, 'url' => array('view', 'id' => $model->id));
+$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="module-wsp">
+<div class="workbench">
 
-	<h1><?= Html::encode($this->title); ?></h1>
+<?php Block::begin(array('id'=>'sidebar')); ?>
 
-	<?= $this->render('_form', array(
+  <?php 
+
+    $sideMenu = array();
+    $sideMenu[] = array('icon'=>'home','label'=>Yii::t('app','Home'),'url'=>Url::to(array('/site/index')));
+    $sideMenu[] = array('icon'=>'arrow-left','label'=>Yii::t('app','Post Overview'),'url'=>Url::to(array('/posts/post/index')));
+   
+    echo SideNav::widget([
+      'type' => SideNav::TYPE_DEFAULT,
+      'heading' => 'Options',
+      'items' => $sideMenu
+    ]);
+
+  ?>
+
+  <?php
+    if(class_exists('app\modules\posts\widgets\WidgetBlogMap')){
+      echo app\modules\posts\widgets\WidgetBlogMap::widget([
+        'module'=> app\modules\workflow\models\Workflow::MODULE_BLOG,
+        'id' => $model->id,
+      ]);
+    }
+  ?>
+
+<?php Block::end(); ?>
+
+	<h1 class="page-header"><?= Html::encode($this->title) ?></h1>
+
+	<?php echo $this->render('_form', [
 		'model' => $model,
-	)); ?>
+	]); ?>
 
 </div>

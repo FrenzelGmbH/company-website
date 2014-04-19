@@ -21,18 +21,18 @@ class RevisionForm extends Model
 
 	public function rules()
 	{
-		return array(
-			array('id, creator_id, time_create, revision_table, revision_id', 'integer'),
-			array('content, status', 'safe'),
-		);
+		return [
+			[['id', 'creator_id', 'time_create', 'revision_table', 'revision_id'], 'integer'],
+			[['content', 'status'], 'safe'],
+		];
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function attributeLabels()
 	{
-		return array(
+		return [
 			'id' => 'ID',
 			'content' => 'Content',
 			'status' => 'Status',
@@ -40,15 +40,15 @@ class RevisionForm extends Model
 			'time_create' => 'Time Create',
 			'revision_table' => 'Revision Table',
 			'revision_id' => 'Revision ID',
-		);
+		];
 	}
 
 	public function search($params)
 	{
 		$query = Revision::find();
-		$dataProvider = new ActiveDataProvider(array(
+		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
-		));
+		]);
 
 		if (!($this->load($params) && $this->validate())) {
 			return $dataProvider;
@@ -71,10 +71,10 @@ class RevisionForm extends Model
 			return;
 		}
 		if ($partialMatch) {
-			$value = '%' . strtr($value, array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\')) . '%';
-			$query->andWhere(array('like', $attribute, $value));
+			$value = '%' . strtr($value, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%';
+			$query->andWhere(['like', $attribute, $value]);
 		} else {
-			$query->andWhere(array($attribute => $value));
+			$query->andWhere([$attribute => $value]);
 		}
 	}
 }

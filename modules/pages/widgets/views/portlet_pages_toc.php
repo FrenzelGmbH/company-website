@@ -1,8 +1,6 @@
 <?php
 
-use \Yii;
-use yii\helpers\Html;
-use yiijquerytoc\yiijquerytoc;
+use philippfrenzel\yiijquerytoc\yiijquerytoc;
 
 ?>
 

@@ -6,6 +6,7 @@ use \Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
+use app\models\User;
 use app\modules\workflow\models\Workflow;
 use app\modules\comments\models\Comment;
 use app\modules\tags\models\Tag;
@@ -45,6 +46,15 @@ class Page extends \yii\db\ActiveRecord
 	*/
 	private $_oldBody;
 
+  /**
+   * will include the custom scopes for this model
+   * @return object enhanced query object
+   */
+  public static function find()
+  {
+    return new PageQuery(get_called_class());
+  }
+
 	/**
 	 * @inheritdoc
 	 */
@@ -61,18 +71,18 @@ class Page extends \yii\db\ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, name, body, status', 'required'),
+			array(['title', 'body', 'status'], 'required'),
 			array('status', 'in', 'range'=>array(Workflow::STATUS_DRAFT,Workflow::STATUS_PUBLISHED,Workflow::STATUS_ARCHIVED)),
-			array('title, name', 'string', 'max'=>128),
+			array(['title', 'name'], 'string', 'max'=>128),
 			array('parent_pages_id','integer'),
-			array('body, description, vars','string'),
+			array(['description', 'vars'],'string'),
 			array('date_associated','date'),
 			array('ord','integer'),
-			array('time_create, time_update, template','string'),
+			array(['time_create', 'time_update', 'template'],'string'),
 			array('special','integer'),
 			array('category','integer'),
 			array('tags', 'match', 'pattern'=>'/^[\w\s,]+$/', 'message'=>'Tags can only contain word characters.'),
-			//array('tags', 'normalizeTags'),
+			array('tags', 'normalizeTags'),
 		);
 	}
 
@@ -100,14 +110,6 @@ class Page extends \yii\db\ActiveRecord
 			'status' => 'Status',
 		);
 	}
-
-  /**
-  * @param ActiveQuery $query
-  */
-  public static function active($query)
-  {
-      $query->andWhere('(special <> -1 OR special IS NULL)');
-  }
 
   /**
    * returns the complete parent node of the selected page
@@ -154,10 +156,11 @@ class Page extends \yii\db\ActiveRecord
 	 */
 	public function getUrl()
 	{
-		return Yii::$app->controller->createUrl('/pages/page/onlineview', array(
+		return Yii::$app->urlManager->createUrl([
+      '/pages/page/onlineview',
 			'id'=>$this->id,
 			'title'=>$this->title,
-		));
+		]);
 	}
 
 	/**
@@ -165,9 +168,10 @@ class Page extends \yii\db\ActiveRecord
 	 */
 	public function getUrlUpdate()
 	{
-		return Yii::$app->controller->createUrl('pages/update', array(
+		return Yii::$app->urlManager->createUrl([
+      'pages/page/update',
 			'id'=>$this->id
-		));
+		]);
 	}
 
 	/**
@@ -175,9 +179,10 @@ class Page extends \yii\db\ActiveRecord
 	 */
 	public function getUrlDiff()
 	{
-		return Yii::$app->controller->createUrl('page/diffview', array(
+		return Yii::$app->urlManager->createUrl([
+      'pages/page/diffview', 
 			'id'=>$this->id
-		));
+		]);
 	}
 
 	/**
@@ -238,6 +243,7 @@ class Page extends \yii\db\ActiveRecord
 			}
 			else {
 				$this->time_update=time();
+        $this->date_associated = date('Y-m-d');
 				//here we check if the body has changed
 				if($this->body != $this->_oldBody){
 					$OldPage = new Page; //looks strange, but the old page needs to be backuped into a new one;)
@@ -300,7 +306,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function rootTreeAsArray($id)
     {
-    	$checkRootNode = Page::find($id);
+    	$checkRootNode = Page::findOne($id);
     	if(is_null($checkRootNode->parent_pages_id) OR $checkRootNode->parent_pages_id == 0)
     		$rootNode = $checkRootNode->id;
     	else
@@ -325,7 +331,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function nodeChildren($id,$lazyLoad = false)
     {
-        $curnode = static::find($id);
+        $curnode = static::findOne($id);
         if($curnode)
         {
             $children = static::find()->where('parent_pages_id = '.$id.' AND (special IS NULL OR special <> "-1")')->All();

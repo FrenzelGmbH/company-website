@@ -2,17 +2,19 @@
 
 namespace app\modules\workflow\controllers;
 
+use Yii;
+use app\modules\app\controllers\AppController;
+
 use app\modules\workflow\models\Workflow;
 use app\modules\workflow\models\WorkflowForm;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\HttpException;
-use yii\web\VerbFilter;
+use yii\filters\VerbFilter;
 
 /**
  * WorkflowController implements the CRUD actions for Workflow model.
  */
-class WorkflowController extends Controller
+class WorkflowController extends AppController
 {
 
 	/**
@@ -77,7 +79,7 @@ class WorkflowController extends Controller
 	{
 		$model = new Workflow;
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('view', 'id' => $model->id));
 		} else {
 			return $this->render('create', array(
@@ -96,7 +98,7 @@ class WorkflowController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load($_POST) && $model->save()) {
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(array('view', 'id' => $model->id));
 		} else {
 			return $this->render('update', array(
@@ -126,7 +128,7 @@ class WorkflowController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if (($model = Workflow::find($id)) !== null) {
+		if (($model = Workflow::findOne($id)) !== null) {
 			return $model;
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');

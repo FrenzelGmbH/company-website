@@ -25,8 +25,8 @@ class WorkflowForm extends Model
 	public function rules()
 	{
 		return array(
-			array('id, previous_user_id, next_user_id, wf_table, wf_id', 'integer'),
-			array('module, status_from, status_to, actions_next, date_create', 'safe'),
+			array(['id', 'previous_user_id', 'next_user_id', 'wf_table', 'wf_id'], 'integer'),
+			array(['module', 'status_from', 'status_to', 'actions_next', 'date_create'], 'safe'),
 		);
 	}
 

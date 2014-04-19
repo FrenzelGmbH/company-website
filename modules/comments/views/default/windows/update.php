@@ -57,6 +57,12 @@ $this->registerJs($formsubmitJS);
     ),
 )); ?>
 
+	<?php if(Yii::$app->user->isGuest): ?>
+
+    <?= $form->field($model, 'anonymous')->textInput(); ?>
+
+  <?php endif; ?>
+
 	<?= $form->field($model,'content')->textArea(array('rows'=>4, 'cols'=>40)); ?>
 
 	<div class="form-group">

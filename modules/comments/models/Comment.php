@@ -29,7 +29,7 @@ class Comment extends ActiveRecord
      */
 	public static function tableName()
     {
-        return '{{%comment}}';
+        return '{{tbl_comment}}';
     }
 
 	/**
@@ -39,9 +39,9 @@ class Comment extends ActiveRecord
     {
         return array(
             array('content', 'string'),
-            array('content, comment_table, comment_id', 'required'),
-						array('author_id, time_create, comment_table, comment_id', 'integer'),
-            array('status', 'string', 'max' => 255)
+            array(['content', 'comment_table', 'comment_id'], 'required'),
+						array(['author_id', 'time_create', 'comment_table', 'comment_id'], 'integer'),
+            array(['status','anonymous'], 'string', 'max' => 255)
         );
     }
 
@@ -81,6 +81,7 @@ class Comment extends ActiveRecord
 			'status' => Yii::t('app','Status'),
 			'time_create' => Yii::t('app','Create Time'),
 			'author_id' => Yii::t('app','Name'),
+			'anonymous' => Yii::t('app','Email'),
 			'comment_id' => Yii::t('app','Reference ID'),
 			'comment_table' => Yii::t('app','Module'),
 		);
@@ -115,7 +116,14 @@ class Comment extends ActiveRecord
 		/*if(!empty($this->url))
 			return Html::a(Html::encode($this->author),$this->url);
 		else*/
-		return Html::encode($this->Author->username);
+		if(!Yii::$app->user->isGuest)
+		{
+			return Html::encode($this->Author->username);
+		}
+		else
+		{
+			return Html::encode($this->anonymous);
+		}
 	}
 
 	/**
@@ -135,7 +143,7 @@ class Comment extends ActiveRecord
 	 */
 	public static function findRecentComments($module,$id,$limit=10)
 	{
-		return static::find()->where('status="'.Workflow::STATUS_APPROVED.'" AND comment_table = '.$module.' AND comment_id = '.$id)
+		return static::find()->where('status IN ("'.Workflow::STATUS_APPROVED.'","'.Workflow::STATUS_CREATED.'") AND comment_table = '.$module.' AND comment_id = '.$id)
 					->orderBy('time_create DESC')
 					->limit($limit)
 					->with('post');
@@ -149,7 +157,14 @@ class Comment extends ActiveRecord
 	{
 		if (parent::beforeSave($insert)) {
 			if ($insert) {
-				$this->author_id = Yii::$app->user->identity->id;
+				if(Yii::$app->user->isGuest)
+				{
+					//for anonymous posts, we need to define a special rule...
+					$this->author_id = NULL;
+				}
+				{
+					$this->author_id = Yii::$app->user->identity->id;
+				}				
 				$this->time_create=time();
 			}
 			return true;
@@ -166,7 +181,7 @@ class Comment extends ActiveRecord
 	 */
 	public static function getAdapterForCommentCount($module,$id)
 	{
-		return static::find()->where('status="'.Workflow::STATUS_APPROVED.'" AND comment_table = '.$module.' AND comment_id = '.$id)->Count();
+		return static::find()->where('status IN ("'.Workflow::STATUS_APPROVED.'","'.Workflow::STATUS_CREATED.'") AND comment_table = '.$module.' AND comment_id = '.$id)->Count();
 	}
 
 }

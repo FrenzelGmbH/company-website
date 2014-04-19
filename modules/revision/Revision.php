@@ -9,7 +9,7 @@ class Revision extends Module
   /**
   * @var public defaultRoute holding the controller name which will be called by default
   */
-  public $defaultRoute = 'default';
+  public $defaultRoute = 'revision';
 
 	/**
 	* @var public $controllerNamespace holing the namespace of the controller

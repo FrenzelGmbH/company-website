@@ -3,52 +3,80 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\modules\app\controllers\AppController;
 
-class SiteController extends Controller
+class SiteController extends AppController
 {
+
+	public function behaviors()
+	{
+		return [
+			'access' => [
+				'class' => AccessControl::className(),
+				'only' => ['logout'],
+				'rules' => [
+					[
+						'actions' => ['logout'],
+						'allow' => true,
+						'roles' => ['@'],
+					],
+				],
+			],
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'logout' => ['post'],
+				],
+			],
+		];
+	}
+
 	public function actions()
 	{
-		return array(
-			'error' => array(
+		return [
+			'error' => [
 				'class' => 'yii\web\ErrorAction',
-			),
-			'captcha' => array(
+			],
+			'captcha' => [
 				'class' => 'yii\captcha\CaptchaAction',
 				'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-			),
-			'connector' => array(
-				'class' => 'yii2elfinder\ConnectorAction',
-				'clientOptions'=>array(
-					'locale' => '',
-					'roots'  => array(
-				        array(
-				            'driver' => 'LocalFileSystem',
-				            'path'   => dirname(__DIR__).'/web/',
-				            'URL'    => '',
-				        )
-				    ) 	
-				)
-			)
-		);
+			],
+		];
 	}
 
 	public function actionIndex()
 	{
-		return $this->render('index');
+		return $this->render('blog',['linkedby'=>$referrer]);
+	}
+
+	public function actionDashboard()
+	{
+		return $this->render('dashboard');
+	}
+
+	public function actionBlog()
+	{
+		$referrer = $_SERVER['HTTP_REFERER'];
+		return $this->render('blog',['linkedby'=>$referrer]);
 	}
 
 	public function actionLogin()
 	{
+		if (!\Yii::$app->user->isGuest) {
+			$this->goHome();
+		}
+
 		$model = new LoginForm();
-		if ($model->load($_POST) && $model->login()) {
-			return $this->goHome();
+		if ($model->load(Yii::$app->request->post()) && $model->login()) {
+			return $this->goBack();
 		} else {
-			return $this->render('login', array(
+			return $this->render('login', [
 				'model' => $model,
-			));
+			]);
 		}
 	}
 
@@ -61,13 +89,13 @@ class SiteController extends Controller
 	public function actionContact()
 	{
 		$model = new ContactForm;
-		if ($model->load($_POST) && $model->contact(Yii::$app->params['adminEmail'])) {
+		if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
 			Yii::$app->session->setFlash('contactFormSubmitted');
 			return $this->refresh();
 		} else {
-			return $this->render('contact', array(
+			return $this->render('contact', [
 				'model' => $model,
-			));
+			]);
 		}
 	}
 
@@ -75,10 +103,4 @@ class SiteController extends Controller
 	{
 		return $this->render('about');
 	}
-
-	public function actionFilemanager()
-	{
-		return $this->render('elfinder');
-	}
-
 }

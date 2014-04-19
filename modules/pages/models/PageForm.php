@@ -31,8 +31,8 @@ class PageForm extends Model
 	public function rules()
 	{
 		return array(
-			array('id, parent_pages_id, ord, time_create, time_update, special', 'integer'),
-			array('name, body, title, template, category, tags, description, date_associated, vars, status', 'safe'),
+			array(['id', 'parent_pages_id', 'ord', 'time_create', 'time_update', 'special'], 'integer'),
+			array(['name', 'body', 'title', 'template', 'category', 'tags', 'description', 'date_associated', 'vars', 'status'], 'safe'),
 		);
 	}
 

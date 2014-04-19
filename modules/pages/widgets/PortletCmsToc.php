@@ -3,6 +3,7 @@ namespace app\modules\pages\widgets;
 
 use \Yii;
 use yii\helpers\Html;
+use app\modules\app\widgets\Portlet;
 
 class PortletCmsToc extends Portlet
 {

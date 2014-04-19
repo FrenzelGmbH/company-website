@@ -33,7 +33,7 @@ $this->registerJs($initbookingJS);
 				'class' => DataColumn::className(),
 				'attribute' => 'previous_user_id',
 				'content'=>function($data, $row) {
-					$html = $data->PreviousUser->username;
+					$html = $data->previousUser->username;
 					return $html;
 				}
 			),
@@ -46,7 +46,7 @@ $this->registerJs($initbookingJS);
 				'class' => DataColumn::className(),
 				'attribute' => 'next_user_id',
 				'content'=>function($data, $row) {
-					$html = $data->NextUser->username;
+					$html = $data->nextUser->username;
 					return $html;
 				}
 			),

@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\HtmlPurifier;
 
 ?>
@@ -36,13 +37,13 @@ use yii\helpers\HtmlPurifier;
       <?= HtmlPurifier::process($model->body); ?>
     </div>
     <div class="col-md-2">
-      <a href="<?= Html::url('reply'); ?>" class="btn btn-warning btn-sm tipster" title="<?= Yii::t('app','reply'); ?>"> 
+      <a href="<?= Url::to('reply'); ?>" class="btn btn-warning btn-sm tipster" title="<?= Yii::t('app','reply'); ?>"> 
         <i class="icon-mail-reply"> </i>
       </a>
-      <a href="<?= Html::url('update'); ?>" class="btn btn-info btn-sm tipster" title="<?= Yii::t('app','update'); ?>"> 
+      <a href="<?= Url::to('update'); ?>" class="btn btn-info btn-sm tipster" title="<?= Yii::t('app','update'); ?>"> 
         <i class="icon-pencil"> </i>
       </a>
-      <a href="<?= Html::url('update'); ?>" class="btn btn-danger btn-sm tipster" title="<?= Yii::t('app','delete'); ?>"> 
+      <a href="<?= Url::to('update'); ?>" class="btn btn-danger btn-sm tipster" title="<?= Yii::t('app','delete'); ?>"> 
         <i class="icon-trash"> </i>
       </a>      
     </div>

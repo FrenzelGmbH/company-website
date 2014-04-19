@@ -2,19 +2,21 @@
 
 namespace app\modules\comments\controllers;
 
-use \Yii;
+use Yii;
 
-use yii\web\Controller;
+use app\modules\app\controllers\AppController;
+
 use yii\data\ActiveDataProvider;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 use yii\helpers\Json;
 
 use app\modules\comments\models\Comment;
 
-class DefaultController extends Controller
+class DefaultController extends AppController
 {
-	public $layout='/column1';
 
 	public function actionIndex()
 	{
@@ -47,6 +49,37 @@ class DefaultController extends Controller
 	}
 
 	/**
+	 * will create a new commment
+	 * @param  integer $id     [description]
+	 * @param  integer $module [description]
+	 * @return [type]         [description]
+	 */
+	public function actionCreate($id=NULL,$module=NULL)
+	{
+		$model=new Comment;
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$query = Comment::findRecentComments($model->comment_table, $model->comment_id);
+			$dpComments = new ActiveDataProvider(array(
+			  'query' => $query,
+		  ));
+			echo $this->renderPartial('@app/modules/comments/widgets/views/_comments_nonepjax',[
+				'dpComments' =>$dpComments,
+				'module'     =>$model->comment_table,
+				'id'         =>$model->comment_id
+			]);
+		} else {
+			$model->comment_id = $id;
+			$model->comment_table = $module;
+			$model->author_id = Yii::$app->user->id;
+
+			return $this->renderPartial('_form_create', array(
+				'model' => $model,
+			));
+		}
+		
+	}
+
+	/**
 	 * will create a window with the relevant form
 	 * @param  [type] $id     [description]
 	 * @param  [type] $module [description]
@@ -54,13 +87,13 @@ class DefaultController extends Controller
 	 */
 	public function actionCreatewindow($id,$module){		
 		//define the request target		
-		$requestUrl = Html::url(array('default/createwindow','id'=>$id,'module'=>$module));
+		$requestUrl = Url::to(array('default/createwindow','id'=>$id,'module'=>$module));
 		
 		$model=new Comment;
 		$model->comment_id = $id;
 		$model->comment_table = $module;
 		$model->author_id = Yii::$app->user->id;
-		if ($model->load($_POST)) {
+		if ($model->load(Yii::$app->request->post())) {
 			if($model->save()){
 				$myCounter = Comment::getAdapterForCommentCount($module,$id);
 				header('Content-type: application/json');

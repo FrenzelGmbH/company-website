@@ -9,6 +9,10 @@ use app\modules\workflow\models\Workflow;
 use app\modules\comments\models\Comment;
 use app\modules\tags\models\Tag;
 
+use yii\helpers\Html;
+
+use \DateTime;
+
 /**
  * This is the model class for table "tbl_post".
  *
@@ -20,6 +24,7 @@ use app\modules\tags\models\Tag;
  * @property integer $author_id
  * @property integer $time_create
  * @property integer $time_update
+ * @property integer $categories_id
  *
  * @property  $author
  */
@@ -30,7 +35,7 @@ class Post extends \yii\db\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return 'tbl_post';
+		return '{{%post}}';
 	}
 
 	private $_oldTags;
@@ -43,26 +48,42 @@ class Post extends \yii\db\ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, content, status', 'required'),
-			array('status', 'in', 'range'=>array(Workflow::STATUS_DRAFT,Workflow::STATUS_PUBLISHED,Workflow::STATUS_ARCHIVED)),
+			array(['title', 'content', 'status'], 'required'),
+			array('status', 'in', 'range'=>array(Workflow::STATUS_CREATED,Workflow::STATUS_DRAFT,Workflow::STATUS_PUBLISHED,Workflow::STATUS_ARCHIVED)),
 			array('title', 'string', 'max'=>128),
+			array('categories_id','integer'),
+			['time_create','string'],
 			array('tags', 'match', 'pattern'=>'/^[\w\s,]+$/', 'message'=>'Tags can only contain word characters.'),
 			array('tags', 'normalizeTags'),
-
-			//array('title, status', 'safe', 'on'=>'search'),
+			
+			//array('title, status', 'safe','categories_id', 'on'=>'search'),
 		);
 	}
 
-
+	/**
+	 * [getComments description]
+	 * @return [type] [description]
+	 */
 	public function getComments() {
 		return $this->hasMany('\app\modules\comments\models\Comment', array('comment_id' => 'id')) //
 		            ->where('status = "'. Workflow::STATUS_APPROVED.'" AND comment_table = '.Workflow::MODULE_BLOG)
 					->orderBy('time_create DESC');
 	}
 
-	
+	/**
+	 * [getAuthor description]
+	 * @return [type] [description]
+	 */
 	public function getAuthor() {
-		return $this->hasOne('User', array('id' => 'author_id'));
+		return $this->hasOne('\app\modules\app\components\User', array('id' => 'author_id'));
+	}
+
+	/**
+	 * [getCategory description]
+	 * @return [type] [description]
+	 */
+	public function getCategory() {
+		return $this->hasOne('\app\modules\categories\models\Categories', array('id' => 'categories_id'));
 	}
 	
 	/**
@@ -71,14 +92,15 @@ class Post extends \yii\db\ActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id'          => 'Id',
-			'title'       => Yii::t('app','Title'),
-			'content'     => Yii::t('app','Content'),
-			'tags'        => Yii::t('app','Tags'),
-			'status'      => Yii::t('app','Status'),
-			'time_create' => Yii::t('app','Create Time'),
-			'time_update' => Yii::t('app','Update Time'),
-			'author_id'   => Yii::t('app','Author'),
+			'id'            => 'Id',
+			'title'         => Yii::t('app','Title'),
+			'content'       => Yii::t('app','Content'),
+			'tags'          => Yii::t('app','Tags'),
+			'status'        => Yii::t('app','Status'),
+			'time_create'   => Yii::t('app','Created at'),
+			'time_update'   => Yii::t('app','Updatet at'),
+			'author_id'     => Yii::t('app','Author'),
+			'categories_id' => Yii::t('app','Category'),
 		);
 	}
 
@@ -87,10 +109,11 @@ class Post extends \yii\db\ActiveRecord
 	 */
 	public function getUrl()
 	{
-		return Yii::$app->controller->createUrl('post/view', array(
+		return \Yii::$app->urlManager->createUrl([
+			'/posts/post/onlineview',
 			'id'=>$this->id,
-			'title'=>$this->title,
-		));
+			'title'=>$this->title
+		]);
 	}
 
 	/**
@@ -100,8 +123,8 @@ class Post extends \yii\db\ActiveRecord
 	{
 		$links=array();
 		foreach(Tag::string2array($this->tags) as $tag)
-			$links[]=Html::a(Html::encode($tag), array('post/index', 'tag'=>$tag), array('class'=>'label'));
-		return $links;
+			$links[]=Html::a(Html::encode($tag), array('/posts/post/tag', 'tag'=>$tag), array('class'=>'label label-info'));
+		return implode("&nbsp;\n",$links);
 	}
 
 	/**
@@ -135,7 +158,8 @@ class Post extends \yii\db\ActiveRecord
 	public function afterFind()
 	{
 		parent::afterFind();
-		$this->_oldTags=$this->tags;
+		$this->_oldTags = $this->tags;		
+		$this->time_create = gmdate("Y-m-d", $this->time_create);
 	}
 
 	/**
@@ -143,19 +167,24 @@ class Post extends \yii\db\ActiveRecord
 	 * @return boolean whether the record should be saved.
 	 */
 	public function beforeSave($insert)
-	{
-		if (parent::beforeSave($insert)) {
-			if ($insert) {
+	{		
+		if (parent::beforeSave($insert)) 
+		{
+			if ($insert) 
+			{
 				$this->time_create=$this->time_update=time();
-				$this->author_id=Yii::$app->user->identity->id;
+				$this->author_id=\Yii::$app->user->identity->id;
 			}
-			else {
+			else
+			{
 				$this->time_update=time();
+				$a = strptime($this->time_create, '%Y-%m-%d');
+				$timestamp = mktime(0, 0, 0, $a['tm_mon']+1, $a['tm_mday']+1, $a['tm_year']+1900);				
+				$this->time_create = $timestamp;		
 			}
 			return true;
-		} else {
-			return false;
-		}
+		} 
+		return false;
 	}
 
 	/**
@@ -182,16 +211,59 @@ class Post extends \yii\db\ActiveRecord
 
 	/**
 	 * This will return the query the passed number of posts ordered desc by time created
-	 * 
 	 * @param  limit number of records to be listed by data provider
 	 * @return  query containing the correct sql for active data provider
 	 */
-	
-	public static function getAdapterForPosts($limit=5,$tag='All')
+	public static function getAdapterForPosts($limit=5,$tag='')
 	{
 		return static::find()->where('status="'.Workflow::STATUS_PUBLISHED.'" AND tags LIKE "%'.$tag.'%"')
 					->orderBy('time_create DESC')
 					->limit($limit);
+	}
+
+	/**
+	 * This will return the query the passed number of posts ordered desc by time created
+	 * @param  limit number of records to be listed by data provider
+	 * @return  query containing the correct sql for active data provider
+	 */
+	public static function getAdapterForPostsCatgory($limit=5,$category='')
+	{
+		return static::find()->where('status="'.Workflow::STATUS_PUBLISHED.'" AND categories_id = "'.$category.'"')
+					->orderBy('time_create DESC')
+					->limit($limit);
+	}
+
+	/**
+  * search body by string
+  * @param string searchText to be looked up
+  */
+  public static function searchByString($query)
+  {
+		return static::find()->where("UPPER(content) LIKE '%".strtoupper($query)."%'");
+	}
+
+	/**
+	 * Will return the next post after this one... If no one behind it, then jump to start
+	 * @return the next record
+	 * @todo if the result is NULL, we need to return the first post
+	 */
+	public function getNextPost()
+	{
+		return static::find()
+			->where('id > :id', [':id' => $this->id])
+			->orderBy('time_create ASC')->limit(1)->One();
+	}
+
+	/**
+	 * Will return the previous post after this one... If no one behind it, then jump to start
+	 * @return the next record
+	 * @todo if the result is NULL, we need to return the first post
+	 */
+	public function getPreviousPost()
+	{
+		return static::find()
+			->where('id < :id', [':id' => $this->id])
+			->orderBy('time_create DESC')->limit(1)->One();
 	}
 
 }

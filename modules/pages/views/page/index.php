@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\helpers\Url;
+use kartik\grid\GridView;
+use kartik\widgets\SideNav;
 use yii\grid\DataColumn;
 
 /**
@@ -10,20 +12,32 @@ use yii\grid\DataColumn;
  * @var app\modules\pages\models\PageForm $searchModel
  */
 
-$this->title = 'Pages';
+$this->title = 'Manage Content Pages';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="module-wsp">
 
-	<h1><?= Html::encode($this->title); ?></h1>
+<?php yii\widgets\Block::begin(array('id'=>'sidebar')); ?>
 
-	<?php //echo $this->render('_search', array('model' => $searchModel)); ?>
+	<?php 
 
-	<hr>
+  	$sideMenu = array();
+  	$sideMenu[] = array('icon'=>'home','label'=>Yii::t('app','Home'),'url'=>Url::to(array('/site/index')));
+  	$sideMenu[] = array('icon'=>'plus','label'=>Yii::t('app','New Page'),'url'=>Url::to(array('/pages/page/create')));
+   
+    echo SideNav::widget([
+      'type' => SideNav::TYPE_DEFAULT,
+      'heading' => 'Options',
+      'items' => $sideMenu
+    ]);
 
-	<div>
-		<?= Html::a('Create Page', array('create'), array('class' => 'btn btn-danger')); ?>
-	</div>
+  ?>
+
+<?php yii\widgets\Block::end(); ?>
+
+
+<div class="workbench">
+
+  <h1 class="page-header"><?= Html::encode($this->title) ?></h1>
 
 	<?= GridView::widget(array(
 		'dataProvider' => $dataProvider,
@@ -45,16 +59,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'date_associated',
 			// 'vars:ntext',
 			// 'status',
-			array(
-				'class' => DataColumn::className(),
-				'content'=>function($data, $row) {
-					$html = Html::a(NULL, array("/pages/page/update", "id"=>$data->id), array('class' => 'edit icon icon-edit', "id"=>$data->id));
-					//$html .= ' | ';
-					$html .= Html::a(NULL, array("/pages/page/delete", "id"=>$data->id), array('class'=>'delete icon icon-trash'));
-					return $html;
-				}
-			),
+			['class' => 'kartik\grid\ActionColumn'],			
 		),
+		'panel' => [
+      'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> Pages</h3>',
+      'type'=>'success',
+      'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Create Page', ['create'], ['class' => 'btn btn-success']),
+      'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset Grid', ['index'], ['class' => 'btn btn-info']),
+      'showFooter'=>false
+  	],
 	)); ?>
 
 </div>

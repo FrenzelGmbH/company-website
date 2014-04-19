@@ -17,14 +17,16 @@ class PostSearch extends Model
 	public $tags;
 	public $status;
 	public $author_id;
+  public $categories_id;
 	public $time_create;
 	public $time_update;
+	public $searchstring;
 
 	public function rules()
 	{
 		return array(
-			array('id, author_id, time_create, time_update', 'integer'),
-			array('title, content, tags, status', 'safe'),
+			array(['id', 'author_id', 'time_create', 'time_update'], 'integer'),
+			array(['title', 'content', 'tags', 'status','searchstring','categories_id'], 'safe'),
 		);
 	}
 
@@ -39,7 +41,9 @@ class PostSearch extends Model
 			'content' => 'Content',
 			'tags' => 'Tags',
 			'status' => 'Status',
-			'author_id' => 'Author ID',
+			'author_id' => 'Author',
+      'categories_id' => 'Category',
+			'searchstring' => 'search',
 			'time_create' => 'Time Create',
 			'time_update' => 'Time Update',
 		);
@@ -62,22 +66,28 @@ class PostSearch extends Model
 		$this->addCondition($query, 'tags', true);
 		$this->addCondition($query, 'status', true);
 		$this->addCondition($query, 'author_id');
+    $this->addCondition($query, 'categories_id');
 		$this->addCondition($query, 'time_create');
 		$this->addCondition($query, 'time_update');
 		return $dataProvider;
 	}
 
 	protected function addCondition($query, $attribute, $partialMatch = false)
-	{
-		$value = $this->$attribute;
-		if (trim($value) === '') {
-			return;
-		}
-		if ($partialMatch) {
-			$value = '%' . strtr($value, array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\')) . '%';
-			$query->andWhere(array('like', $attribute, $value));
-		} else {
-			$query->andWhere(array($attribute => $value));
-		}
-	}
+  {
+      if (($pos = strrpos($attribute, '.')) !== false) {
+          $modelAttribute = substr($attribute, $pos + 1);
+      } else {
+          $modelAttribute = $attribute;
+      }
+
+      $value = $this->$modelAttribute;
+      if (trim($value) === '') {
+          return;
+      }
+      if ($partialMatch) {
+          $query->andWhere(['like', $attribute, $value]);
+      } else {
+          $query->andWhere([$attribute => $value]);
+      }
+  }
 }

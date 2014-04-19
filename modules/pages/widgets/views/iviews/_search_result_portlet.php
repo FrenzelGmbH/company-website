@@ -1,7 +1,7 @@
 <?php 
 use \yii\helpers\Html;
 
-use app\helpers\HighlightHelper;
+use app\modules\app\helpers\HighlightHelper;
 ?>
 
 <div class="row">

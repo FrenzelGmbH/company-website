@@ -3,11 +3,13 @@ namespace app\modules\pages\widgets;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 use yii\data\ActiveDataProvider;
 
 use app\modules\pages\models\Page;
 
-class PortletSinglePage extends Portlet
+class PortletSinglePage extends \app\modules\app\widgets\AdminPortlet
 {
 	public $title='Content';
 	
@@ -33,15 +35,15 @@ class PortletSinglePage extends Portlet
 	public $htmlOptions=array();
 
 	public function init() {		
-		$this->_model = Page::find($this->id);
+		$this->_model = Page::findOne($this->id);
 		if(!is_null($this->_model)){
 			$this->title = $this->_model->title;
 			$this->adminActions[] = array(
-					'action'=>Html::url(array('/pages/page/onlineview','id'=>$this->_model->id)),
+					'action'=>Url::to(array('/pages/page/onlineview','id'=>$this->_model->id)),
 					'content'=>"<i class='icon icon-eye-open icon-1x tipster' title='anzeigen'> </i>"
 			);
 			$this->adminActions[] = array(
-					'action'=>Html::url(array('/pages/page/update','id'=>$this->_model->id)),
+					'action'=>Url::to(array('/pages/page/update','id'=>$this->_model->id)),
 					'content'=>"<i class='icon icon-pencil icon-1x tipster' title='bearbeiten'> </i>"
 			);
 		}

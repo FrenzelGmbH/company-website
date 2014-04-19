@@ -1,11 +1,14 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Json;
+use yii\web\JsExpression;
+
+use kartik\helpers\Html;
+use yii\helpers\Url;
 
 use app\modules\workflow\models\Workflow;
-
-use yiiwymeditor\yiiwymeditor;
+use philippfrenzel\yiiwymeditor\yiiwymeditor;
 
 /**
  * @var yii\base\View $this
@@ -35,18 +38,43 @@ use yiiwymeditor\yiiwymeditor;
 		<?= $form->field($model, 'vars')->textInput(); ?>
 		<?= $form->field($model, 'ord')->textInput(); ?>
 		<?= $form->field($model, 'special')->textInput(); ?>
-		<?= $form->field($model, 'date_associated')->textInput(array('readonly'=>true)); ?>
+		<?= $form->field($model, 'date_associated')->textInput(); ?>
 		<?= $form->field($model, 'category')->textInput(array('maxlength' => 64)); ?>
+		<?= $form->field($model, 'time_create')->textInput(); ?>
+		<?= $form->field($model, 'time_update')->textInput(); ?>
 	</div>
 	<div class="col-lg-8">
+
+	<?php
+
+$pinterest = <<< SCRIPT
+{instanceReady: function() {
+  this.dataProcessor.htmlFilter.addRules({
+      elements: {
+          img: function( el ) {
+              if ( !el.attributes.class )
+                el.attributes.class = 'img-responsive';
+              if(el.attributes.alt == 'pinterest') {
+                var fragment = CKEDITOR.htmlParser.fragment.fromHtml( '<div class="pinterest-image">'+el.getOuterHtml()+'</div>' );
+                el.replaceWith(fragment);
+              }
+          }
+      }
+  });          
+}}
+SCRIPT;
+
+?>
+
 		<?= yiiwymeditor::widget(array(
 			'model'=>$model,
 			'attribute'=>'body',
 			'clientOptions'=>array(
+				'on' => new JsExpression($pinterest),
 				'toolbar' => 'basic',
-				'height' => '500px',
-				'filebrowserBrowseUrl' => Html::url(array('/pages/page/filemanager')),
-				'filebrowserImageBrowseUrl' => Html::url(array('/pages/page/filemanager','mode'=>'image')),
+				'height' => '400px',
+				'filebrowserBrowseUrl' => Url::to(array('/pages/page/filemanager')),
+				'filebrowserImageBrowseUrl' => Url::to(array('/pages/page/filemanager','mode'=>'image')),
 			),
 			'inputOptions'=>array(
 				'size'=>'2',

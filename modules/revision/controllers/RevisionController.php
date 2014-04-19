@@ -2,28 +2,30 @@
 
 namespace app\modules\revision\controllers;
 
+use Yii;
+use app\modules\app\controllers\AppController;
+
 use app\modules\revision\models\Revision;
 use app\modules\revision\models\RevisionForm;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\HttpException;
-use yii\web\VerbFilter;
+use yii\filters\VerbFilter;
 
 /**
  * RevisionController implements the CRUD actions for Revision model.
  */
-class RevisionController extends Controller
+class RevisionController extends AppController
 {
+
 	public function behaviors()
 	{
-		return array(
-			'verbs' => array(
+		return [
+			'verbs' => [
 				'class' => VerbFilter::className(),
-				'actions' => array(
-					'delete' => array('post'),
-				),
-			),
-		);
+				'actions' => [
+					'delete' => ['post'],
+				],
+			],
+		];
 	}
 
 	/**
@@ -35,10 +37,10 @@ class RevisionController extends Controller
 		$searchModel = new RevisionForm;
 		$dataProvider = $searchModel->search($_GET);
 
-		return $this->render('index', array(
+		return $this->render('index', [
 			'dataProvider' => $dataProvider,
 			'searchModel' => $searchModel,
-		));
+		]);
 	}
 
 	/**
@@ -48,9 +50,9 @@ class RevisionController extends Controller
 	 */
 	public function actionView($id)
 	{
-		return $this->render('view', array(
+		return $this->render('view', [
 			'model' => $this->findModel($id),
-		));
+		]);
 	}
 
 	/**
@@ -62,12 +64,12 @@ class RevisionController extends Controller
 	{
 		$model = new Revision;
 
-		if ($model->load($_POST) && $model->save()) {
-			return $this->redirect(array('view', 'id' => $model->id));
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
-			return $this->render('create', array(
+			return $this->render('create', [
 				'model' => $model,
-			));
+			]);
 		}
 	}
 
@@ -81,12 +83,12 @@ class RevisionController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load($_POST) && $model->save()) {
-			return $this->redirect(array('view', 'id' => $model->id));
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
-			return $this->render('update', array(
+			return $this->render('update', [
 				'model' => $model,
-			));
+			]);
 		}
 	}
 
@@ -99,7 +101,7 @@ class RevisionController extends Controller
 	public function actionDelete($id)
 	{
 		$this->findModel($id)->delete();
-		return $this->redirect(array('index'));
+		return $this->redirect(['index']);
 	}
 
 	/**
@@ -111,7 +113,7 @@ class RevisionController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if (($model = Revision::find($id)) !== null) {
+		if (($model = Revision::findOne($id)) !== null) {
 			return $model;
 		} else {
 			throw new HttpException(404, 'The requested page does not exist.');

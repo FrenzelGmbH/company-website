@@ -63,7 +63,7 @@ class PageForm extends Model
 
 	public function search($params)
 	{
-		$query = Page::find()->active();
+		$query = Page::find();
 		$dataProvider = new ActiveDataProvider(array(
 			'query' => $query,
 		));
@@ -92,16 +92,22 @@ class PageForm extends Model
 	}
 
 	protected function addCondition($query, $attribute, $partialMatch = false)
-	{
-		$value = $this->$attribute;
-		if (trim($value) === '') {
-			return;
-		}
-		if ($partialMatch) {
-			$value = '%' . strtr($value, array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\')) . '%';
-			$query->andWhere(array('like', $attribute, $value));
-		} else {
-			$query->andWhere(array($attribute => $value));
-		}
-	}
+  {
+    if (($pos = strrpos($attribute, '.')) !== false) {
+      $modelAttribute = substr($attribute, $pos + 1);
+    } else {
+      $modelAttribute = $attribute;
+    }
+
+    $value = $this->$modelAttribute;
+    if (trim($value) === '') {
+      return;
+    }
+    if ($partialMatch) {
+      $query->andWhere(['like', $attribute, $value]);
+    } else {
+      $query->andWhere([$attribute => $value]);
+    }
+  }
+
 }

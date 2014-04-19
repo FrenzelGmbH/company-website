@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'description:ntext',
 			// 'date_associated',
 			// 'vars:ntext',
-			 'status',
+			// 'status',
 			['class' => 'kartik\grid\ActionColumn'],			
 		),
 		'panel' => [

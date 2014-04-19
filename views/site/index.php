@@ -14,7 +14,10 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
     <div class="col-lg-8">
       <div class="bigspace">
         <?php 
-          for($img=1;$img<=3;$img++){
+          $item = array();
+          $item[] = array('content'=>"<img src='img/sample_rps.png'/>",'id'=>$img);
+
+          for($img=1;$img<=2;$img++){
             $item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);
           }
 

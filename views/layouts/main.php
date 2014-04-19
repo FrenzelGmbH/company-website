@@ -66,7 +66,7 @@ Icon::map($this);
 
 		$rootNodes = app\modules\pages\models\Page::getRootNodes();
 		foreach($rootNodes AS $Node)
-			$menuItems[] = array('label'=>'<i class="icon-book"></i> '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id));
+			$MenuItems[] = array('label'=>'<i class="icon-book"></i> '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id));
 		
 		//menu items visible for administrator
 		if(!Yii::$app->user->isGuest){

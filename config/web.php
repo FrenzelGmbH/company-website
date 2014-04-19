@@ -64,11 +64,6 @@ $config = [
         'recipies' => [
             'class' => 'app\modules\recipies\recipies',
         ],
-        'packaii' => [
-            'class' => 'schmunk42\packaii\Module',
-            'gitHubUsername' => 'philippfrenzel',
-            'gitHubPassword' => 'cassandra0903'
-        ],
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
         ]
@@ -109,18 +104,6 @@ $config = [
         ],
 		'errorHandler' => [
 			'errorAction' => 'site/error',
-		],
-		'mail' => [
-			'class' => 'yii\swiftmailer\Mailer',
-			'transport' => [        
-                'class'        => 'Swift_SmtpTransport',
-                'host'         => 'mail.simplebutmagnificent.com',
-                'username'     => 'hello@simplebutmagnificent.com',
-                'password'     => 'Cassandra0903#'
-			],
-            'messageConfig' => [
-                'from'         => 'hello@simplebutmagnificent.com'
-            ]
 		],
 		'log' => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,

@@ -125,7 +125,7 @@ Icon::map($this);
 		NavBar::end();
 	?>
 
-  <div id="maincontent" class="container">
+  <div id="wrapper" class="container">
     <?= $content ?>
   </div>
 

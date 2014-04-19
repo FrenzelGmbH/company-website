@@ -1,6 +1,17 @@
+@font-face{
+  font-family: junction;
+  src: url(../fonts/junction-master/webfonts/junction-webfont.woff);
+}
+
 /* all styles for purepo */
 html{
   
+}
+
+body {
+  font-family: junction;
+  background: radial-gradient(ellipse farthest-side at 10% 0 , rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)) repeat scroll 0 0%, url("../img/bgnoise_lg_dark.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background-position: center;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {

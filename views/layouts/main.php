@@ -46,6 +46,20 @@ Icon::map($this);
 	Modal::end();
 ?>
 
+<div class="masthead">
+	<div class="container">
+		<img src="images/logo_powershop_v2.png"></img>		
+		<h2 class="muted pull-right fg-color-grayLight">
+		<?php if (!Yii::$app->user->isGuest): ?>
+			<i class="icon-user"></i> <a href="<?php echo Url::to(array('user/view','id'=>Yii::$app->user->identity->id)); ?>"><?php echo Yii::$app->user->identity->username; ?></a>
+			<a href="<?php echo Url::to(array('/site/logout')); ?>" class="fg-color-orange"><i class="icon-signout"></i></a>
+		<?php else: ?>
+			<a href="<?php echo Url::to(array('/site/login')); ?>" class="fg-color-orange"><i class="icon-signin"></i></a>
+		<?php endif; ?>
+		</h2>
+	</div>
+</div>
+
 
 	<?php
 		$MenuItems = NULL;
@@ -63,10 +77,10 @@ Icon::map($this);
 		};
 
 		NavBar::begin([
-			'brandLabel' => Yii::t('app','Purchase Order Request System'),
+			'brandLabel' => Yii::t('app','Frenzel GmbH'),
 			'brandUrl' => Yii::$app->homeUrl,
 			'options' => [
-				'class' => 'navbar-default navbar-fixed-top',
+				'class' => 'navbar-default',
 			],
 		]);		
 
@@ -117,43 +131,50 @@ Icon::map($this);
 
 	<footer class="footer">
 		<div class="container">
-			<div class="col-md-4 md-margin-bottom-40">
-				<h3>About</h3>
-				<p>purePO is a modern lightweight and KISS purchase order system.</p>
-			</div>
-			<div class="col-md-4 md-margin-bottom-40">
-				
-			</div>
-			<div class="col-md-4">
-				<h3>Contact Us</h3>
-				<p>
-					Frenzel GmbH <br>
-					Hohewartstr. 32 <br>
-					GER - 70469 Stuttgart
-				</p>
-				<a href="<?php echo Url::to(['/site/contact']); ?>"><?= Yii::t('app','Contact'); ?></a>
-			</div>
+			<div class="row">
+				<div class="col-md-3">
+					
+				</div>
+				<div class="col-md-3">
+					<div class="footer-box">
+						<h4 class="fg-color-orange">Kontakt</h4>
+						<address>
+						Hohewartstr. 32	<br>
+						D-70469 Stuttgart <br>
+
+						Tel. 0049 - 7964 - 33 17 54 <br>
+						Fax. 0049 - 7664 - 33 17 55 <br>
+
+						Mail. info@frenzel.net
+						</address>						
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="footer-box">
+						<h4 class="fg-color-orange">Abkürzungen</h4>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="footer-box">
+						<h4 class="fg-color-orange">Sozialenetze</h4>
+						<ul>
+							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-facebook"></i></li>
+							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-google-plus"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>					
 		</div>
 	</footer>
 
-	<div class="copyright">
+	<footer class="copyright">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<p class="copyright-space">
-						Frenzel GmbH 2013
-					</p>
-				</div>
-				<div class="col-md-8">
-					<p class="copyright-space">
-						<?= Breadcrumbs::widget([
-              'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-             ]) ?>
-					</p>
-				</div>
+			<div class="footer-box">
+				<p class="pull-left fg-color-white">Build by creative people on a happy base! ;) <?php echo date('Y'); ?></p>
+				<p class="pull-right fg-color-white">&copy; Frenzel GmbH <?php echo date('Y'); ?></p>
 			</div>
 		</div>
-	</div>
+	</footer>
 
 <?php $this->endBody() ?>
 </body>

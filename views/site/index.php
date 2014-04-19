@@ -21,6 +21,12 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
               'caption' => '<h4>Restricted Party Screening Solution</h4><p>Keep trade governance!</p>'
           );
 
+          $item[] = array(
+              'content'=>"<img src='img/sample_planlogiq.png'/>",
+              'id'=>$img,
+              'caption' => '<h4>Planlogiq</h4><p>Dezentrale Planungslösung für KMU!</p>'
+          );
+
           for($img=1;$img<=2;$img++){
             $item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);
           }

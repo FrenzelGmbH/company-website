@@ -63,6 +63,11 @@ Icon::map($this);
 
 	<?php
 		$MenuItems = NULL;
+
+		$rootNodes = app\modules\pages\models\Page::getRootNodes();
+		foreach($rootNodes AS $Node)
+			$menuItems[] = array('label'=>'<i class="icon-book"></i> '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id));
+		
 		//menu items visible for administrator
 		if(!Yii::$app->user->isGuest){
 			$subMenuAdmin[] = ['label'=>Icon::show('folder-open', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Paper Runner'),'url' => ['/dms/dmpaper/index']];

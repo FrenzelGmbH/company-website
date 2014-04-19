@@ -4,7 +4,7 @@ $db = require(__DIR__ . '/db.php');
 
 $config = [
 	'id' => 'basic',
-    'name' => 'cassandra',
+  'name' => 'frenzelgmbh',
 	'basePath' => dirname(__DIR__),
 	'extensions' => require(__DIR__ . '/../vendor/yiisoft/extensions.php'),
 	'charset'=>'UTF-8',

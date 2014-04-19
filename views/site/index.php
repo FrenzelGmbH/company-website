@@ -15,7 +15,11 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
       <div class="bigspace">
         <?php 
           $item = array();
-          $item[] = array('content'=>"<img src='img/sample_rps.png'/>",'id'=>$img);
+          $item[] = array(
+              'content'=>"<img src='img/sample_rps.png'/>",
+              'id'=>$img,
+              'caption' => 'Restricted Party Screening Solution - Keep trade governance!'
+          );
 
           for($img=1;$img<=2;$img++){
             $item[] = array('content'=>"<img src='http://lorempixel.com/750/250/people'/>",'id'=>$img);

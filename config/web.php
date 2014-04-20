@@ -21,7 +21,11 @@ $config = [
                 'userClass' => 'app\modules\app\components\User'
             ]
           ]
-        ],
+    ],
+    'golfteamplanner'=>[
+        'class'=>'frenzelgmbh\golfteamplanner\Module',
+        'mainLayout' => 'main_admin',
+    ],
         'comments' => [
     		'class' => 'app\modules\comments\Comments'
     	],

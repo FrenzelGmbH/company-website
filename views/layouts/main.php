@@ -48,7 +48,7 @@ Icon::map($this);
 
 <div class="masthead">
 	<div class="container-fluid">
-		<img src="images/logo_powershop_v2.png" class="pull-right"></img>
+		<img src="images/logo_powershop_v2.png" class="pull-right img-responsive"></img>
 	</div>
 </div>
 

@@ -47,7 +47,7 @@ Icon::map($this);
 ?>
 
 <div class="masthead">
-	<div class="container">
+	<div class="container-fluid">
 		<img src="images/logo_powershop_v2.png" class="pull-right"></img>
 	</div>
 </div>
@@ -78,6 +78,9 @@ Icon::map($this);
 		NavBar::begin([
 			'brandLabel' => Yii::t('app','Frenzel GmbH'),
 			'brandUrl' => Yii::$app->homeUrl,
+			'innerContainerOptions' => [
+				'class' => 'container-fluid'
+			],
 			'options' => [
 				'class' => 'navbar-trans navbar-fixed-top',
 			],

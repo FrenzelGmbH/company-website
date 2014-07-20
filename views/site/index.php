@@ -17,19 +17,19 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
           $item = array();
           $item[] = array(
               'content'=>"<img src='img/sample_rps.png'/>",
-              'id'=>$img,
+              'id'=>'1',
               'caption' => '<h4>Restricted Party Screening Solution</h4><p>Keep trade governance!</p>'
           );
 
           $item[] = array(
               'content'=>"<img src='img/sample_planlogiq.png'/>",
-              'id'=>$img,
+              'id'=>'2',
               'caption' => '<h4>Planlogiq</h4><p>Dezentrale Planungslösung für KMU!</p>'
           );
 
           $item[] = array(
               'content'=>"<img src='img/sample_blog.png'/>",
-              'id'=>$img,
+              'id'=>'3',
               'caption' => '<h4>SBLOG</h4><p>Smart Blog Lösung - indiviual!</p>'
           );
 
@@ -41,14 +41,14 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
         <div class="row">
           <div class="col-lg-6">
             <?php
-              echo app\modules\pages\widgets\PortletSinglePage::widget(array(
+              echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
                   'id'=>1,
               ));
             ?>
           </div>
           <div class="col-lg-6">
             <?php
-              echo app\modules\pages\widgets\PortletSinglePage::widget(array(
+              echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
                   'id'=>2,
               ));
             ?>
@@ -60,12 +60,12 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
     <div class="col-lg-4">
       <div class="spacer">
         <?php
-          echo app\modules\posts\widgets\PortletPosts::widget(array(
+          /*echo frenzelgmbh\sblog\widgets\PortletPosts::widget(array(
               'limit'=>3,
-          ));
+          ));*/
         ?>
         <?php
-          echo app\modules\pages\widgets\PortletSinglePage::widget(array(
+          echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
               'id'=>3,
           ));
         ?>

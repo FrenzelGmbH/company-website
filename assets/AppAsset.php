@@ -22,9 +22,11 @@ class AppAsset extends AssetBundle
 	public $basePath = '@webroot';
 	public $baseUrl = '@web';
 	public $css = [
+		'frenzelgmbh/css/style.css',
 		'css/site.css'
 	];
 	public $js = [
+		'frenzelgmbh/js/script.js',
 		'js/css3-mediaqueries.js',
 		'js/modal_win.js',
 		'js/jquery.form.js',

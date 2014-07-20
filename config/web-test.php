@@ -5,7 +5,7 @@ $config = [
       'class' => 'yii\db\Connection',
       'dsn' => 'mysql:host=localhost;dbname=purepo',
       'username' => 'root',
-      'password' => '',
+      'password' => 'ph1l1pp',
       'charset' => 'utf8',
       'tablePrefix' => 'tbl_'
     ],

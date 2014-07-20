@@ -48,22 +48,14 @@ Icon::map($this);
 
 <div class="masthead">
 	<div class="container">
-		<img src="images/logo_powershop_v2.png"></img>		
-		<h2 class="muted pull-right fg-color-grayLight">
-		<?php if (!Yii::$app->user->isGuest): ?>
-			<i class="icon-user"></i> <a href="<?php echo Url::to(array('user/view','id'=>Yii::$app->user->identity->id)); ?>"><?php echo Yii::$app->user->identity->username; ?></a>
-			<a href="<?php echo Url::to(array('/site/logout')); ?>" class="fg-color-orange"><i class="icon-signout"></i></a>
-		<?php else: ?>
-			<a href="<?php echo Url::to(array('/site/login')); ?>" class="fg-color-orange"><i class="icon-signin"></i></a>
-		<?php endif; ?>
-		</h2>
+		<img src="images/logo_powershop_v2.png" class="pull-right"></img>
 	</div>
 </div>
 
 
 	<?php
 		$menuItems = array();
-    $menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));
+    	$menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));
 
 		$rootNodes = app\modules\pages\models\Page::getRootNodes();
 		foreach($rootNodes AS $Node){
@@ -87,7 +79,7 @@ Icon::map($this);
 			'brandLabel' => Yii::t('app','Frenzel GmbH'),
 			'brandUrl' => Yii::$app->homeUrl,
 			'options' => [
-				'class' => 'navbar-inverse',
+				'class' => 'navbar-trans navbar-fixed-top',
 			],
 		]);		
 
@@ -126,47 +118,76 @@ Icon::map($this);
 		NavBar::end();
 	?>
 
-  <div id="wrapper" class="container">
     <?= $content ?>
-  </div>
 
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3">
-					
-				</div>
-				<div class="col-md-3">
-					<div class="footer-box">
-						<h4 class="fg-color-orange">Kontakt</h4>
-						<address>
-						Hohewartstr. 32	<br>
-						D-70469 Stuttgart <br>
+<section class="container-fluid" id="section7">
+	<h1 class="text-center">Social Media</h1>
+    <div class="row">
+      <!--fontawesome icons-->
+      <div class="col-sm-1 col-sm-offset-2 col-xs-4 text-center">
+       <i class="fa fa-github fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-foursquare fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       	<i class="fa fa-facebook fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-pinterest fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-google-plus fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-twitter fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-dribbble fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-instagram fa-4x"></i>
+      </div>
+  </div><!--/row-->
+</section>
 
-						Tel. 0049 - 7964 - 33 17 54 <br>
-						Fax. 0049 - 7664 - 33 17 55 <br>
-
-						Mail. info@frenzel.net
-						</address>						
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="footer-box">
-						<h4 class="fg-color-orange">Abkürzungen</h4>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="footer-box">
-						<h4 class="fg-color-orange">Sozialenetze</h4>
-						<ul>
-							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-facebook"></i></li>
-							<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-google-plus"></i></li>
-						</ul>
-					</div>
-				</div>
-			</div>					
+<footer id="footer">
+  <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			
 		</div>
-	</footer>
+		<div class="col-md-3">
+			<div class="footer-box">
+				<h4 class="fg-color-orange">Kontakt</h4>
+				<address>
+				Hohewartstr. 32	<br>
+				D-70469 Stuttgart <br>
+
+				Tel. 0049 - 7964 - 33 17 54 <br>
+				Fax. 0049 - 7664 - 33 17 55 <br>
+
+				Mail. info@frenzel.net
+				</address>						
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="footer-box">
+				<h4 class="fg-color-orange">Abkürzungen</h4>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="footer-box">
+				<h4 class="fg-color-orange">Sozialenetze</h4>
+				<ul>
+					<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-facebook"></i></li>
+					<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-google-plus"></i></li>
+				</ul>
+			</div>
+		</div>
+	</div>					
+  </div>
+</footer>
 
 	<footer class="copyright">
 		<div class="container">

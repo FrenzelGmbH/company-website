@@ -8,11 +8,39 @@ use Yii2Imageslider\Yii2Imageslider;
  */
 $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwicklung, Management Beratung';
 ?>
-<div class="nostyler">
 
+<section class="container-fluid" id="section1">
+  <h1 class="text-center v-center">We love numbers!</h1>
   <div class="row">
-    <div class="col-lg-8">
-      <div class="bigspace">
+      <div class="col-sm-4">
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-2 text-center"><h3>Robust</h3>
+            <p>There is other content and snippets of details or features that can be placed here..</p>
+            <i class="fa fa-cog fa-5x"></i></div>
+          </div>
+      </div>
+        <div class="col-sm-4 text-center">
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center"><h3>Simple</h3>
+            <p>You may also want to create content that compells users to scroll down more..</p>
+            <i class="fa fa-user fa-5x"></i></div>
+          </div>
+      </div>
+        <div class="col-sm-4 text-center">
+          <div class="row">
+            <div class="col-sm-10 text-center"><h3>Clean</h3>
+            <p>In the first 30 seconds of a user's visit to your site they decide if they're going to stay..</p>
+            <i class="fa fa-mobile fa-5x"></i></div>
+          </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="container-fluid" id="section2">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 text-center">
+      <h1>Some of our Solutions</h1>
         <?php 
           $item = array();
           $item[] = array(
@@ -37,22 +65,33 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
             'items'=> $item,
           )); 
         ?>
+    </div>
+  </div>
+</section>
 
-        <div class="row">
-          <div class="col-lg-6">
+<section class="container-fluid" id="section3">
+  <h1 class="text-center">Bootstrap is Responsive</h1>
+    <div class="row">
+      <div class="col-sm-6">
             <?php
               echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
                   'id'=>1,
               ));
             ?>
           </div>
-          <div class="col-lg-6">
+          <div class="col-sm-6">
             <?php
               echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
                   'id'=>2,
               ));
             ?>
           </div>
+   </div>
+</section>
+
+
+        <div class="row">
+          
         </div>
 
       </div>

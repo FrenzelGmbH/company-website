@@ -101,10 +101,19 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
         ?>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 text-center">
+      <?php
+          echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
+              'id'=>3,
+          ));
+      ?>
+    </div>
+  </div>
 </section>
 
 <section class="container-fluid" id="section3">
-  <h1 class="text-center">Bootstrap is Responsive</h1>
+  <h1 class="text-center">About Us</h1>
     <div class="row">
       <div class="col-sm-4 col-sm-offset-2">
             <?php
@@ -122,28 +131,3 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
           </div>
    </div>
 </section>
-
-
-        <div class="row">
-          
-        </div>
-
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="spacer">
-        <?php
-          /*echo frenzelgmbh\sblog\widgets\PortletPosts::widget(array(
-              'limit'=>3,
-          ));*/
-        ?>
-        <?php
-          echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
-              'id'=>3,
-          ));
-        ?>
-      </div>
-    </div>
-  </div>  
-
-</div>

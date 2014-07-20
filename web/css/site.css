@@ -166,3 +166,9 @@ a.desc:after { content: /*"\e114"*/"\e152"; }
     filter:alpha(opacity=80); /* IE5.x -7.0 */  
 }
 
+.post-box {
+  margin-bottom: 35px;
+  border: 0px solid #ffffff; 
+  position: relative;
+  box-shadow: 0 0 0 0px #f0f4fa, 0 0 0 0px #ffffff;
+}

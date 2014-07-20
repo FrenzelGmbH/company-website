@@ -178,11 +178,6 @@ Icon::map($this);
 		</div>
 		<div class="col-md-3">
 			<div class="footer-box">
-				<h4 class="fg-color-orange">Sozialenetze</h4>
-				<ul>
-					<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-facebook"></i></li>
-					<li class="liicon fg-color-white bg-color-orange smallspace"><i class="icon-google-plus"></i></li>
-				</ul>
 			</div>
 		</div>
 	</div>					

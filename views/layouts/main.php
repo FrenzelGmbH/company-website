@@ -120,7 +120,7 @@ Icon::map($this);
 
     <?= $content ?>
 
-<section class="container-fluid" id="section7">
+<section class="container-fluid" id="section6">
 	<h1 class="text-center">Social Media</h1>
     <div class="row">
       <!--fontawesome icons-->

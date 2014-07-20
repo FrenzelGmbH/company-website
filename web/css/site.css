@@ -34,15 +34,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   width: 80%;
 }
 
-.footer {
-  border-top: 1px solid #ddd;
-  margin-top: 30px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  background-color: #585F69;
-  color: #DADADA;
-}
-
 .footer-box{
   border-left: 1px dotted #404040;
   padding-left: 20px;

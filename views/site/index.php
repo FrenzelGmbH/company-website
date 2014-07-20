@@ -102,7 +102,7 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 text-center">
+    <div class="col-lg-8 col-lg-offset-2">
       <?php
           echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
               'id'=>3,

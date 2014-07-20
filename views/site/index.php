@@ -161,6 +161,7 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
        <i class="fa fa-instagram fa-4x"></i>
       </div>
   </div><!--/row-->
+  <h1 class="text-center">Blog</h1>
   <div class="row">
       <div class="col-sm-8 col-sm-offset-2">
         <?php 

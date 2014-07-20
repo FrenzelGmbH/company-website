@@ -131,3 +131,46 @@ $this->title = 'Frenzel GmbH - QlikView Consulting, Individual Software Entwickl
           </div>
    </div>
 </section>
+
+<section class="container-fluid" id="section6">
+  <h1 class="text-center">Social Media</h1>
+    <div class="row">
+      <!--fontawesome icons-->
+      <div class="col-sm-1 col-sm-offset-2 col-xs-4 text-center">
+       <i class="fa fa-github fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-foursquare fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+        <i class="fa fa-facebook fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-pinterest fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-google-plus fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-twitter fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-dribbble fa-4x"></i>
+      </div>
+      <div class="col-sm-1 col-xs-4 text-center">
+       <i class="fa fa-instagram fa-4x"></i>
+      </div>
+  </div><!--/row-->
+  <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <?php 
+          if(class_exists('frenzelgmbh\sblog\widgets\PortletPostsStyled')){
+            echo frenzelgmbh\sblog\widgets\PortletPostsStyled::widget([
+              'title'=>NULL,
+              'limit'=>5,
+            ]); 
+          }
+        ?>
+      </div>
+   </div>
+</section>

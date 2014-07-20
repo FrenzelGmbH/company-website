@@ -123,37 +123,6 @@ Icon::map($this);
 
     <?= $content ?>
 
-<section class="container-fluid" id="section6">
-	<h1 class="text-center">Social Media</h1>
-    <div class="row">
-      <!--fontawesome icons-->
-      <div class="col-sm-1 col-sm-offset-2 col-xs-4 text-center">
-       <i class="fa fa-github fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-foursquare fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       	<i class="fa fa-facebook fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-pinterest fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-google-plus fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-twitter fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-dribbble fa-4x"></i>
-      </div>
-      <div class="col-sm-1 col-xs-4 text-center">
-       <i class="fa fa-instagram fa-4x"></i>
-      </div>
-  </div><!--/row-->
-</section>
-
 <footer id="footer">
   <div class="container-fluid">
 	<div class="row">

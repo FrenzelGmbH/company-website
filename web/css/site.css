@@ -172,3 +172,8 @@ a.desc:after { content: /*"\e114"*/"\e152"; }
   position: relative;
   box-shadow: 0 0 0 0px #f0f4fa, 0 0 0 0px #ffffff;
 }
+
+.datebox{
+  background-color: transparent;
+  border-radius: 0;
+}

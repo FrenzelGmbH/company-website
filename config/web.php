@@ -100,9 +100,9 @@ $config = [
             'cache' => [
                 'class' => 'yii\caching\FileCache',
             ],
-        /*'authManager' => [
+        'authManager' => [
           'class' => 'frenzelgmbh\appcommon\components\User',
-        ],*/
+        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [

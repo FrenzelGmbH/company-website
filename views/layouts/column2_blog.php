@@ -1,4 +1,4 @@
-<?php $this->beginContent('@app/views/layouts/main_blog.php'); ?>
+<?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <div class="row">
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main pull-right">
     <?= $content; ?> 

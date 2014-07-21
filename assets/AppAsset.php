@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
 		'css/site.css'
 	];
 	public $js = [
-		'frenzelgmbh/js/script.js',
+		'js/scripts.js',
 		'js/css3-mediaqueries.js',
 		'js/modal_win.js',
 		'js/jquery.form.js',

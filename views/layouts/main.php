@@ -55,7 +55,7 @@ Icon::map($this);
 
 	<?php
 		$menuItems = array();
-    	$menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));
+    	$menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));  	
 
 		$rootNodes = app\modules\pages\models\Page::getRootNodes();
 		foreach($rootNodes AS $Node){
@@ -71,9 +71,13 @@ Icon::map($this);
 			$subMenuAdmin[] = ['label'=>Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Countries'),'url' => ['/parties/country']];						
 			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Vendors'), 'url'=>['/parties/party/index','type'=>'Vendors']];
 			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Articles'), 'url'=>['/article/article/index','type'=>'Article']];
-      $subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Purchase Requests'), 'url'=>['/purchase/purchase-order/index']];
+      		$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Purchase Requests'), 'url'=>['/purchase/purchase-order/index']];
 			$menuItems[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Administration'), 'url' => '','items' => $subMenuAdmin];
 		};
+
+		$menuItems[] = ['label' => Icon::show('sign-in', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Login'), 'url' => ['/user/auth/login'], 'visible' => Yii::$app->user->isGuest];
+		$menuItems[] = ['label' => Icon::show('pencil', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Registration'), 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest];
+		$menuItems[] = ['label' => Icon::show('sign-out', ['class'=>'fa'], Icon::FA) . ' ' .Yii::t('app','Logout'), 'url' => ['/user/auth/logout'], 'visible' => !Yii::$app->user->isGuest, 'linkOptions' => ['data-method' => 'post']];
 
 		NavBar::begin([
 			'brandLabel' => Yii::t('app','Frenzel GmbH'),

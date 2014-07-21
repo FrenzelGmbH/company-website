@@ -90,27 +90,27 @@ $config = [
       ]
     ],
     'components' => [
-    'urlManager'=>[
-      'enablePrettyUrl' => false
-    ],
-    'request' => [
-      'enableCsrfValidation' => true,
-      'cookieValidationKey' => 'mysecrethobby',
-    ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
+        'urlManager'=>[
+          'enablePrettyUrl' => false
         ],
-    'authManager' => [
-      'class' => 'frenzelgmbh\appcommon\components\User',
-    ],
-    'authClientCollection' => [
-        'class' => 'yii\authclient\Collection',
-        'clients' => [
-            'google' => [
-                'class' => 'yii\authclient\clients\GoogleOpenId'
-            ]
+        'request' => [
+          'enableCsrfValidation' => true,
+          'cookieValidationKey' => 'mysecrethobby',
         ],
-    ],
+            'cache' => [
+                'class' => 'yii\caching\FileCache',
+            ],
+        'authManager' => [
+          'class' => 'frenzelgmbh\appcommon\components\User',
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\GoogleOpenId'
+                ]
+            ],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

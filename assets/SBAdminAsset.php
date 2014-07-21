@@ -19,19 +19,18 @@ class SBAdminAsset extends AssetBundle
 	public $baseUrl = '@web/sb-admin-v2';
 	public $css = [
 		'css/sb-admin.css',
-		'css/bootstrap.min.css',
-		'../css/dmpaper.css'
+		'css/bootstrap.min.css'
 	];
 	public $js = [
 		'js/sb-admin.js',
 		'js/plugins/metisMenu/jquery.metisMenu.js',
-		'../js/modal_win.js',
-		'../js/jquery.form.js'
+		'../js/modal_win.js'
 	];
 	public $depends = [
 		'yii\web\YiiAsset',
 		'yii\bootstrap\BootstrapAsset',
 		'yii\jui\CoreAsset',
-		'yii\jui\EffectAsset'
+		'yii\jui\EffectAsset',
+		'frenzelgmbh\appcommon\commonAsset'
 	];
 }

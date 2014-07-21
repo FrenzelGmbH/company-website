@@ -27,14 +27,11 @@ class AppAsset extends AssetBundle
 	];
 	public $js = [
 		'js/scripts.js',
-		'js/css3-mediaqueries.js',
-		'js/modal_win.js',
-		'js/jquery.form.js',
-		//'js/excells/excell_modal_button.js',
-		'http://use.edgefonts.net/ubuntu:n3,i3,n4,i4,n5,i5,n7,i7.js'
+		//'js/excells/excell_modal_button.js'
 	];
 	public $depends = [
 		'yii\web\YiiAsset',
 		'yii\bootstrap\BootstrapAsset',
+		'frenzelgmbh\appcommon\commonAsset'
 	];
 }

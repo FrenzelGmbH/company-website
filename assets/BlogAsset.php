@@ -26,14 +26,12 @@ class BlogAsset extends AssetBundle
 	];
 	public $js = [
 		'js/jquery.scrollUp.min.js',
-		'js/css3-mediaqueries.js',
 		'js/modal_win.js',
-		'js/jquery.form.js',
-		'js/excells/excell_modal_button.js',
 		'http://assets.pinterest.com/js/pinit.js'
 	];
 	public $depends = [
 		'yii\web\YiiAsset',
 		'yii\bootstrap\BootstrapAsset',
+		'frenzelgmbh\appcommon\commonAsset'
 	];
 }

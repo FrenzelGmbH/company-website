@@ -1,12 +1,10 @@
 <?php
 $params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
     'name' => 'frenzelgmbh',
     'basePath' => dirname(__DIR__),
-    //'extensions' => require(__DIR__ . '/../vendor/yiisoft/extensions.php'),
     'charset'=>'UTF-8',
     'language' => 'en_US',
     'aliases' => [
@@ -24,7 +22,7 @@ $config = [
       ],
       'comments' => [
             'class' => 'app\modules\comments\Comments'
-        ],
+      ],
       'golfteamplanner'=>[
         'class'=>'frenzelgmbh\golfteamplanner\Module',
         'mainLayout' => 'main_admin',
@@ -80,11 +78,6 @@ $config = [
       'recipies' => [
           'class' => 'app\modules\recipies\recipies',
       ],
-      'packaii' => [
-          'class' => 'schmunk42\packaii\Module',
-          'gitHubUsername' => 'philippfrenzel',
-          'gitHubPassword' => 'cassandra0903'
-      ],
       'gridview' =>  [
           'class' => '\kartik\grid\Module'
       ]
@@ -93,13 +86,22 @@ $config = [
         'urlManager'=>[
           'enablePrettyUrl' => false
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'css' => ['amoeba/css/bootstrap.css','amoeba/css/bootstrap-theme.css']
+                ],
+            ],
+        ],
         'request' => [
           'enableCsrfValidation' => true,
           'cookieValidationKey' => 'mysecrethobby',
         ],
-            'cache' => [
-                'class' => 'yii\caching\FileCache',
-            ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
         'authManager' => [
           'class' => 'frenzelgmbh\appcommon\components\User',
         ],
@@ -135,7 +137,7 @@ $config = [
               ],
          ],
       ],
-      'db' => $db,
+      'db' => require(__DIR__ . '/db.php'),
      ],
      'params' => $params,
 ];
@@ -144,6 +146,8 @@ if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = 'yii\debug\Module';
+
+    $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';
 }
 

@@ -86,11 +86,25 @@ AppAsset::register($this);
     <section id="footer" class="section footer">
         <div class="container">
             <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
-                <div class="col-sm-12 align-center">
+                <div class="col-sm-8 align-center">
                     <ul class="social-network social-circle">
                         <li><a href="http://www.facebook.com/pepefrenzel" class="icoFacebook" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="https://plus.google.com/u/0/102078578622410234043/posts/p/pub" class="icoGoogle" title="Google +" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                     </ul>               
+                </div>
+                <div class="col-sm-4">
+                    <div class="footer-box">
+                        <h4 class="fg-color-orange">Kontakt</h4>
+                        <address>
+                        Hohewartstr. 32 <br>
+                        D-70469 Stuttgart <br>
+
+                        Tel. 0049 - 7964 - 33 17 54 <br>
+                        Fax. 0049 - 7664 - 33 17 55 <br>
+
+                        Mail. info@frenzel.net
+                        </address>                      
+                    </div>
                 </div>
             </div>
 

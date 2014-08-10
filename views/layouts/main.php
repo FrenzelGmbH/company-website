@@ -1,175 +1,109 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
-
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\bootstrap\Dropdown;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-use philippfrenzel\yii2tooltipster\yii2tooltipster;
-use yii\bootstrap\Modal;
+/* @var $this \yii\web\View */
+/* @var $content string */
 
-use kartik\icons\Icon;
-use app\modules\app\widgets\wgtLanguage;  
-
-/**
- * @var \yii\web\View $this
- * @var string $content
- */
 AppAsset::register($this);
-
-Icon::map($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset ?>"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link rel="shortcut icon" href="favicon.ico">
-	<title><?= Html::encode($this->title) ?></title>
-	<?php $this->head() ?>
+    <meta charset="<?= Yii::$app->charset ?>"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
 </head>
 <body>
+
 <?php $this->beginBody() ?>
+    <section id="header" class="appear"></section>
+        <?php
+        NavBar::begin([
+            'brandLabel' => 'Frenzel GmbH',
+            'screenReaderToggleText' => 'MENU',
+            'brandUrl' => Yii::$app->homeUrl,
+            'brandOptions' => [
+                'data-0' => 'line-height:90px;',
+                'data-300' => 'line-height:50px;'
+            ],
+            'options' => [
+                'class' => 'navbar navbar-fixed-top',
+                'role'  => 'navigation',
+                'data-0' => 'line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);',
+                'data-300' => 'line-height:60px; height:60px; background-color:rgba(0,0,0,1);'
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => [
+                'class' => 'nav navbar-nav',
+                'data-0' => 'margin-top:20px;',
+                'data-300' => 'margin-top:5px;'
+            ],
+            'items' => [
+                ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'About', 'url' => '#section-about'],
+                ['label' => 'Contact', 'url' => '#footer'],
+                Yii::$app->user->isGuest ?
+                    ['label' => 'Login', 'url' => ['/user/security/login']] :
+                    ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                        'url' => ['/user/security/logout'],
+                        'linkOptions' => ['data-method' => 'post']],
+            ],
+        ]);
+        NavBar::end();
+        ?>        
 
-<?= yii2tooltipster::widget(['options'=>['class'=>'.tipster']]); ?>
+        <?= $content ?>
 
-<?php 
-	Modal::begin([
-	  'id'=>'applicationModal',
-	  'header' => '<h4><i class="icon-meter-medium"></i>Loading</h4>',
-	]);
-	echo 'pls. wait one moment...';
-	Modal::end();
-?>
+        
+        <!-- /about -->
 
-<div class="masthead">
-	<div class="container-fluid">
-		<img src="images/logo_powershop_v2.png" class="pull-right img-responsive"></img>
-	</div>
-</div>
+    <!-- spacer section:parallax1 -->
+    <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
+        <div class="container">
+        <div class="align-center pad-top40 pad-bot40">
+            <blockquote class="bigquote color-white">Blog</blockquote>
+            <?php 
+              if(class_exists('frenzelgmbh\sblog\widgets\PortletPostsStyled')){
+                echo frenzelgmbh\sblog\widgets\PortletPostsStyled::widget([
+                  'title'=>NULL,
+                  'limit'=>5,
+                ]); 
+              }
+            ?>
+        </div>
+        </div>  
+    </section>
 
+    <section id="footer" class="section footer">
+        <div class="container">
+            <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
+                <div class="col-sm-12 align-center">
+                    <ul class="social-network social-circle">
+                        <li><a href="http://www.facebook.com/pepefrenzel" class="icoFacebook" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://plus.google.com/u/0/102078578622410234043/posts/p/pub" class="icoGoogle" title="Google +" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>               
+                </div>
+            </div>
 
-	<?php
-		$menuItems = array();
-    	$menuItems[] = array('label' => '<i class="icon-home"></i> Startseite', 'url' => array('/site/index'));  	
+            <div class="row align-center copyright">
+                    <div class="col-sm-12"><p>Copyright &copy; frenzel GmbH - by <a href="http://frenzel.net">Frenzel.NET</a></p></div>
+            </div>
+        </div>
+    </section>
 
-		$rootNodes = app\modules\pages\models\Page::getRootNodes();
-		foreach($rootNodes AS $Node){
-			if($Node->title!='')
-        $menuItems[] = ['label'=>Icon::show('book', ['class'=>'fa'], Icon::FA).' '.Yii::t('app',$Node->title), 'url' => array('/pages/page/onlineview','id'=>$Node->id)];
-		}
-		//menu items visible for administrator
-		if(!Yii::$app->user->isGuest){
-			$subMenuAdmin[] = ['label' => Icon::show('folder-open', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Paper Runner'),'url' => ['/dms/dmpaper/index']];
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Blog'),'url' => ['/posts/post/index']];
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','CMS'),'url' => ['/pages/page/index']];
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Revision'),'url' => ['/revision']];
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Countries'),'url' => ['/parties/country']];						
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Vendors'), 'url'=>['/parties/party/index','type'=>'Vendors']];
-			$subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Articles'), 'url'=>['/article/article/index','type'=>'Article']];
-      $subMenuAdmin[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Purchase Requests'), 'url'=>['/purchase/purchase-order/index']];
-			$menuItems[] = ['label' => Icon::show('gears', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Administration'), 'url' => '','items' => $subMenuAdmin];
-		};
-
-		$menuItems[] = ['label' => Icon::show('sign-in', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Login'), 'url' => ['/user/security/login'], 'visible' => Yii::$app->user->isGuest];
-		$menuItems[] = ['label' => Icon::show('pencil', ['class'=>'fa'], Icon::FA) . ' ' . Yii::t('app','Registration'), 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest];
-		$menuItems[] = ['label' => Icon::show('sign-out', ['class'=>'fa'], Icon::FA) . ' ' .Yii::t('app','Logout'), 'url' => ['/user/security/logout'], 'visible' => !Yii::$app->user->isGuest, 'linkOptions' => ['data-method' => 'post']];
-
-		NavBar::begin([
-			'brandLabel' => Yii::t('app','Frenzel GmbH'),
-			'brandUrl' => Yii::$app->homeUrl,
-			'innerContainerOptions' => [
-				'class' => 'container-fluid'
-			],
-			'options' => [
-				'class' => 'navbar-trans navbar-fixed-top',
-			],
-		]);		
-
-		if (!Yii::$app->user->isGuest){
-			echo Icon::show('building-o', ['class'=>'fa navbar-left navbar-brand'], Icon::FA);
-
-		  if(class_exists('\app\modules\parties\widgets\PortletPartyInfo')){
-		    echo \app\modules\parties\widgets\PortletPartyInfo::widget(array(
-		      'enableAdmin'=>false,
-		      'id' => \Yii::$app->user->identity->currentEntityId,
-		      'title' => NULL,
-		      'isNav' => true
-		    ));
-		  } 	
-	  }
-
-	  ?>
-
-		<?php if (!Yii::$app->user->isGuest): ?>
-			<div class="navbar-left navbar-brand">
-				<?= Icon::show('user', ['class'=>'fa fa-1x'], Icon::FA); ?>	
-				<a href="<?= Url::to(['/profile/view','id'=>Yii::$app->user->identity->id]); ?>"><?= Yii::$app->user->identity->username; ?></a>			
-			</div>
-		<?php endif; ?>
-		
-	  <?php
-	  	echo wgtLanguage::widget();		
-		?>
-
-		<?php
-		echo Nav::widget([
-			'options' => ['class' => 'navbar-nav navbar-right'],
-			'encodeLabels' => false,
-			'items' => $menuItems
-		]);		
-		NavBar::end();
-	?>
-
-    <?= $content ?>
-
-<footer id="footer">
-  <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-3">
-			
-		</div>
-		<div class="col-md-3">
-			<div class="footer-box">
-				<h4 class="fg-color-orange">Kontakt</h4>
-				<address>
-				Hohewartstr. 32	<br>
-				D-70469 Stuttgart <br>
-
-				Tel. 0049 - 7964 - 33 17 54 <br>
-				Fax. 0049 - 7664 - 33 17 55 <br>
-
-				Mail. info@frenzel.net
-				</address>						
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="footer-box">
-				<h4 class="fg-color-orange">Abkürzungen</h4>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="footer-box">
-			</div>
-		</div>
-	</div>					
-  </div>
-</footer>
-
-	<footer class="copyright">
-		<div class="container">
-			<div class="footer-box">
-				<p class="pull-left fg-color-white">Build by creative people on a happy base! ;) <?php echo date('Y'); ?></p>
-				<p class="pull-right fg-color-white">&copy; Frenzel GmbH <?php echo date('Y'); ?></p>
-			</div>
-		</div>
-	</footer>
+        <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
 
 <?php $this->endBody() ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>

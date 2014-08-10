@@ -51,7 +51,7 @@ class SiteController extends AppController
 	public function actionIndex()
 	{
 		$referrer = Null;
-    	$this->layout = \app\modules\app\controllers\AppController::mainlayout;
+    $this->layout = '/main';
 		return $this->render('index',['linkedby'=>$referrer]);
 	}
 

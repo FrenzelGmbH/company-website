@@ -66,23 +66,6 @@ AppAsset::register($this);
         
         <!-- /about -->
 
-    <!-- spacer section:parallax1 -->
-    <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
-        <div class="container">
-        <div class="align-center pad-top40 pad-bot40">
-            <blockquote class="bigquote color-white">Blog</blockquote>
-            <?php 
-              if(class_exists('frenzelgmbh\sblog\widgets\PortletPostsStyled')){
-                echo frenzelgmbh\sblog\widgets\PortletPostsStyled::widget([
-                  'title'=>NULL,
-                  'limit'=>5,
-                ]); 
-              }
-            ?>
-        </div>
-        </div>  
-    </section>
-
     <section id="footer" class="section footer">
         <div class="container">
             <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">

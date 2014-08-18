@@ -74,6 +74,7 @@ AppAsset::register($this);
                     <ul class="social-network social-circle">
                         <li><a href="http://www.facebook.com/pepefrenzel" class="icoFacebook" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="https://plus.google.com/u/0/102078578622410234043/posts/p/pub" class="icoGoogle" title="Google +" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="https://www.github.com/philippfrenzel" class="icoGithub" title="Github" target="_blank"><i class="fa fa-github"></i></a></li>
                     </ul>               
                 </div>
                 <div class="col-sm-4">

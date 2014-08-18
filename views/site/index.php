@@ -177,6 +177,10 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
               </p>
           </li>          
 
+          <li class="year">
+              <span>since 2001</span>
+          </li>
+
           <li class="right present">
               <div class="tl-header">
                   <h3 class="tl-role">SolCon</h3>

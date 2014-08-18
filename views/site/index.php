@@ -177,7 +177,7 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
               </p>
           </li>          
 
-          <li class="present">
+          <li class="right present">
               <div class="tl-header">
                   <h3 class="tl-role">SolCon</h3>
                   <h4 class="tl-company">Version 1.0</h4>

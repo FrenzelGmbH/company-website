@@ -50,7 +50,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Home', 'url' => ['/site/index']],
                 ['label' => 'About', 'url' => '#section-about'],
-                ['label' => 'Contact', 'url' => '#footer'],
+                ['label' => 'Contact', 'url' => '#section-contact'],
                 Yii::$app->user->isGuest ?
                     ['label' => 'Login', 'url' => ['/user/security/login']] :
                     ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',

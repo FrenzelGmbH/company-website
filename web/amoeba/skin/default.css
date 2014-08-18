@@ -294,7 +294,7 @@ a.scrollup{
 
 .post-box {
     margin-bottom: 35px;
-    /* border: 2px solid #ffffff; */
+    border: 0px solid #ffffff;
     position: relative;
-    /* box-shadow: 0 0 0 10px #f0f4fa, 0 0 0 15px #ffffff; */
+    box-shadow: 0 0 0 0 #f0f4fa, 0 0 0 0px #ffffff;
 }

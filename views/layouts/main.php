@@ -50,6 +50,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Home', 'url' => ['/site/index']],
                 ['label' => 'About', 'url' => '#section-about'],
+                ['label' => 'Blog', 'url' => '#parallax1'],
                 ['label' => 'Contact', 'url' => '#section-contact'],
                 Yii::$app->user->isGuest ?
                     ['label' => 'Login', 'url' => ['/user/security/login']] :

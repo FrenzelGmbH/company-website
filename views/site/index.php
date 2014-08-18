@@ -152,7 +152,22 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
                   our customers based upon QlikView 10 and QlikView 11. For both versions we got repositories
                   of usefull macro extensions, that help us deploying solutions for our customers.
               </p>
-          </li>          
+          </li>    
+
+          <li class="right">
+              <div class="tl-header">
+                  <h3 class="tl-role">PlanlogiQ 2.0</h3>
+                  <h4 class="tl-company">Online Planning Plattform</h4>
+                  <span class="tl-time">May 2006 - Present</span>
+              </div>
+          
+              <p class="tl-content">
+                Durch unsere Zusammenarbeit mit der Harley Davidson Business Planning Devision konnten
+                wir unsere bereits funtionierende Webplanungslösung "Planlogiq" auf eine neuere technische
+                Plattform portieren. Dabei wurde die Datenbankstruktur erhalten. Bestehende 
+                Datasets konnten dadurch ohne Risiken migrieren und die neuen Funktionen voll nutzen.
+              </p>
+          </li>      
 
           <li class="year">
               <span>since 2001</span>

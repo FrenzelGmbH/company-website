@@ -154,22 +154,28 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
                   zu Ihren Daten zu gewährleisten.
               </p>
           </li>
-  
+
           <li class="year">
               <span>since 2009</span>
           </li>
-            
-          <li>
+
+          <li class="present">
               <div class="tl-header">
                   <h3 class="tl-role">Business Intelligence</h3>
                   <h4 class="tl-company">Professional Planner and QlikView</h4>
                   <span class="tl-time">since Apr 2009</span>
               </div>
           
+              <div>
+                  <img class="tl-img" src="http://www2.qlik.com/images/interface/chrome/logo.png" alt="QlikView">
+              </div>
+
               <p class="tl-content">
-                
+                  We are certified QlikView Developers since 2009. Currently we maintain solutions for
+                  our customers based upon QlikView 10 and QlikView 11. For both versions we got repositories
+                  of usefull macro extensions, that help us deploying solutions for our customers.
               </p>
-          </li>
+          </li>          
 
           <li class="present">
               <div class="tl-header">

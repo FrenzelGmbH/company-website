@@ -134,26 +134,29 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
         <ul class="timeline">
         
           <li class="year top">
-              <span>2013 - Present</span>
+              <span>2012 - Present</span>
           </li>
 
           <li class="right">
               <div class="tl-header">
                   <h3 class="tl-role">Business Analytics</h3>
-                  <h4 class="tl-company">Vienna</h4>
-                  <span class="tl-time">Jan 2013 - present</span>
+                  <h4 class="tl-company">S-Versicherung</h4>
+                  <span class="tl-time">Apr 2012 - present</span>
               </div>
               <div style="background-color: #ababab;">
-                  <img class="tl-img" src="http://www.ctbto.org/fileadmin/templates/images/banner.png?1332404879" alt="">
+                  <img class="tl-img" src="http://www.s-versicherung.at/content/86391ce2/-18c6-480c-8afd-459d4affd43a/sVersicherung_Logo.gif" alt="S-Versicherung">
               </div>
 
               <p class="tl-content">
-
+                  Seit 2012 unterstützen wir die Sparkassenversicherung in Wien beim
+                  Aufbau Ihrer Analyseplatform. Dabei kommen unterschiedlichste
+                  Technologien zum Einsatz um den Mitarbeitern einen einfachen Zugang
+                  zu Ihren Daten zu gewährleisten.
               </p>
           </li>
   
           <li class="year">
-              <span>2009 - 2013</span>
+              <span>since 2009</span>
           </li>
             
           <li>

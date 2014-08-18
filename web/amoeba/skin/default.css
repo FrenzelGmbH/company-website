@@ -291,3 +291,10 @@ a.scrollup{
 .tl-content {
 	text-align: left;
 }
+
+.post-box {
+    margin-bottom: 35px;
+    /* border: 2px solid #ffffff; */
+    position: relative;
+    /* box-shadow: 0 0 0 10px #f0f4fa, 0 0 0 15px #ffffff; */
+}

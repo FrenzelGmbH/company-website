@@ -217,7 +217,10 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
   <section id="section-contact" class="section appear clearfix">
       <div class="container">
 
-        <?php echo $this->render('login', ['model'=>new \app\models\ContactForm()]); ?>
+        <?php 
+          $contact = new \app\models\ContactForm;
+          echo $this->render('login', ['model'=>$contact]); 
+        ?>
 
       </div>
   </section>

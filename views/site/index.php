@@ -234,7 +234,9 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
     <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
         <div class="container">
         <div class="pad-top40 pad-bot40">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Blog</h2>
+            <div class="section-header">
+              <h2 class="section-heading animated" data-animation="bounceInUp">Blog</h2>
+            </div>
             <?php 
               if(class_exists('frenzelgmbh\sblog\widgets\PortletPostsStyled')){
                 echo frenzelgmbh\sblog\widgets\PortletPostsStyled::widget([

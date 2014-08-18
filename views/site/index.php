@@ -143,7 +143,7 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
                   <h4 class="tl-company">S-Versicherung</h4>
                   <span class="tl-time">Apr 2012 - present</span>
               </div>
-              <div style="background-color: #ababab;">
+              <div style="background-color: #ffffff;">
                   <img class="tl-img" src="http://www.s-versicherung.at/content/86391ce2/-18c6-480c-8afd-459d4affd43a/sVersicherung_Logo.gif" alt="S-Versicherung">
               </div>
 

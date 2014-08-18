@@ -109,18 +109,102 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
 </section>
 
 <!-- about -->
-        <section id="section-about" class="section appear clearfix">
-        <div class="container">
-            <div class="row mar-bot40">
-                <div class="col-md-offset-3 col-md-6">
-                    <div class="section-header">
-                        <h2 class="section-heading animated" data-animation="bounceInUp">About Us</h2>
-                        <p>Work - Live - Balance</p>
-                    </div>
-                </div>
-            </div>       
+<section id="section-about" class="section appear clearfix">
+  <div class="container">
+    <div class="row mar-bot40">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="section-header">
+                <h2 class="section-heading animated" data-animation="bounceInUp">About Us</h2>
+                <p>Work - Live - Balance</p>
+            </div>
         </div>
-        </section>
+    </div>
+    <div class="row align-center mar-bot40">
+      <div class="col-md-12">
+          <div class="team-member">
+              <figure class="member-photo"><img src="amoeba/img/team/member1.jpg" alt="" /></figure>
+              <div class="team-detail">
+                  <h4>Frenzel GmbH</h4>
+                  <span>Business 'nd IT Consulting</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-12">
+          <!-- timeline -->
+        <ul class="timeline">
+        
+          <li class="year top">
+              <span>2013 - Present</span>
+          </li>
+
+          <li class="right">
+              <div class="tl-header">
+                  <h3 class="tl-role">Business Analytics</h3>
+                  <h4 class="tl-company">Vienna</h4>
+                  <span class="tl-time">Jan 2013 - present</span>
+              </div>
+              <div style="background-color: #ababab;">
+                  <img class="tl-img" src="http://www.ctbto.org/fileadmin/templates/images/banner.png?1332404879" alt="">
+              </div>
+
+              <p class="tl-content">
+
+              </p>
+          </li>
+  
+          <li class="year">
+              <span>2009 - 2013</span>
+          </li>
+            
+          <li>
+              <div class="tl-header">
+                  <h3 class="tl-role">Business Intelligence</h3>
+                  <h4 class="tl-company">Professional Planner and QlikView</h4>
+                  <span class="tl-time">since Apr 2009</span>
+              </div>
+          
+              <p class="tl-content">
+                
+              </p>
+          </li>
+
+          <li class="present">
+              <div class="tl-header">
+                  <h3 class="tl-role">SolCon</h3>
+                  <h4 class="tl-company">Version 1.0</h4>
+                  <span class="tl-time">Aug 2001 - Present</span>
+              </div>
+          
+              <p class="tl-content">
+                The first working hardware of the canbus controller unit (incl. software) has
+                been released to the public.
+              </p>
+          </li>
+        
+          <li class="year">
+              <span>1999</span>
+          </li>
+
+          <li class="right">
+              <div class="tl-header">
+                  <h3 class="tl-role">Founders</h3>
+                  <h4 class="tl-company">Frenzel GmbH</h4>
+                  <span class="tl-time">Fall 1999 - Present</span>
+              </div>
+          
+              <img class="tl-img" src="images/logo_powershop_v2.png" alt="frenzellogo">
+          
+              <p class="tl-content">
+                  Im Herbst 1999 wurde die Frenzel GmbH mit Hauptsitz in Stuttgart gegründet. Schwerpunkt
+                  zum damaligen Zeitpunkt war die Entwicklung von Individualsoftware in den Bereichen <b>Automotive</b> und
+                  <b>Banken</b>.
+              </p>
+          </li>
+        </ul>
+      </div>
+    </div>       
+  </div>
+</section>
 
 <!-- spacer section:parallax1 -->
     <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">

@@ -74,7 +74,7 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
 <section id="testimonials" class="section" data-stellar-background-ratio="0.5">
 <div class="container">
     <div class="row">               
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="color:#000000;">
             <?php
               echo frenzelgmbh\scms\widgets\PortletSinglePage::widget(array(
                   'id'=>1,

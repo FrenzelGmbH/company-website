@@ -114,6 +114,21 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
               <span>2012 - Present</span>
           </li>
 
+          <li class="present">
+              <div class="tl-header">
+                  <h3 class="tl-role">Restricted Party Screening</h3>
+                  <h4 class="tl-company">Trade Compliance Solution</h4>
+                  <span class="tl-time">Jan 2013 - present</span>
+              </div>
+              <div>
+                  <img class="tl-img" src="http://www.restrictedpartyscreening.org/images/logo_type3.gif" alt="Resticted Party Screening">
+              </div>
+
+              <p class="tl-content">
+                  Restricted Party Screening .ORG is committed to enabling our customers and partners to meet its regulatory obligations so you can enforce compliance, reduce risks, and implement due diligent best practices.
+              </p>
+          </li>
+
           <li class="right">
               <div class="tl-header">
                   <h3 class="tl-role">Business Analytics</h3>

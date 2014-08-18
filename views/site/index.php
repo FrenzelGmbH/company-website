@@ -173,6 +173,25 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
               <span>since 2001</span>
           </li>
 
+           <li class="present">
+              <div class="tl-header">
+                  <h3 class="tl-role">HTV und Weasy</h3>
+                  <h4 class="tl-company">Händler Teile Vermittlung und CallCenter Lösung</h4>
+                  <span class="tl-time">since Jun 2002</span>
+              </div>
+          
+              <div>
+                  <img class="tl-img" src="http://weasy.frenzel.net/gfx/logo_erp.gif" alt="Weasy">
+              </div>
+
+              <p class="tl-content">
+                  Sommer 2002 we launched HTV - our dealer part exchange platform and in October
+                  our CallCenter CRM solution weasy. Both applications are webbased and multiuser
+                  and platform compatible. Our biggest customers for those solutions are OrgDelta and
+                  PEP UK.
+              </p>
+          </li>  
+
           <li class="right present">
               <div class="tl-header">
                   <h3 class="tl-role">SolCon</h3>

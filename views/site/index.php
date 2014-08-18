@@ -212,3 +212,13 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
         </div>
         </div>  
     </section>
+
+
+  <section id="section-contact" class="section appear clearfix">
+      <div class="container">
+
+        <?php echo $this->render('login', ['model'=>new \app\models\ContactForm()]); ?>
+
+      </div>
+  </section>
+

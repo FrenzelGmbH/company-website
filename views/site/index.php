@@ -219,7 +219,7 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
 
         <?php 
           $contact = new \app\models\ContactForm;
-          echo $this->render('login', ['model'=>$contact]); 
+          echo $this->render('contact', ['model'=>$contact]); 
         ?>
 
       </div>

@@ -71,7 +71,7 @@ $this->title = 'Frenzel GmbH - Business Intelligence, Analysis and Planning';
 </section>
 
 <!-- spacer section:testimonial -->
-<section id="section-testimonials" class="section" data-stellar-background-ratio="0.5">
+<section id="testimonials" class="section" data-stellar-background-ratio="0.5">
 <div class="container">
     <div class="row">               
         <div class="col-lg-12">

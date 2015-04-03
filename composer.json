@@ -34,24 +34,49 @@
         "frenzelgmbh/cm-entity":"*"
 	},
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*",
-        "schmunk42/yii2-packaii": "*"
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-apidoc": "*",
+        "codeception/codeception": "2.0.*",
+        "codeception/specify": "*",
+        "codeception/verify": "*",
+        "schmunk42/yii2-giiant" : "*"
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::setPermission",
+            "yii\\composer\\Installer::generateCookieValidationKey"
+        ],
+        "post-install-cmd": [
+            "ivanovyordan\\migration\\Migration::migrate"
+        ],
+        "post-update-cmd": [
+            "ivanovyordan\\migration\\Migration::migrate"
+        ]
     },
     "config": {
-        "process-timeout": 1000
+        "process-timeout": 1800,
+        "github-oauth": {
+            "github.com": "16521c2d2dc1d6b44f5302b28eb44cb3a23a9394"
+        }
     },
-	"scripts": {
-		"post-create-project-cmd": [
-			"yii\\composer\\Installer::setPermission"
-		]
-	},
-	"extra": {
-		"writable": [
-			"runtime",
-			"web/assets"
-		],
-		"executable": [
-			"yii"
-		]
-	}
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ],
+            "generateCookieValidationKey": [
+                "config/web.php"
+            ]
+        },
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }   
 }

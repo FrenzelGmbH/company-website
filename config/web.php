@@ -83,8 +83,12 @@ $config = [
       ]
     ],
     'components' => [
-        'urlManager'=>[
-          'enablePrettyUrl' => false
+        'urlManager' => [
+            'enablePrettyUrl' => false,           
+            'showScriptName' => true,
+            'rules'           => [
+                'docs/<file:[a-zA-Z0-9_\-\.]*>' => 'docs',
+            ],
         ],
         'assetManager' => [
             'bundles' => [

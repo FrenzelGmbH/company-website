@@ -45,12 +45,6 @@
         "post-create-project-cmd": [
             "yii\\composer\\Installer::setPermission",
             "yii\\composer\\Installer::generateCookieValidationKey"
-        ],
-        "post-install-cmd": [
-            "ivanovyordan\\migration\\Migration::migrate"
-        ],
-        "post-update-cmd": [
-            "ivanovyordan\\migration\\Migration::migrate"
         ]
     },
     "config": {
